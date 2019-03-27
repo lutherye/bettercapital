@@ -7,9 +7,8 @@ const Splash = () => {
         <div className="splashPage">
             <div>
                 <Link to={"/signup"}>Sign Up</Link>
-            </div>
-            <div>
-
+                <br></br>
+                <Link to={"/login"}>Log In</Link>
             </div>
         </div>
 

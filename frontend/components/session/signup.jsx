@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Signup extends React.Component {
     constructor(props){
@@ -21,7 +22,7 @@ class Signup extends React.Component {
     handleSubmit(e){
         e.preventDefault();
         this.props.createUser(this.state)
-            // .then(() => this.props.history.push('/home'));
+            .then(() => this.props.history.push('/'));
     }
 
     render(){
@@ -42,19 +43,20 @@ class Signup extends React.Component {
                             />
                         </label>
                         <label>Email:
-                            <input type="text"
+                            <input type="email"
                                 value={this.state.email}
                                 onChange={this.update("email")}
                             />
                         </label>
                         <label>Password:
-                            <input type="text"
+                            <input type="password"
                                 value={this.state.password}
                                 onChange={this.update("password")}
                             />
                         </label>
                         <input type="submit" value="Continue"/>
                     </form>
+                    <Link to={"/login"}>Already a user?</Link>
             </div>
         )
     }

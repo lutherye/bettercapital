@@ -3,6 +3,7 @@ import * as ApiUtilSession from '../util/session';
 
 export const RECEIVE_USER = "RECEIVE_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 
 const receiveUser = user => {
     return({
@@ -17,21 +18,25 @@ const logoutUser = () => {
     });
 };
 
+export const receiveErrors = errors => {
+    return({
+        type: RECEIVE_ERRORS,
+        errors
+    });
+};
+
 export const createUser = user => dispatch => {
     return(
         ApiUtilSession.signup(user)
-            .then((user) => {
-                return dispatch(receiveUser(user));
-            }));
+            .then((user) => dispatch(receiveUser(user)))
+    );
 };
 
 export const login = user => dispatch => {
     return(
         ApiUtilSession.login(user)
-            .then((user) => {
-                debugger
-                return dispatch(receiveUser(user));
-            }));
+            .then((user) => dispatch(receiveUser(user)))
+    );
 };
 
 export const logout = () => dispatch => {

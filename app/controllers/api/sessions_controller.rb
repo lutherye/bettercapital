@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
 
     def create
         @user = User.find_by_credentials(
@@ -13,8 +13,8 @@ class SessionsController < ApplicationController
         end
     end
 
-    def delete
+    def destroy
         logout
-        render json: { message: "Logged Out" }, status: 404
+        render json: { message: "Logged Out" }
     end
 end
