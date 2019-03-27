@@ -2,11 +2,13 @@ class Api::UsersController < ApplicationController
 
     def create
         @user = User.new(user_params)
+        @user.portfolio_value = 0
+        @user.buying_power = 0
         if @user.save!
             login(@user)
-            render ""
+            render "/api/users/show"
         else
-
+            render json: @user.errors.full_messages, status: 422
         end
     end
 
@@ -14,6 +16,6 @@ class Api::UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:username, :password, :first_name, :last_name)
+        params.require(:user).permit( :first_name, :last_name, :email, :password )
     end
 end
