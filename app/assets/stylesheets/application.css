@@ -55,14 +55,14 @@
     margin-top: 0px;
     text-size-adjust: 100%;
  }
- #welcome {
+ .welcome {
     margin: 0 0 16px;
     line-height: 30px;
     font-size: 24px;
     font-weight: bolder;
  }
 
-#login-label {
+.login-label {
     padding: 9px 0;
     color: #171718;
     display: block;
@@ -75,8 +75,8 @@
 
 }
 
-#login-email,
-#login-password {
+.login-email,
+.login-password {
     background-color: #f9f9f9;
     box-shadow: none;
     outline: none;
@@ -106,25 +106,25 @@
     padding-left: 18px;
 }
 
-#login-password:focus {
+.login-password:focus {
     background-color: #ffffff;
     border: 1px solid #21ce99;
     transition: border-color 200ms;
 }
 
-#login-email:focus {
+.login-email:focus {
     background-color: #ffffff;
     border: 1px solid #21ce99;
     transition: border-color 200ms;
 }
 
-#login-password:hover {
+.login-password:hover {
     background-color: #fff;
     border: 1px solid whitesmoke;
     border-color: whitesmoke;
 }
 
-#login-email:hover {
+.login-email:hover {
     background-color: #fff;
     border: 1px solid whitesmoke;
     border-color: whitesmoke;
@@ -139,7 +139,7 @@
     padding: 14px 0;
 }
 
-#login-submit {
+.login-submit {
     color: #fff;
     background:#21ce99;
     -webkit-appearance: button;

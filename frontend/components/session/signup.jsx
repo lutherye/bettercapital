@@ -34,18 +34,18 @@ class Signup extends React.Component {
 
             <div className="signup-form-wrapper">
                 <div className="signup-form">
-                <nav id="signup-nav">
+                <nav className="signup-nav">
                     PEEPEE
                 </nav>
-                <div id="signup-header">
-                    <h1 id="signup-h1">Make Your Money Move</h1>
-                    <h2 id="signup-h2">BetterCapital lets you invest in companies you love, commission-free </h2>
+                <div className="signup-header">
+                    <h1 className="signup-h1">Make Your Money Move</h1>
+                    <h2 className="signup-h2">BetterCapital lets you invest in companies you love, commission-free </h2>
                 </div>
-                        <form id="signup-inputs" onSubmit={this.handleSubmit}>
-                        <div id="name-row">
+                        <form className="signup-inputs" onSubmit={this.handleSubmit}>
+                        <div className="name-row">
 
-                                <input className="input-signup"
-                                    id="signup-fname"
+                                <input className="input-signup signup-fname"
+
                                     type="text"
                                     value={this.state.first_name}
                                     onChange={this.update("first_name")}
@@ -53,8 +53,8 @@ class Signup extends React.Component {
                                 />
 
 
-                                <input className="input-signup"
-                                    id="signup-lname"
+                                <input className="input-signup signup-lname"
+
                                     type="text"
                                     value={this.state.last_name}
                                     onChange={this.update("last_name")}
@@ -62,7 +62,7 @@ class Signup extends React.Component {
                                 />
                             </div>
 
-                        <div id="email-row">
+                        <div className="email-row">
                                 <input className="input-signup"
                                     type="email"
                                     value={this.state.email}
@@ -70,7 +70,7 @@ class Signup extends React.Component {
                                     placeholder="Email Address"
                                 />
                         </div>
-                        <div id="pass-row">
+                        <div className="pass-row">
                                 <input className="input-signup"
                                     type="password"
                                     value={this.state.password}
@@ -78,11 +78,11 @@ class Signup extends React.Component {
                                     placeholder="Password(min. 6 characters)"
                                 />
                         </div>
-                        <div id="continue-button">
-                            <input id="signup-continue" type="submit" value="Continue"/>
+                        <div className="continue-button">
+                            <input className="signup-continue" type="submit" value="Continue"/>
                         </div>
                         <div className="already">
-                            <Link id="already-link" to={"/login"}>Already a user?</Link>
+                            <Link className="already-link" to={"/login"}>Already a user?</Link>
                         </div>
                         </form>
 

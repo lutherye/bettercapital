@@ -1,6 +1,6 @@
 
 
-#signup-nav {
+.signup-nav {
     min-height: 100px;
     min-width: 10px;
     display: block;
@@ -33,25 +33,25 @@
     max-width: 800px;
 }
 
-#signup-header {
+.signup-header {
     padding: 0px 15px;
 }
 
-#signup-h1 {
+.signup-h1 {
     margin: 0px 0px 20px;
     font-size: 46px;
     line-height: 1.1;
     font-weight: 550;
 }
 
-#signup-h2 {
+.signup-h2 {
     margin: 0px 0px 15px;
     font-weight: 100;
     width: 100%;
     font-size: 22px;
 }
 
-#signup-input {
+.signup-input {
     display: flex;
     flex-direction: column;
 }
@@ -88,7 +88,7 @@ input::placeholder {
     font-weight: 100;
 }
 
-#name-row {
+.name-row {
 
     font-size: 15px;
     line-height: 1.33333;
@@ -96,30 +96,30 @@ input::placeholder {
 
 }
 
-#signup-fname {
+.signup-fname {
     padding: 0 12px 0 15px;
     margin-right: 15px;
     width: 48.6%
 }
 
-#signup-lname {
+.signup-lname {
     padding: 0 15px 0 12px;
     width: 48.6%;
 }
 
 
-#email-row {
+.email-row {
     padding: 17px 18px;
     width: 100%;
     
 }
 
-#pass-row {
+.pass-row {
     padding: 17px 18px;
     width: 100%;
 }
 
-#signup-continue {
+.signup-continue {
     color: #fff;
     background: #21ce99;
     --webkit-appearance: button;
@@ -139,23 +139,23 @@ input::placeholder {
     font-size: 17px;
 }
 
-#continue-button {
+.continue-button {
     padding: 15px 15px;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
 
-#signup-continue:hover {
+.signup-continue:hover {
     background: #189c75
 }
 
 @media only screen and (max-width: 580px) {
-    #signup-fname {
+    .signup-fname {
         width: 100%;
         margin-bottom: 24px;
     }
-    #signup-lname {
+    .signup-lname {
         width: 100%;
     }
 }
@@ -166,6 +166,6 @@ input::placeholder {
     justify-content: center;
 }
 
-#already-link {
+.already-link {
     font-size: 15px;
 }

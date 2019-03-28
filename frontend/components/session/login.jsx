@@ -32,27 +32,27 @@ class Login extends React.Component {
                 <main className="form-wrapper">
                 <div className="login-form">
 
-                    <h2 id="welcome">Welcome to BetterCapital</h2>
+                    <h2 className="welcome">Welcome to BetterCapital</h2>
                     <form onSubmit={this.handleSubmit}>
 
-                        <div id="login-label">Email or Username</div>
-                                <input id="login-email" type="email"
+                        <div className="login-label">Email or Username</div>
+                                <input className="login-email" type="email"
                                 value={this.state.email}
                                 onChange={this.update("email")}
                             />
 
-                            <div id="login-label">Password</div>
-                                <input id ="login-email" type="password"
+                            <div className="login-label">Password</div>
+                                <input className ="login-email" type="password"
                                 value={this.state.password}
                                 onChange={this.update("password")}
                             />
 
-                            <div id="switch-label">
+                            <div className="switch-label">
                                 <Link to={"/signup"}>Sign up</Link>
                             </div>
                         <br/>
                         <div className="login-button">
-                         <input id ="login-submit" type="submit" value="Log In" />
+                         <input className="login-submit" type="submit" value="Log In" />
                         </div>
                     </form>
                 </div>
