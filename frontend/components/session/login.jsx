@@ -25,27 +25,40 @@ class Login extends React.Component {
 
     render(){
         return(
-               <div className="login-form">
-                <h2>Login</h2>
-                <form onSubmit={this.handleSubmit}>
+            <div className="login-page">
+                <div className="login-splash">
 
-                    <label>Email:
-                            <input type="email"
-                            value={this.state.email}
-                            onChange={this.update("email")}
-                        />
-                    </label>
-                    <label>Password:
-                            <input type="password"
-                            value={this.state.password}
-                            onChange={this.update("password")}
-                        />
-                    </label>
-                    <input type="submit" value="Continue" />
-                </form>
+                </div>
+                <main className="form-wrapper">
+                <div className="login-form">
+
+                    <h2 id="welcome">Welcome to BetterCapital</h2>
+                    <form onSubmit={this.handleSubmit}>
+
+                        <div id="login-label">Email or Username</div>
+                                <input id="login-email" type="email"
+                                value={this.state.email}
+                                onChange={this.update("email")}
+                            />
+
+                            <div id="login-label">Password</div>
+                                <input id ="login-email" type="password"
+                                value={this.state.password}
+                                onChange={this.update("password")}
+                            />
+
+                            <div id="switch-label">
+                                <Link to={"/signup"}>Sign up</Link>
+                            </div>
+                        <br/>
+                        <div className="login-button">
+                         <input id ="login-submit" type="submit" value="Log In" />
+                        </div>
+                    </form>
+                </div>
                <br/>
-               <Link to={"/signup"}>Sign up</Link>
-               </div>      
+               </main>      
+            </div>
         )
     }
 
