@@ -26,18 +26,19 @@
  }
  
   .form-wrapper {
-     height: 100vh;
-     width: 50%;
-     display: flex;
-     align-items: center;
+    height: 100vh;
+    width: 50%;
+    display: flex;
+    align-items: center;
  
   }
  
   .login-splash {
-     width: 50%;
-     background: url("robinhood-login-min.png");
-     background-size: cover;
-     height: 100vh;
+    width: 50%;
+    background: url("robinhood-login-min.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
   }
 
  .login-form {
@@ -106,18 +107,6 @@
     padding-left: 18px;
 }
 
-.login-password:focus {
-    background-color: #ffffff;
-    border: 1px solid #21ce99;
-    transition: border-color 200ms;
-}
-
-.login-email:focus {
-    background-color: #ffffff;
-    border: 1px solid #21ce99;
-    transition: border-color 200ms;
-}
-
 .login-password:hover {
     background-color: #fff;
     border: 1px solid whitesmoke;
@@ -130,13 +119,28 @@
     border-color: whitesmoke;
 }
 
+.login-password:focus {
+    background-color: #ffffff;
+    border: 1px solid #21ce99;
+    transition: border-color 200ms;
+}
+
+.login-email:focus {
+    background-color: #ffffff;
+    border: 1px solid #21ce99;
+    transition: border-color 200ms;
+}
+
 .login-button {
     margin-top: 24px;
     display: flex;
+    align-items: center;
+    font-weight: 100;
 }
 
 .switch-label {
     padding: 14px 0;
+    display: flex;
 }
 
 .login-submit {
@@ -156,11 +160,31 @@
     font-size: 13px;
     padding: 14px 0;
     line-height: 19px;
+    margin-right: 7px;
 }
 
-a {
+a{
     color: #21ce99;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 13px;
     text-decoration: none;
+}
+
+.login-errors {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.25px;
+    line-height: 19px;
+}
+
+.sign-link, .demo-link{
+    margin-left: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+}
+
+.demo-link {
+    margin-left: 5px;
+    font-weight: 510;
 }

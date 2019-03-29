@@ -35,7 +35,7 @@ class Signup extends React.Component {
             <div className="signup-form-wrapper">
                 <div className="signup-form">
                 <nav className="signup-nav">
-                    PEEPEE
+                    <Link className="logo-link" to={"/"}>BetterCapital</Link>
                 </nav>
                 <div className="signup-header">
                     <h1 className="signup-h1">Make Your Money Move</h1>
@@ -45,7 +45,7 @@ class Signup extends React.Component {
                         <div className="name-row">
 
                                 <input className="input-signup signup-fname"
-
+                                    required="required"
                                     type="text"
                                     value={this.state.first_name}
                                     onChange={this.update("first_name")}
@@ -54,7 +54,7 @@ class Signup extends React.Component {
 
 
                                 <input className="input-signup signup-lname"
-
+                                    required="required"
                                     type="text"
                                     value={this.state.last_name}
                                     onChange={this.update("last_name")}
@@ -64,6 +64,7 @@ class Signup extends React.Component {
 
                         <div className="email-row">
                                 <input className="input-signup"
+                                    required="required"
                                     type="email"
                                     value={this.state.email}
                                     onChange={this.update("email")}
@@ -72,6 +73,7 @@ class Signup extends React.Component {
                         </div>
                         <div className="pass-row">
                                 <input className="input-signup"
+                                    required="required"
                                     type="password"
                                     value={this.state.password}
                                     onChange={this.update("password")}
@@ -82,7 +84,7 @@ class Signup extends React.Component {
                             <input className="signup-continue" type="submit" value="Continue"/>
                         </div>
                         <div className="already">
-                            <Link className="already-link" to={"/login"}>Already a user?</Link>
+                            Already started?<Link className="already-link" to={"/login"}> Log in or use demo</Link>
                         </div>
                         </form>
 
