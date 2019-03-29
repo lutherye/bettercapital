@@ -84,7 +84,7 @@ class Signup extends React.Component {
                             <input className="signup-continue" type="submit" value="Continue"/>
                         </div>
                         <div className="already">
-                            Already started?<Link className="already-link" to={"/login"}> Log in or use demo</Link>
+                            Already started?<Link className="already-link" to={"/login"}> Log in or use our demo</Link>
                         </div>
                         </form>
 

@@ -35,7 +35,7 @@ class Login extends React.Component {
     renderErrors() {
         return(
             this.props.errors.map((error, idx) => {
-                return <span key={idx}><i class="fas fa-exclamation-circle"></i> {error} </span>
+                return <span key={idx}><i className="fas fa-exclamation-circle"></i> {error} </span>
             })
         )
     }
@@ -44,7 +44,12 @@ class Login extends React.Component {
         return(
             <div className="login-page">
                 <div className="login-splash">
-
+                    <div className="login-logo-link"> 
+                        <Link to={"/"}
+                            className="logo-link">
+                            BetterCapital
+                        </Link>
+                    </div>
                 </div>
                 <main className="form-wrapper">
                 <div className="login-form">

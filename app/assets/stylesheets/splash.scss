@@ -3,12 +3,19 @@
     margin: 0;
 }
 
+.splashPage {
+    margin: 0 1% 0 1%;
+}
+
 .splash-nav-wrapper {
     display: block;
+    position: fixed;
+    width: 100%;
+    z-index: 100000;
+    background: white;
 }
 
 .splash-nav {
-    margin: 12px 3% 0 3%;
     display: flex;
     font-family: 'Open Sans', sans-serif;
     align-items: center;
@@ -28,6 +35,9 @@
     font-weight: bold;
 }
 
+.splash-log:hover {
+    color: #21ce99;
+}
 .splash-sign {
     color: #fff;
     -webkit-box-pack: center;
@@ -51,19 +61,78 @@
     border-right: 5px;
 }
 
+.splash-sign:hover {
+    background: #189c75
+}
+
 .logo-link {
     font-family: 'Open Sans', sans-serif;
     font-size: 17px;
 }
 
-.top-main-splash {
-    background: url("two-phones.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 100vh;
+.logo-link:hover {
+    color: #189c75
 }
 
-// .top-main {
-//     display: flex;
-//     justify-content: flex-end;
-// }
+.top-main-splash {
+    background: url("two-phones.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    margin-top: 70px;
+}
+
+.top-main {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: flex-end;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0 2% 0 2%;
+}
+
+.top-main-content {
+    width: 25%;
+    height: 100vh;
+    padding: 290px 0 0;
+}
+
+.main-big {
+    font-size: 45px;
+    font-weight: 700;
+    margin-bottom: 76px;
+    letter-spacing: -0.02em;
+}
+
+.comission-free {
+    position: absolute;
+    line-height: 41px;
+}
+
+.main-small {
+    display: block;
+    margin-bottom: 36px;
+    font-size: 15px;
+    position: absolute;
+    width: 30%;
+    box-sizing: border-box;
+    line-height: 1.7;
+}
+
+.main-sign > .splash-sign {
+    margin-top: 110px;
+    margin-bottom: 17px;
+    margin-left: 0px;
+}
+
+.comission {
+
+    color: #21ce99;
+    font-weight: 505;
+    display: flex;
+    position: absolute;
+    width: 30%;
+    box-sizing: border-box;
+}
