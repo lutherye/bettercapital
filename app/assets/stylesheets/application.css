@@ -163,6 +163,10 @@
     margin-right: 7px;
 }
 
+.login-submit:hover{
+    background: #26ecb1;
+}
+
 a{
     color: #21ce99;
     font-weight: 500;
@@ -189,6 +193,13 @@ a{
     font-weight: 510;
 }
 
+.demo-link:hover {
+    color: #26ecb1;
+}
+
+.sign-link:hover {
+    color: #26ecb1
+}
 .login-logo-link {
     font-size: 17px;
     font-weight: bolder;

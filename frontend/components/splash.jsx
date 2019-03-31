@@ -7,10 +7,24 @@ const Splash = () => {
         <div className="splashPage">
             <div className="splash-nav-wrapper">
                 <nav className="splash-nav">
+                    <div className="middle-nav">
                         <Link to={"/"}
                             className="logo-link">
                             BetterCapital
                         </Link>
+                        <Link to="https://github.com/lutherye"
+                            className="github">
+                            github
+                        </Link>
+                        <Link to="https://www.linkedin.com/in/lutherye/"
+                            className="linkedin">
+                            LinkedIn
+                        </Link>
+                        <Link to="https://www.appacademy.io/?location=new-york-city"
+                            className="app">
+                            App Academy    
+                        </Link>
+                    </div>
                         
                     <div className="splash-auth">
                         <Link
@@ -34,11 +48,11 @@ const Splash = () => {
                             Comission-Free
                         </div>
                     </div>
-                    <span className="main-small">
+                    <div className="main-small">
                         Invest in stocks, ETFs, options, and
                         cryptocurrencies, all comission-free, 
                         right from your phone or desktop.
-                    </span>
+                    </div>
                     <div className="main-sign">
                         <Link
                         className="splash-sign"
@@ -55,8 +69,14 @@ const Splash = () => {
                 <div className="top-main-splash">
 
                 </div>
-
             </div>
+                <dir className="cat-div">
+                    <div className="cat-wrapper">
+                        <div className="splash-cat">
+                        <span className="cash">Cash management, coming soon.</span>
+                        </div>
+                    </div>
+                </dir>
         </div>
     )
 };

@@ -4,7 +4,7 @@
 }
 
 .splashPage {
-    margin: 0 1% 0 1%;
+
 }
 
 .splash-nav-wrapper {
@@ -13,19 +13,45 @@
     width: 100%;
     z-index: 100000;
     background: white;
+    height: 65px;
+    margin-left: 2%;
+}
+
+.github {
+    font-size: 15px;
+    font-weight: bolder;
+    color: #24292e;
+    margin-left: 3px;
+}
+
+.linkedin {
+    color: #24292e;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-left: 30px;
+}
+
+.github:hover {
+    color: #5a6672
+}
+
+.linkedin:hover {
+    color: #0077B5;
 }
 
 .splash-nav {
     display: flex;
     font-family: 'Open Sans', sans-serif;
     align-items: center;
+    padding: 1% 2%;
     justify-content: space-between;
-    padding: 5px;
-    
+    margin-right: 5%;
 }
+
 .splash-auth {
     display: flex;
     align-items: center;
+
 }
 
 .splash-log {
@@ -33,11 +59,13 @@
     color: black;
     font-size: 15px;
     font-weight: bold;
+    width: 45px;
 }
 
 .splash-log:hover {
     color: #21ce99;
 }
+
 .splash-sign {
     color: #fff;
     -webkit-box-pack: center;
@@ -50,7 +78,7 @@
     height: 48px;
     font-weight: bolder;
     border-radius: 36px;
-    width: 60px;
+    width: 61px;
     justify-content: center;
     font-size: 17px;
     letter-spacing: 0.2px;
@@ -68,18 +96,38 @@
 .logo-link {
     font-family: 'Open Sans', sans-serif;
     font-size: 17px;
+    margin-right: 70px;
 }
 
 .logo-link:hover {
     color: #189c75
 }
 
+.middle-nav {
+    width: 700px;
+}
+
+.app {
+    font-size: 15px;
+    font-weight: bolder;
+    margin-left: 30px;
+    color: #24292e;
+}
+
+.app:hover {
+    color: red;
+}
+
+.top-main-content {
+    width: 310px;
+}
+
 .top-main-splash {
     background: url("two-phones.png");
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    height: 100vh;
-    width: 100%;
+    height: 720.5px;
+    width: 960px;
     display: flex;
     margin-top: 70px;
 }
@@ -88,14 +136,15 @@
     display: flex;
     position: relative;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
     font-family: 'Open Sans', sans-serif;
     margin: 0 2% 0 2%;
+    -webkit-box-pack: center;
 }
 
 .top-main-content {
     width: 25%;
-    height: 100vh;
+    height: 75vh;
     padding: 290px 0 0;
 }
 
@@ -116,7 +165,7 @@
     margin-bottom: 36px;
     font-size: 15px;
     position: absolute;
-    width: 30%;
+    width: 272.5px;
     box-sizing: border-box;
     line-height: 1.7;
 }
@@ -128,7 +177,7 @@
 }
 
 .comission {
-
+    font-size: 13px;
     color: #21ce99;
     font-weight: 505;
     display: flex;
@@ -136,3 +185,120 @@
     width: 30%;
     box-sizing: border-box;
 }
+
+.question {
+    margin-left: 3px;
+}
+
+@-webkit-keyframes fader {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes fader {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes fader {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fader {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.top-main-splash {
+  -webkit-animation: fader 3s none;
+  -moz-animation:    fader 3s none;
+  -o-animation:      fader 3s none;
+  animation:         fader 3s none; 
+}
+
+@media only screen and (max-width: 990px) {
+    .top-main {
+        display: block;
+    }
+
+    .splash-nav {
+        justify-content: space-between;
+    }
+
+    .github, .linkedin, .app{
+        display: none;
+    }
+
+    .top-main-content {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding-top: 100px;
+        height: 250px;
+    }
+
+    .comission-free {
+        position: static;
+    }
+
+    .main-big {
+        margin-bottom: 45px;
+    }
+
+    .main-small {
+        position: static;
+        margin: auto;
+        width: 272.5px;
+    }
+
+    .main-sign > .splash-sign {
+        margin-top: 30px;
+        margin-right: 0;
+    }
+
+    .comission {
+        position: static;
+        margin: auto;
+        text-align: center;
+        width: 167px;
+
+    }
+}
+
+// splash cat
+
+.cat-div {
+    padding: 0;
+    display: block;
+    height: 270px;
+    width: 100%;
+}
+
+.cat-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+}
+
+.splash-cat {
+    background: url("cat.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0;
+    align-content: center;
+    height: auto;
+    width: 90%;
+    padding: 48px 32px;
+}
+
+.cash {
+    color: white;
+    font-size: 34px;
+    width: 360px;
+    line-height: 38px;
+    font-weight: bolder;
+    letter-spacing: 0.34px;
+    height: 70px;
+    display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+}
+

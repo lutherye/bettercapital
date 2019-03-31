@@ -6,7 +6,8 @@ import Greeting from './greeting';
 const msp = (state) => {
 
     return({
-        currentUser: state.entities.users[state.session.userId]
+        currentUser: state.entities.users[state.session.userId],
+        chart: state.chart,
     });
 };
 

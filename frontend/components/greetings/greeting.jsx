@@ -7,10 +7,19 @@ const Greeting = ({currentUser, logout}) => {
 
     const personalGreeting = () => {
         return(
-            <>
-                <h2>BetterCapital</h2>
+            <div className="greet-page">
+                <nav className="greet-nav">
+                    <div className="login-logo-link">
+                        <Link to={"/"}
+                            className="logo-link">
+                                BetterCapital
+                            </Link>
+                    </div>
+                </nav>
+
+
                 <button className="header-button" onClick={()=> logout()}>Log Out</button>
-            </>
+            </div>
         )
     }
 
