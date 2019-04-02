@@ -7,7 +7,7 @@ class Asset extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            symbol: "aac",
+            symbol: `${props.id}`,
             range: "1d",
         };
     }
@@ -17,7 +17,9 @@ class Asset extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-
+        if (prevProps.match.params.symbol !== this.state.symbol){
+            this.setState({symbol: `${props.id}`})
+        }
         if (prevState.range !== this.state.range) {
             this.getStuff(this.state.symbol, this.state.range);
         }

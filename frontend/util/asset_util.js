@@ -13,3 +13,9 @@ export const getQuote = (symbol) => {
     });
 };
 
+export const getSymbol = () => {
+    return $.ajax ({
+        method:"GET",
+        url: `https://api.iextrading.com/1.0/ref-data/symbols`
+    });
+};
