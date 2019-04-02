@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 const Splash = () => {
+
     return(
         <div className="splashPage">
             <div className="splash-nav-wrapper">
@@ -12,18 +13,12 @@ const Splash = () => {
                             className="logo-link">
                             BetterCapital
                         </Link>
-                        <Link to="https://github.com/lutherye"
-                            className="github">
-                            github
-                        </Link>
-                        <Link to="https://www.linkedin.com/in/lutherye/"
-                            className="linkedin">
-                            LinkedIn
-                        </Link>
-                        <Link to="https://www.appacademy.io/?location=new-york-city"
-                            className="app">
-                            App Academy    
-                        </Link>
+                        <a href="https://github.com/lutherye"
+                            className="github">github</a>
+                        <a href="https://www.linkedin.com/in/lutherye/"
+                            className="linkedin">LinkedIn</a>
+                        <a href="https://www.appacademy.io/?location=new-york-city"
+                            className="app">App Academy</a> 
                     </div>
                         
                     <div className="splash-auth">
@@ -66,17 +61,18 @@ const Splash = () => {
                         </div>
                     </div>
                 </div>
-                <div className="top-main-splash">
 
-                </div>
+                <img className="top-main-splash" src={window.phonePicture}/>
+
+
             </div>
-                <dir className="cat-div">
+                <div className="cat-div">
                     <div className="cat-wrapper">
                         <div className="splash-cat">
                         <span className="cash">Cash management, coming soon.</span>
                         </div>
                     </div>
-                </dir>
+                </div>
         </div>
     )
 };

@@ -8,10 +8,17 @@ import { LineChart, Line } from 'recharts';
 const Greeting = ({currentUser, chart, logout, fetChart}) => {
     
     class PersonalGreeting extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {
+                search: "",
+            };
+        }
 
-        // componentDidMount(){
-        //     fetChart("aapl", "1m");
-        // }
+        updateSearch(e) {
+            this.setState({ search: e.target.value });
+        }
+
 
         render(){
             return(
@@ -22,6 +29,9 @@ const Greeting = ({currentUser, chart, logout, fetChart}) => {
                                 className="logo-link">
                                     BetterCapital
                                 </Link>
+                        </div>
+                        <div className="greet-search">
+                            searchbar
                         </div>
                     </nav>
                     <div className="greet-chart">
