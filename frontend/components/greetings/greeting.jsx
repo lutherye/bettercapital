@@ -140,9 +140,9 @@ import Search from '../navbar/search';
                                         obj[key].quantity = quantity;
                                         obj[key].price = price;
                             } */}
-                        debugger
+                        {/* debugger
                                     return <li key={idx}>{key} {quantity} {price}</li>
-                                })}
+                                })} */}
                             </div>
                         </div>
                         <div className="date-ranges">
