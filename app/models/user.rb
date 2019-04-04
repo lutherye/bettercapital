@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint(8)        not null, primary key
+#  email           :string           not null
+#  first_name      :string           not null
+#  last_name       :string           not null
+#  portfolio_value :float            not null
+#  buying_power    :float            not null
+#  password_digest :string           not null
+#  session_token   :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class User < ApplicationRecord
     validates :email, :session_token, presence: true, uniqueness: true
     validates :password_digest, :first_name, :last_name, :portfolio_value, :buying_power, presence: true
@@ -9,7 +25,11 @@ class User < ApplicationRecord
 
     # has_many :watchlist_items,
 
-    # has_many :transactions,
+    has_many :transactions
+
+    # has_many :assets,
+    #     through: :transactions,
+    #     source: :asset
 
     def password=(password)
         @password = password

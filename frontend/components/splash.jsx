@@ -9,7 +9,7 @@ const Splash = () => {
             <div className="splash-nav-wrapper">
                 <nav className="splash-nav">
                     <div className="middle-nav">
-                        <Link to={"/"}
+                        <Link to={"/home"}
                             className="logo-link">
                             BetterCapital
                         </Link>
@@ -68,9 +68,13 @@ const Splash = () => {
             </div>
                 <div className="cat-div">
                     <div className="cat-wrapper">
-                        <div className="splash-cat">
+                    <img src={window.catPicture} 
+                        alt="investment-cat"
+                        className="splash-cat"
+                    />
+                        {/* <div className="splash-cat"> */}
                         <span className="cash">Cash management, coming soon.</span>
-                        </div>
+                        {/* </div> */}
                     </div>
                 </div>
         </div>

@@ -4,7 +4,8 @@ import Root from './components/root';
 import configureStore from './store/store';
 import { ProtectedRoute, AuthRoute } from './util/route_util';
 import { getChart } from './util/asset_util';
-import { fetChart, fetSymbol } from './actions/asset_actions';
+import { fetChart, fetSymbol, fetQuote } from './actions/asset_actions';
+import { updateTransaction, fetTransaction} from './actions/transaction_actions';
 
 document.addEventListener("DOMContentLoaded", ()=>{
     const root = document.getElementById("root");
@@ -16,6 +17,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     window.getChart = getChart;
     window.fetChart = fetChart;
     window.fetSymbol = fetSymbol;
+    window.fetQuote = fetQuote
+    window.fetTransaction = fetTransaction;
+    window.updateTransaction = updateTransaction;
 
     //testing
     //testing

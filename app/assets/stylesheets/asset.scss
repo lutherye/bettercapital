@@ -1,8 +1,101 @@
 
 .asset-page {
-    margin-left: 10px;
+   margin: 0 1% 1% 1%;
 }
+
+.asset-header {
+    margin: 0 auto;
+    max-width: 100%;
+    height: 64px;
+    display: flex;
+}
+
 .asset-nav {
+    height: 100%;
     width: 100%;
-    height: 70px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+    display: flex;
+    align-items: center;
+
+}
+
+.login-nav-logo-link {
+    font-size: 17px;
+    font-weight: bolder;
+    margin: 1%;
+
+}
+
+.asset-search {
+    min-width: 160px;
+    flex-basis: 480px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+}
+
+.searchbar {
+    display: inline-block;
+    align-items: center;
+    max-width: 400px;
+    position: relative;
+}
+
+.search-input {
+    height: 36px;
+    display: inline-block;
+    padding: 0 24px 0 52px;
+    line-height: 34px;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+
+}
+
+.drop-ul {
+    position: absolute;
+    display: inline-block;
+    min-width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.drop-li {
+    display: block;
+}
+
+.drop-li:hover {
+    background-color: azure;
+} 
+
+.date-ranges {
+    width: 30%;
+    height: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.date-button {
+
+    border: none;
+    color: black;
+    padding: 1px 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 300;
+    margin: 1px 1px;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.date-button:hover {
+    color: #21ce99;
+    cursor: pointer;
+}
+
+.date-button:focus {
+    color: #21ce99;
 }

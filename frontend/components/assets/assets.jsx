@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
+import Search from '../navbar/search';
 
 class Asset extends React.Component {
     constructor(props){
@@ -9,7 +9,10 @@ class Asset extends React.Component {
         this.state = {
             symbol: `${props.id}`,
             range: "1d",
+            quantity: "",
         };
+        this.changeDate = this.changeDate.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
@@ -17,26 +20,41 @@ class Asset extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if (prevProps.match.params.symbol !== this.state.symbol){
-            this.setState({symbol: `${props.id}`})
-        }
-        if (prevState.range !== this.state.range) {
-            this.getStuff(this.state.symbol, this.state.range);
+        if (prevProps.match.params.symbol !== this.props.match.params.symbol){
+            this.setState({symbol: `${this.props.id}`}, () => {
+                this.getStuff(this.state.symbol, this.state.range);
+            });
         }
     }
 
     getStuff(symbol, range) {
         this.props.fetChart(symbol, range).then(() => {
-            this.props.fetQuote(symbol);
+            this.props.fetQuote(symbol).then(() => {
+                this.props.fetSymbol();
+            });
         });
     }
 
     changeDate(date) {
-        debugger
-        this.setState({range: date});
+            this.getStuff(this.state.symbol, date);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.updateTransaction({ user_id: this.props.currentUser.id,
+            quantity: this.state.quantity,
+            asset_symbol: this.props.symbol });
+        this.setState({quantity: ""});
+    }
+
+    update(){
+        return (e) => {
+            this.setState({ quantity: e.target.value });
+        };
     }
 
     render(){
+
         let parsedData = (this.props.chart[this.props.symbol]) ? (this.props.chart[this.props.symbol].map((ele) => {
             return {time: ele.label, price: ele.high};
         })) : null;
@@ -51,20 +69,26 @@ class Asset extends React.Component {
                 parsedData = filteredData;
                 let prices = filteredData.map(obj => obj.price);
                 this.min = Math.min(...prices);
-            }
+        }
         
-            debugger
+
         return(
             <div className="asset-page">
-            <nav className="asset-nav">
-                <div className="login-logo-link">
-                    <Link to={"/"}
-                        className="logo-link">
-                        BetterCapital
-                    </Link>
-                </div>
-                searchbar nav
-            </nav>
+            <header className="asset-header">
+                <nav className="asset-nav">
+                    <div className="login-nav-logo-link">
+                        <Link to={"/home"}
+                            className="logo-link">
+                            BetterCapital
+                        </Link>
+                    </div>
+                    <div className="asset-search">
+                        <Search 
+                        props={this.props.symbol}/>
+                    </div>
+                </nav>
+            </header>
+
             <div className="asset-sym">
                 {companyName}
             </div>
@@ -95,40 +119,60 @@ class Asset extends React.Component {
                         hide={true}  
                     />
                     <Tooltip
-                        position={{x: 0, y: -70 }}
+                        position={{y: -30 }}
+                        offset={-45}
+                        isAnimationActive={false}
+                        contentStyle = {{border: "0",
+                            backgroundColor: "transparent",
+                            fontSize: "14"}}
                         // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
                         // coordinate={{ x: 100, y: 140 }}
-
                     />
-
                 </LineChart>
-
             </div>
 
             <div className="date-ranges">
-                <button onClick={() => this.changeDate("1d")} className="click-date">
-                    1D
-                </button> 
-                <button onClick={() => this.changeDate("1m")} className="click-date">
-                    1M
-                </button> 
-                <button onClick={() => this.changeDate("3m")} className="click-date">
-                    3M
-                </button> 
-                <button onClick={() => this.changeDate("6m")} className="click-date">
-                    6M
-                </button> 
-                <button onClick={() => this.changeDate("1y")} className="click-date">
-                    1Y
-                </button> 
-                <button onClick={() => this.changeDate("5y")} className="click-date">
-                    5Y
-                </button> 
+                <div 
+                    onClick={() => this.changeDate("1d")} className="click-date">
+                        <span className="date-button">1D</span>
+                </div> 
+                <div className="date-button"
+                    onClick={() => this.changeDate("1m")} className="click-date">
+                        <span className="date-button">1M</span>
+                </div> 
+                <div className="date-button"
+                    onClick={() => this.changeDate("3m")} className="click-date">
+                        <span className="date-button">3M</span>
+                </div> 
+                <div className="date-button"
+                    onClick={() => this.changeDate("6m")} className="click-date">
+                        <span className="date-button">6M</span>
+                </div> 
+                <div className="date-button"
+                    onClick={() => this.changeDate("1y")} className="click-date">
+                        <span className="date-button">1Y</span>
+                </div> 
+                <div className="date-button"
+                    onClick={() => this.changeDate("5y")} className="click-date">
+                        <span className="date-button">5Y</span>
+                </div> 
                 
                 <span className="5y">
 
                 </span>
             </div>
+
+            <div className="buybox">
+                <form onSubmit={this.handleSubmit}>
+                    <label className="buy-quantity">Shares</label>
+                    <input type="number"
+                        value={this.state.quantity}
+                        onChange={this.update()}
+                    />
+                    <input type="submit" value="Buy"/>
+                </form>
+            </div>
+
             </div>
         )
     }

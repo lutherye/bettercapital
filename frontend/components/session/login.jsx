@@ -43,14 +43,16 @@ class Login extends React.Component {
     render(){
         return(
             <div className="login-page">
-                <div className="login-splash">
+            <img src={window.loginPicture} 
+                alt="login-splash-art"
+                className="login-splash"
+            />
                     <div className="login-logo-link"> 
-                        <Link to={"/"}
+                        {/* <Link to={"/home"}
                             className="logo-link">
                             BetterCapital
-                        </Link>
+                        </Link> */}
                     </div>
-                </div>
                 <main className="form-wrapper">
                 <div className="login-form">
 

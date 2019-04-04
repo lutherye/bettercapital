@@ -12,7 +12,8 @@ export default () => {
     return(
         <div>
             <ProtectedRoute exact path={`/asset/:symbol`} component={AssetsContainer} />
-            <Route exact path="/" component={GreetingContainer} />
+            <ProtectedRoute exact path="/home" component={GreetingContainer} />
+            <AuthRoute exact path="/" component={Splash} />
             <AuthRoute exact path="/signup" component={SignupContainer} />
             <AuthRoute exact path="/login" component={LoginContainer} />
         </div>

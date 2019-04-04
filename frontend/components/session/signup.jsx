@@ -35,7 +35,7 @@ class Signup extends React.Component {
             <div className="signup-form-wrapper">
                 <div className="signup-form">
                 <nav className="signup-nav">
-                    <Link className="logo-link" to={"/"}>BetterCapital</Link>
+                    <Link className="logo-link" to={"/home"}>BetterCapital</Link>
                 </nav>
                 <div className="signup-header">
                     <h1 className="signup-h1">Make Your Money Move</h1>
