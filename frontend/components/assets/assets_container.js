@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { fetChart, fetQuote, fetSymbol } from '../../actions/asset_actions';
 import Asset from './assets';
+import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
 import { updateUser, updateTransaction } from '../../actions/transaction_actions';
 
@@ -18,6 +19,7 @@ const msp = (state, ownProps) => {
 
 const mdp = dispatch => {
     return ({
+        logout: () => dispatch(logout()),
         // asset
         fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
         fetQuote: symbol => dispatch(fetQuote(symbol)),
