@@ -72,21 +72,27 @@ import Search from '../navbar/search';
                                 <Search
                                     props={this.props.symbol} />
                             </div>
+                            <button className="header-button" 
+                                onClick={() => this.props.logout()}>Log Out</button>
                         </nav>
                     </header>
+
+
                     <div className="greet-chart">
-                    <div>
-                        {this.props.currentUser.buying_power}
-                    </div>
-                    <span>
-                        {this.state.portVal}
-                    </span>
                     <br/>
                     <span>
 
                     </span>
     
-                        <div className="asset-chart">
+                        <div className="p-asset-chart">
+                            <div className="port-holder">
+                                <div className="buying-power">
+                                    ${this.props.currentUser.buying_power}
+                                </div>
+                                <span className="port-val">
+                                    ${this.state.portVal}
+                                </span>
+                            </div>
                             <LineChart
                                 margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
                                 width={700}
@@ -113,19 +119,69 @@ import Search from '../navbar/search';
                                 // coordinate={{ x: 100, y: 140 }}
                                 />
                             </LineChart>
+                                <div className="date-ranges">
+                                    <div
+                                        // onClick={() => this.changeDate("1d")} 
+                                        >
+                                        <span className="date-button">1D</span>
+                                    </div>
+                                    <div 
+                                        // onClick={() => this.changeDate("1d")} 
+                                        className="date-button">
+                                        <span className="date-button">1M</span>
+                                    </div>
+                                    <div 
+                                        className="date-button"
+                                        // onClick={() => this.changeDate("3m")} 
+                                        >
+                                        <span className="date-button">3M</span>
+                                    </div>
+                                    <div className="date-button"
+                                        // onClick={() => this.changeDate("6m")} 
+                                        >
+                                        <span className="date-button">6M</span>
+                                    </div>
+                                    <div className="date-button"
+                                        // onClick={() => this.changeDate("1y")} 
+                                        >
+                                        <span className="date-button">1Y</span>
+                                    </div>
+                                    <div className="date-button"
+                                        // onClick={() => this.changeDate("5y")} 
+                                        >
+                                        <span className="date-button">5Y</span>
+                                    </div>
+                                </div>
                         </div>
                         <div className="sidebar">
-                            <div>
-                                Assets
-                            </div>
-                            <div>
+
+                            <div className="personal-holder">
                                 {this.props.transactions.map((obj, idx) => {
                                     const key = obj.asset_symbol;
                                     const quantity = obj.quantity;
-                                    debugger
+
                                     const price = this.state.symbolPrices[key]
-                                    debugger
-                                    return <li key={idx}>{key} {quantity} {price}</li>
+
+                                    return <li key={idx}
+                                                className="personal-asset"
+                                            // onClick={this.props.history.push(`/asset/${key}`)}
+                                            >
+                                            <div className="key-quantity">
+                                                <div className="p-key">
+                                                    {key} 
+                                                </div>
+                                                <div className="p-quantity">
+                                                    {quantity}
+                                                    <div className="p-shares">
+                                                        Shares
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                <div className="p-price">
+                                                    ${price}
+                                                </div>
+                                            </li>
                                 })}
                                 {/* {const obj = {};
                                     this.props.transactions.map((obj, idx) => {
@@ -145,46 +201,9 @@ import Search from '../navbar/search';
                                 })} */}
                             </div>
                         </div>
-                        <div className="date-ranges">
-                            <div
-                                // onClick={() => this.changeDate("1d")} 
-                                >
-                                <span className="date-button">1D</span>
-                            </div>
-                            <div 
-                                // onClick={() => this.changeDate("1d")} 
-                                className="date-button">
-                                <span className="date-button">1M</span>
-                            </div>
-                            <div 
-                                className="date-button"
-                                // onClick={() => this.changeDate("3m")} 
-                                >
-                                <span className="date-button">3M</span>
-                            </div>
-                            <div className="date-button"
-                                // onClick={() => this.changeDate("6m")} 
-                                >
-                                <span className="date-button">6M</span>
-                            </div>
-                            <div className="date-button"
-                                // onClick={() => this.changeDate("1y")} 
-                                >
-                                <span className="date-button">1Y</span>
-                            </div>
-                            <div className="date-button"
-                                // onClick={() => this.changeDate("5y")} 
-                                >
-                                <span className="date-button">5Y</span>
-                            </div>
 
-                            <span className="5y">
-
-                            </span>
                         </div>
-                    </div>
-    
-                    <button className="header-button" onClick={()=> this.props.logout()}>Log Out</button>
+
                 </div>
             )
         }

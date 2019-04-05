@@ -43,35 +43,42 @@
 
 .search-input {
     height: 36px;
-    display: inline-block;
-    padding: 0 24px 0 52px;
+    display: block;
     line-height: 34px;
-    width: 100%;
-    max-width: 400px;
+    width: 400px;
     overflow: hidden;
-
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    padding-left: 37px;
 }
 
 .drop-ul {
+    padding: 0;
+    padding-left: 11%;
+    margin: 0;
     position: absolute;
-    display: inline-block;
-    min-width: 100%;
-    max-width: 400px;
+    display: block;
+    width: 89%;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     cursor: pointer;
     z-index: 1;
+    background: white;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .drop-li {
     display: block;
+    padding: 3%;
+    width: 94%;
 }
 
 .drop-li:hover {
-    background-color: azure;
+    background-color: #eee;
 } 
 
 .date-ranges {
-    width: 30%;
+    width: 40%;
     height: 15px;
     display: flex;
     justify-content: space-between;
@@ -98,4 +105,116 @@
 
 .date-button:focus {
     color: #21ce99;
+}
+
+.sym-price {
+    display: inline-block;
+    width: 100px;
+}
+
+.asset-chart {
+    font-family: 'Open Sans', sans-serif;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.chart{
+    display: flex;
+}
+
+.asset-sym {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    font-weight: bolder;
+    width: 700px;
+
+}
+
+.asset-price {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 100;
+    width: 700px;
+
+}
+
+.buybox {
+    width: 237px;
+    box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    height: 100%;
+    margin-left: 7%;
+}
+
+.buy-wrapper {
+
+    padding: 20px 20px 0 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.asset-form {
+    font-size: 13px;
+}
+
+.asset-buy {
+    width: 100%;
+}
+
+.buy-symbol {
+    color: #21ce99;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 2px solid #21ce99;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.shares {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.asset-input{
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    width: 68px;
+    text-align: right;
+}
+
+.market {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.button-div {
+    padding: 0 20px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.asset-buy {
+    padding: 13px 0;
+    color: white;
+    background-color: #21ce99;
+    border-radius: 4px;
+    border: none;
+
+}
+
+.buy-words {
+    border-top: 1px solid #eee;
+    padding: 20px 20px;
+    align-content: center;
+    display: flex;
+}
+
+.buying {
+    margin-left: 5px;
 }

@@ -3,6 +3,7 @@ import { fetChart, fetQuote } from '../../actions/asset_actions';
 import {logout} from '../../actions/session_actions';
 import { updateUser, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
 import Greeting from './greeting';
+import { withRouter } from 'react-router-dom';
 
 const msp = (state) => {
 
@@ -24,4 +25,4 @@ const mdp = dispatch => {
     });
 };
 
-export default connect(msp, mdp)(Greeting);
+export default withRouter(connect(msp, mdp)(Greeting));

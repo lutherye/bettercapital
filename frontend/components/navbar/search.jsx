@@ -83,6 +83,7 @@ class Search extends React.Component {
         return(
             <div className="entire-search">
             <div className="searchbar">
+                <i className="magPicture"></i>
                 <input className="search-input"
                     type="text"
                     onChange={this.handleInput}

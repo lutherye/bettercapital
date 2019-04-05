@@ -1,0 +1,71 @@
+.greet-chart {
+    display: flex;
+    justify-content: space-around;
+    margin: 37px 0 0 0;
+}
+
+.sidebar {
+    font-family: 'Open Sans', sans-serif;
+    margin-right: 7%;
+    list-style: none;
+}
+
+.header-button {
+    border: none;
+}
+
+.header-button:hover {
+    color: #21ce99;
+}
+
+.port-val, .buying-power {
+    margin-left: 7%;
+    font-size: 37px;
+    font-family: 'Open Sans', sans-serif;
+    color: #21ce99;
+}
+
+.port-holder {
+    margin-top: 17px;
+}
+
+.personal-holder {
+    width: 270px;
+    box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    height: 100%;
+    margin-left: 9%;
+}
+
+.personal-asset {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+
+    align-items: center;
+    align-content: center;
+}
+
+.p-asset-chart {
+
+}
+
+.p-key {
+    font-weight: bolder;
+}
+
+.p-quantity {
+    display: flex;
+    font-size: 13px;
+}
+.p-shares {
+    padding: 0;
+    margin: 0 0 0 3px;
+
+}
+
+.p-price {
+    color: #21ce99;
+}

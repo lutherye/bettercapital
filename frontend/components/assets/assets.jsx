@@ -73,105 +73,140 @@ class Asset extends React.Component {
         
 
         return(
+
             <div className="asset-page">
-            <header className="asset-header">
-                <nav className="asset-nav">
-                    <div className="login-nav-logo-link">
-                        <Link to={"/home"}
-                            className="logo-link">
-                            BetterCapital
-                        </Link>
+                <header className="asset-header">
+                    <nav className="asset-nav">
+                        <div className="login-nav-logo-link">
+                            <Link to={"/home"}
+                                className="logo-link">
+                                BetterCapital
+                            </Link>
+                        </div>
+                        <div className="asset-search">
+                            <Search 
+                            props={this.props.symbol}/>
+                        </div>
+                    </nav>
+                </header>
+
+
+                <div className="asset-chart">
+                    <div className="sym-price">
+                        <div className="asset-sym">
+                            {companyName}
+                        </div>
+                        <div className="asset-price">
+                            {latestPrice}
+                        </div>
                     </div>
-                    <div className="asset-search">
-                        <Search 
-                        props={this.props.symbol}/>
+                    <div className="chart">
+                        <LineChart
+                            margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
+                            width={700}
+                            height={300}
+                            data={parsedData}>
+                            <Line type="linear" 
+                                dataKey="price" 
+                                stroke="#21ce99"
+                                strokeWidth={2}
+                                dot={false} 
+                                
+                            />
+                            <XAxis dataKey="time" 
+                                hide={true}
+                            />
+                            <YAxis dataKey="price"
+                                type="number"
+                                domain={[ "dataMin" , 'dataMax']} 
+                                hide={true}  
+                            />
+                            <Tooltip
+                                position={{y: -30 }}
+                                offset={-45}
+                                isAnimationActive={false}
+                                contentStyle = {{border: "0",
+                                    backgroundColor: "transparent",
+                                    fontSize: "14"}}
+                                // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
+                                // coordinate={{ x: 100, y: 140 }}
+                            />
+                        </LineChart>
+                        <div className="buybox">
+                            <div className="buy-wrapper">
+                                <div className="buy-symbol">
+                                    Buy {this.props.chart.symbol}
+                                </div>
+                            </div>
+                            <form className="asset-form"
+                                onSubmit={this.handleSubmit}>
+                                <div className="shares">
+                                    <label className="buy-quantity">Shares</label>
+                                    <input className="asset-input"
+                                        type="number"
+                                        value={this.state.quantity}
+                                        onChange={this.update()}
+                                    />
+                                </div>
+                                <div className="market">
+                                    <div>
+                                        Market Price
+                                    </div>
+                                    {this.props.chart.latestPrice}
+                                </div>
+                                <div className="button-div">
+                                    <input 
+                                        className="asset-buy"
+                                        type="submit" 
+                                        value="Buy" />
+                                </div>
+                                <div>
+                                    <div className="buy-words">
+
+                                            ${this.props.currentUser.buying_power}
+
+                                            <div className="buying">
+                                                Buying Power Available
+                                            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </nav>
-            </header>
+                <div className="date-ranges">
+                    <div 
+                        onClick={() => this.changeDate("1d")} className="click-date">
+                            <span className="date-button">1D</span>
+                    </div> 
+                    <div className="date-button"
+                        onClick={() => this.changeDate("1m")} className="click-date">
+                            <span className="date-button">1M</span>
+                    </div> 
+                    <div className="date-button"
+                        onClick={() => this.changeDate("3m")} className="click-date">
+                            <span className="date-button">3M</span>
+                    </div> 
+                    <div className="date-button"
+                        onClick={() => this.changeDate("6m")} className="click-date">
+                            <span className="date-button">6M</span>
+                    </div> 
+                    <div className="date-button"
+                        onClick={() => this.changeDate("1y")} className="click-date">
+                            <span className="date-button">1Y</span>
+                    </div> 
+                    <div className="date-button"
+                        onClick={() => this.changeDate("5y")} className="click-date">
+                            <span className="date-button">5Y</span>
+                    </div> 
+                    
+                    <span className="5y">
 
-            <div className="asset-sym">
-                {companyName}
-            </div>
-            <div className="asset-price">
-                {latestPrice}
+                    </span>
+                </div>
+                </div>
 
-            </div>
 
-            <div className="asset-chart">
-                <LineChart
-                    margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
-                    width={700}
-                    height={300}
-                    data={parsedData}>
-                    <Line type="linear" 
-                        dataKey="price" 
-                        stroke="#21ce99"
-                        strokeWidth={2}
-                        dot={false} 
-                        
-                    />
-                    <XAxis dataKey="time" 
-                        hide={true}
-                    />
-                    <YAxis dataKey="price"
-                        type="number"
-                        domain={[ "dataMin" , 'dataMax']} 
-                        hide={true}  
-                    />
-                    <Tooltip
-                        position={{y: -30 }}
-                        offset={-45}
-                        isAnimationActive={false}
-                        contentStyle = {{border: "0",
-                            backgroundColor: "transparent",
-                            fontSize: "14"}}
-                        // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
-                        // coordinate={{ x: 100, y: 140 }}
-                    />
-                </LineChart>
-            </div>
-
-            <div className="date-ranges">
-                <div 
-                    onClick={() => this.changeDate("1d")} className="click-date">
-                        <span className="date-button">1D</span>
-                </div> 
-                <div className="date-button"
-                    onClick={() => this.changeDate("1m")} className="click-date">
-                        <span className="date-button">1M</span>
-                </div> 
-                <div className="date-button"
-                    onClick={() => this.changeDate("3m")} className="click-date">
-                        <span className="date-button">3M</span>
-                </div> 
-                <div className="date-button"
-                    onClick={() => this.changeDate("6m")} className="click-date">
-                        <span className="date-button">6M</span>
-                </div> 
-                <div className="date-button"
-                    onClick={() => this.changeDate("1y")} className="click-date">
-                        <span className="date-button">1Y</span>
-                </div> 
-                <div className="date-button"
-                    onClick={() => this.changeDate("5y")} className="click-date">
-                        <span className="date-button">5Y</span>
-                </div> 
-                
-                <span className="5y">
-
-                </span>
-            </div>
-
-            <div className="buybox">
-                <form onSubmit={this.handleSubmit}>
-                    <label className="buy-quantity">Shares</label>
-                    <input type="number"
-                        value={this.state.quantity}
-                        onChange={this.update()}
-                    />
-                    <input type="submit" value="Buy"/>
-                </form>
-            </div>
+            
 
             </div>
         )
