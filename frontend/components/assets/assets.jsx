@@ -84,8 +84,25 @@ class Asset extends React.Component {
                             </Link>
                         </div>
                         <div className="asset-search">
-                            <Search 
-                            props={this.props.symbol}/>
+                            <Search
+                                props={this.props.symbol} />
+                        </div>
+                        <div className="home-button-div">
+                            <div className="home-home">
+                                <Link to={"/home"}
+                                    className="home-link">
+                                    Home
+                                </Link>
+                            </div>
+                            <div className="home-home">
+                                <Link to={"/home"}
+                                    className="home-link">
+                                    Notifications
+                                </Link>
+                            </div>
+                            
+                            <button className="asset-header-button"
+                                onClick={() => this.props.logout()}>Log Out</button>
                         </div>
                     </nav>
                 </header>
@@ -97,7 +114,7 @@ class Asset extends React.Component {
                             {companyName}
                         </div>
                         <div className="asset-price">
-                            {latestPrice}
+                            $ {latestPrice}
                         </div>
                     </div>
                     <div className="chart">
@@ -144,6 +161,7 @@ class Asset extends React.Component {
                                     <label className="buy-quantity">Shares</label>
                                     <input className="asset-input"
                                         type="number"
+                                        placeholder="0"
                                         value={this.state.quantity}
                                         onChange={this.update()}
                                     />
@@ -152,7 +170,7 @@ class Asset extends React.Component {
                                     <div>
                                         Market Price
                                     </div>
-                                    {this.props.chart.latestPrice}
+                                    $ {this.props.chart.latestPrice}
                                 </div>
                                 <div className="button-div">
                                     <input 

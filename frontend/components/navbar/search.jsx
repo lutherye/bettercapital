@@ -22,7 +22,7 @@ class Search extends React.Component {
             inputVal: "",
         };
         this.handleInput = this.handleInput.bind(this);
-        this.selectAss = this.selectAss.bind(this);
+        this.selectAsset = this.selectAsset.bind(this);
     }
 
     componentDidMount(){
@@ -41,10 +41,11 @@ class Search extends React.Component {
             return null;
         }
         if (this.props.symbols){
-            this.props.symbols.forEach(ass => {
-                if ((ass.symbol.includes(this.state.inputVal.toUpperCase())) || 
-                (ass.name.toUpperCase().includes(this.state.inputVal.toUpperCase()))) {
-                    matches.push(ass.symbol);
+            this.props.symbols.forEach(asset => {
+                if ((asset.symbol.includes(this.state.inputVal.toUpperCase())) || 
+                (asset.name.toUpperCase().includes(this.state.inputVal.toUpperCase()))) {
+
+                    matches.push(asset);
                 }
             });
             if ( matches.length === 0 ) {
@@ -54,27 +55,37 @@ class Search extends React.Component {
         }
     }
 
-    selectAss(e) {
-        const ass = e.target.innerText;
-
-        if (this.props.match.url.includes("asset")) {
-            this.setState({inputVal: ""});
-            this.props.history.push(`/asset/${ass}`);
-        } else {
-            this.setState({ inputVal: "" });
-            this.props.history.push(`/asset/${ass}`);
-        }
+    selectAsset(result) { 
+        return () => {
+    
+            if (this.props.match.url.includes("asset")) {
+                this.setState({inputVal: ""});
+                this.props.history.push(`/asset/${result.symbol}`);
+            } else {
+                this.setState({ inputVal: "" });
+                this.props.history.push(`/asset/${result.symbol}`);
+            }
+        };
     }
+
 
     render() {
         const results = (this.matches()) ? (
             this.matches().map((result, i) => {
+
                 return(
                     <li 
                         className="drop-li"
                         key={i} 
-                        onClick={this.selectAss}>
-                        {result}
+                        onClick={this.selectAsset(result)}>
+                        <div className="res-sym">
+                            {result.symbol}
+                        </div>
+
+                        <div className="res-name">
+                            {(result.name) ? (result.name.split(" ")
+                                .slice(0, (result.name.split(" ").length - 1)).join(" ")) : ("We're unable to find any results.")}
+                        </div>
                     </li>
                 );
             })

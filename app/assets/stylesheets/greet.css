@@ -1,6 +1,11 @@
+
+.greet-page {
+    margin: 0 1% 1% 1%;
+}
+
 .greet-chart {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin: 37px 0 0 0;
 }
 
@@ -8,9 +13,16 @@
     font-family: 'Open Sans', sans-serif;
     margin-right: 7%;
     list-style: none;
+    height: 100%;
 }
 
 .header-button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    color: black;
+    min-width: 57px;
     border: none;
 }
 
@@ -43,9 +55,13 @@
     font-size: 15px;
     padding: 10px 20px;
     border-bottom: 1px solid #eee;
-
+    cursor: pointer;
     align-items: center;
     align-content: center;
+}
+
+.personal-asset:hover {
+    background-color: #eee;
 }
 
 .p-asset-chart {
@@ -69,3 +85,4 @@
 .p-price {
     color: #21ce99;
 }
+

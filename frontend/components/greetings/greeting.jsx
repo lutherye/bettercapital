@@ -66,14 +66,29 @@ import Search from '../navbar/search';
                                 <Link to={"/home"}
                                     className="logo-link">
                                     BetterCapital
-                        </Link>
+                            </Link>
                             </div>
                             <div className="asset-search">
                                 <Search
                                     props={this.props.symbol} />
                             </div>
-                            <button className="header-button" 
-                                onClick={() => this.props.logout()}>Log Out</button>
+                            <div className="home-button-div">
+                                <div className="home-home">
+                                    <Link to={"/home"}
+                                        className="home-link">
+                                        Home
+                                </Link>
+                                </div>
+                                <div className="home-home">
+                                    <Link to={"/home"}
+                                        className="home-link">
+                                        Notifications
+                                </Link>
+                                </div>
+                                
+                                <button className="asset-header-button"
+                                    onClick={() => this.props.logout()}>Log Out</button>
+                            </div>
                         </nav>
                     </header>
 
@@ -164,7 +179,7 @@ import Search from '../navbar/search';
 
                                     return <li key={idx}
                                                 className="personal-asset"
-                                            // onClick={this.props.history.push(`/asset/${key}`)}
+                                            onClick={() => {this.props.history.push(`/asset/${key}`)}}
                                             >
                                             <div className="key-quantity">
                                                 <div className="p-key">
@@ -187,7 +202,7 @@ import Search from '../navbar/search';
                                     this.props.transactions.map((obj, idx) => {
                                         const key = obj.asset_symbol;
                                         const quantity = obj.quantity;
-                                        debugger
+
                                         const price = this.state.symbolPrices[key]
                                         if (obj[key]){
                                         obj[key].quantity += quantity
@@ -196,7 +211,7 @@ import Search from '../navbar/search';
                                         obj[key].quantity = quantity;
                                         obj[key].price = price;
                             } */}
-                        {/* debugger
+                        {/* 
                                     return <li key={idx}>{key} {quantity} {price}</li>
                                 })} */}
                             </div>
