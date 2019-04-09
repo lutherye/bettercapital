@@ -17,6 +17,6 @@ class Api::TransactionsController < ApplicationController
     private
 
     def transaction_params
-        params.require(:transaction).permit(:user_id, :asset_symbol, :quantity)
+        params.require(:transaction).permit(:user_id, :asset_symbol, :quantity, :price)
     end
 end

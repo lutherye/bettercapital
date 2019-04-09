@@ -28,18 +28,20 @@ export const receiveErrors = errors => {
 export const createUser = user => dispatch => {
     return(
         ApiUtilSession.signup(user)
-            .then((user) => dispatch(receiveUser(user))).fail(error => {
-                return dispatch(receiveErrors(error.responseJSON));
-            })
+            .then((user) => dispatch(receiveUser(user)), (errors => {
+
+                return dispatch(receiveErrors(errors.responseJSON));
+            }))
+
     );
 };
 
 export const login = user => dispatch => {
     return(
         ApiUtilSession.login(user)
-            .then((user) => dispatch(receiveUser(user))).fail( error => {
-                return dispatch(receiveErrors(error.responseJSON));
-            })
+            .then((user) => dispatch(receiveUser(user)), (errors => {
+                return dispatch(receiveErrors(errors.responseJSON));
+            })) 
     );
 };
 

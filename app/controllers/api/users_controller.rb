@@ -4,7 +4,7 @@ class Api::UsersController < ApplicationController
         @user = User.new(user_params)
         @user.portfolio_value = 0
         @user.buying_power = 0
-        if @user.save!
+        if @user.save
             login(@user)
             render "/api/users/show"
         else

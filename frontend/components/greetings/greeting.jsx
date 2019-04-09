@@ -16,11 +16,22 @@ import Search from '../navbar/search';
                 firstRender: true,
                 symbolPrices: {},
             };
-           
+           this.handleClick = this.handleClick.bind(this);
         }
     
         componentDidMount(){
-            this.props.fetTransaction(this.props.currentUser.id);
+            this.props.fetTransaction(this.props.currentUser.id).then(() => {
+
+                    (this.props.transactions.length < 1) ? null :
+                        (this.props.transactions.map(transaction => {
+                            let that = this;
+                            this.props.fetQuote(transaction.asset_symbol).then(quote => {
+                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: quote.quote.latestPrice });
+                                that.setState({ symbolPrices: newPrices });
+                            });
+                        }));
+                    this.setState({ firstRender: false });
+            });
         }
         
         componentDidUpdate(prevProps){
@@ -28,35 +39,90 @@ import Search from '../navbar/search';
             if(this.state.firstRender) {
                 (this.props.transactions.length < 1) ? null :
                     (this.props.transactions.map(transaction => {
-                        let that = this;
+                        if (transaction.user_id === this.props.currentUser.id) {let that = this;
                         this.props.fetQuote(transaction.asset_symbol).then(quote => {
                             let newPrices = merge({}, this.state.symbolPrices, {[transaction.asset_symbol]: quote.quote.latestPrice});
                             that.setState({ symbolPrices: newPrices});
 
                             let val = (quote.quote.latestPrice * transaction.quantity);
                             this.setState({portVal: that.state.portVal + val});
-                        });
+                        });}
                     }));
                         this.setState({ firstRender: false});
                     }
         }
 
-
         updateSearch(e) {
             this.setState({ search: e.target.value });
         }
 
-
-        getStuff(symbol, range) {
-            this.props.fetChart(symbol, range).then(() => {
-                this.props.fetQuote(symbol).then(() => {
-
-                });
-            });
+        handleClick(symbol) {
+            this.props.history.push(`/asset/${symbol}`);
+            this.props.fetChart(symbol, "1d").then(() => {
+                this.props.fetQuote(symbol);
+             });
         }
 
-
         render(){   
+
+            const object = {};
+            const keys = [];
+            let that = this;
+            if (this.props.transactions) {
+
+                this.props.transactions.forEach((obj) => {
+
+                if (obj.user_id === this.props.currentUser.id) {const symbol = obj.asset_symbol;
+                    const quantity = obj.quantity;
+                    const price = that.state.symbolPrices[symbol];
+
+                    if (object[symbol]) {
+                        object[symbol].quantity += quantity;
+                    } else {
+                        object[symbol] = {};
+                        object[symbol].quantity = quantity;
+                        object[symbol].price = price;
+                        keys.push(symbol);
+                    }
+                }
+                });
+            }
+            debugger
+            
+            const sidebar = ( keys.length > 0 ) ? (keys.map((sym, idx) => {
+
+                const symbol = sym;
+                const quantity = object[sym].quantity;
+                const price = that.state.symbolPrices[symbol];
+                that.state.portVal
+
+                return (
+                    <li key={idx}
+                        className="personal-asset"
+                        onClick={() => { this.handleClick(symbol) }}
+                    >
+                        <div className="key-quantity">
+                            <div className="p-key">
+                                {symbol}
+                            </div>
+
+                            <div className="p-quantity">
+                                {quantity}
+                                <div className="p-shares">
+                                    Shares
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-price">
+                            ${price}
+                        </div>
+                    </li>
+                )
+            })) : (<li></li>);
+
+            // let parsedData = (this.props.transactions.length > 0) ? (
+                
+            // ) : ();
 
             return(
                 <div className="greet-page">
@@ -171,58 +237,15 @@ import Search from '../navbar/search';
                         <div className="sidebar">
 
                             <div className="personal-holder">
-                                {this.props.transactions.map((obj, idx) => {
-                                    const key = obj.asset_symbol;
-                                    const quantity = obj.quantity;
+                                {sidebar}
 
-                                    const price = this.state.symbolPrices[key]
-
-                                    return <li key={idx}
-                                                className="personal-asset"
-                                            onClick={() => {this.props.history.push(`/asset/${key}`)}}
-                                            >
-                                            <div className="key-quantity">
-                                                <div className="p-key">
-                                                    {key} 
-                                                </div>
-                                                <div className="p-quantity">
-                                                    {quantity}
-                                                    <div className="p-shares">
-                                                        Shares
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                                <div className="p-price">
-                                                    ${price}
-                                                </div>
-                                            </li>
-                                })}
-                                {/* {const obj = {};
-                                    this.props.transactions.map((obj, idx) => {
-                                        const key = obj.asset_symbol;
-                                        const quantity = obj.quantity;
-
-                                        const price = this.state.symbolPrices[key]
-                                        if (obj[key]){
-                                        obj[key].quantity += quantity
-                                        } else {
-                                        obj[key] = {};
-                                        obj[key].quantity = quantity;
-                                        obj[key].price = price;
-                            } */}
-                        {/* 
-                                    return <li key={idx}>{key} {quantity} {price}</li>
-                                })} */}
                             </div>
                         </div>
-
                         </div>
-
                 </div>
             )
         }
     }
 
-
 export default Greeting;
+

@@ -11,7 +11,7 @@
 #
 
 class Transaction < ApplicationRecord
-    validates :user_id, :asset_symbol, presence: true
+    validates :user_id, :asset_symbol, :price, presence: true
     
     belongs_to :user
 

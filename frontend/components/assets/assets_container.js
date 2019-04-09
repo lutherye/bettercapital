@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import { fetChart, fetQuote, fetSymbol } from '../../actions/asset_actions';
+import { fetChart, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
 import Asset from './assets';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
 import { updateUser, updateTransaction } from '../../actions/transaction_actions';
 
 const msp = (state, ownProps) => {
+
     const chart = state.entities.assets;
     const id = ownProps.match.params.symbol;
     return({
@@ -24,6 +25,8 @@ const mdp = dispatch => {
         fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
         fetQuote: symbol => dispatch(fetQuote(symbol)),
         fetSymbol: () => dispatch(fetSymbol()),
+        fetNews: (symbol) => dispatch(fetNews(symbol)),
+        fetCompany: (symbol) => dispatch(fetCompany(symbol)),
         // transaction
         updateUser: (user) => dispatch(updateUser(user)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),

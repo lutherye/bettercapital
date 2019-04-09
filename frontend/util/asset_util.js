@@ -16,6 +16,21 @@ export const getQuote = (symbol) => {
 export const getSymbol = () => {
     return $.ajax ({
         method:"GET",
-        url: `https://api.iextrading.com/1.0/ref-data/symbols`
+        url: "https://api.iextrading.com/1.0/ref-data/symbols"
     });
 };
+
+export const getNews = (symbol) => {
+    return $.ajax ({
+        method: "GET",
+        url: `https://api.iextrading.com/1.0/stock/${symbol}/news`
+    });
+};
+
+export const getCompany = (symbol) => {
+    return $.ajax ({
+        method: "GET",
+        url: `https://api.iextrading.com/1.0/stock/${symbol}/company`
+    });
+};
+
