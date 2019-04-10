@@ -23,7 +23,14 @@ export const getSymbol = () => {
 export const getNews = (symbol) => {
     return $.ajax ({
         method: "GET",
-        url: `https://api.iextrading.com/1.0/stock/${symbol}/news`
+        url: `https://newsapi.org/v2/everything?q=${symbol}&sortBy=popularity&apiKey=d2fe2ae5a16244569a1f135e842aa8b1`
+    });
+};
+
+export const getAllNews = () => {
+    return $.ajax ({
+        method: "GET",
+        url: "https://newsapi.org/v2/everything?q=stocks&sortBy=publishedAt&apiKey=d2fe2ae5a16244569a1f135e842aa8b1"
     });
 };
 

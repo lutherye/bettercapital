@@ -20,38 +20,23 @@ import Search from '../navbar/search';
         }
     
         componentDidMount(){
-            this.props.fetTransaction(this.props.currentUser.id).then(() => {
-
+                this.props.fetTransaction(this.props.currentUser.id).then(() => {
+                    this.props.fetAllNews();
                     (this.props.transactions.length < 1) ? null :
                         (this.props.transactions.map(transaction => {
-                            let that = this;
+
+                            if (transaction.user_id === this.props.currentUser.id) {let that = this;
                             this.props.fetQuote(transaction.asset_symbol).then(quote => {
                                 let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: quote.quote.latestPrice });
                                 that.setState({ symbolPrices: newPrices });
-                            });
+                                let val = (quote.quote.latestPrice * transaction.quantity);
+                            this.setState({portVal: that.state.portVal + val});
+                            });}
                         }));
                     this.setState({ firstRender: false });
-            });
+                });
         }
         
-        componentDidUpdate(prevProps){
-
-            if(this.state.firstRender) {
-                (this.props.transactions.length < 1) ? null :
-                    (this.props.transactions.map(transaction => {
-                        if (transaction.user_id === this.props.currentUser.id) {let that = this;
-                        this.props.fetQuote(transaction.asset_symbol).then(quote => {
-                            let newPrices = merge({}, this.state.symbolPrices, {[transaction.asset_symbol]: quote.quote.latestPrice});
-                            that.setState({ symbolPrices: newPrices});
-
-                            let val = (quote.quote.latestPrice * transaction.quantity);
-                            this.setState({portVal: that.state.portVal + val});
-                        });}
-                    }));
-                        this.setState({ firstRender: false});
-                    }
-        }
-
         updateSearch(e) {
             this.setState({ search: e.target.value });
         }
@@ -62,6 +47,75 @@ import Search from '../navbar/search';
                 this.props.fetQuote(symbol);
              });
         }
+
+        parsedNews() {
+            const parsedNews = [];
+            debugger
+            (this.props.chart.news) ? (this.props.chart.news.forEach((ele, idx) => {
+                parsedNews.push(
+                    <a href={ele.url}
+                        key={idx}
+                        className="news-section"
+                        target="_blank"
+                    >
+                        <div className="news-picture-div">
+                            <div >
+                                <img className="news-picture" src={ele.urlToImage} alt={ele.title} />
+                            </div>
+                        </div>
+                        <div className="news-section-div">
+                            <div className="source-name-div">
+                                <span className="source-name">{ele.source.name}</span>
+                            </div>
+                            <div className="headline-summary">
+                                <div className="headline-div">
+                                    <span className="headline">{ele.title}</span>
+                                </div>
+                                <div className="summary-div">
+                                    <span className="summary">{ele.description}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                )
+            })) : null;
+            return parsedNews.slice(0, 6);
+        }
+
+        createChart() {
+
+                let chart = [];
+                let that = this;
+            debugger
+                let idx = this.props.transactions.length - 1; 
+                    while (idx >= 0) {
+                    if (that.props.transactions) {
+                        debugger
+                        const transaction = that.props.transactions[idx];
+                        let val = 0;
+                        debugger
+                        that.props.fetChart(transaction.asset_symbol, "1y").then(() => {
+                            debugger
+                            for (let i = 0; i < that.props.chart[transaction.asset_symbol].length; i++) {
+                                const ele = transaction.asset_symbol[i];
+                                if (ele.date === transaction.created_at.slice(0,10)) {
+                                    debugger
+                                    val += ele.high;
+                                    if (idx !== 0) {
+                                        debugger
+                                        if (transaction.created_at.slice(0, 10) !== this.props.transactions[idx + 1]) {
+                                        chart.push({ time: `${transaction.created_at.slice(0, 10)}`, price: val });
+                                        }
+                                        break;
+                                    }
+                                    idx -= 1;
+                                }  
+                            }
+                        });
+                    }
+                }
+            }
+
 
         render(){   
 
@@ -87,7 +141,7 @@ import Search from '../navbar/search';
                 }
                 });
             }
-            debugger
+
             
             const sidebar = ( keys.length > 0 ) ? (keys.map((sym, idx) => {
 
@@ -119,10 +173,6 @@ import Search from '../navbar/search';
                     </li>
                 )
             })) : (<li></li>);
-
-            // let parsedData = (this.props.transactions.length > 0) ? (
-                
-            // ) : ();
 
             return(
                 <div className="greet-page">
@@ -158,17 +208,18 @@ import Search from '../navbar/search';
                         </nav>
                     </header>
 
-
+                
+                <div className="main-wrapper">
                     <div className="greet-chart">
                     <br/>
                     <span>
-
+                        {/* {this.createChart()} */}
                     </span>
     
                         <div className="p-asset-chart">
                             <div className="port-holder">
                                 <div className="buying-power">
-                                    ${this.props.currentUser.buying_power}
+                                    {/* ${this.props.currentUser.buying_power} */}
                                 </div>
                                 <span className="port-val">
                                     ${this.state.portVal}
@@ -233,6 +284,9 @@ import Search from '../navbar/search';
                                         <span className="date-button">5Y</span>
                                     </div>
                                 </div>
+                                <div>
+                                    {this.parsedNews()}
+                                </div>
                         </div>
                         <div className="sidebar">
 
@@ -242,6 +296,7 @@ import Search from '../navbar/search';
                             </div>
                         </div>
                         </div>
+                </div>
                 </div>
             )
         }

@@ -1,7 +1,12 @@
+.main {
+    margin: 0;
+    padding: 0;
+}
 
 .greet-page {
     margin: 0 1% 1% 1%;
 }
+
 
 .greet-chart {
     display: flex;

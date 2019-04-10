@@ -60,6 +60,39 @@ class Asset extends React.Component {
         };
     }
 
+    parsedNews() {
+        const parsedNews = [];
+        (this.props.chart.news) ? (this.props.chart.news.forEach((ele, idx) => {
+            parsedNews.push(
+                <a href={ele.url}
+                    key={idx}
+                    className="news-section"
+                    target="_blank"
+                >
+                <div className="news-picture-div">
+                    <div >
+                        <img className="news-picture" src={ele.urlToImage} alt={ele.title}/>
+                    </div>
+                </div>
+                <div className="news-section-div">
+                    <div className="source-name-div">
+                        <span className="source-name">{ele.source.name}</span>
+                    </div>
+                    <div className="headline-summary">
+                        <div className="headline-div">
+                            <span className="headline">{ele.title}</span>
+                        </div>
+                        <div className="summary-div">
+                            <span className="summary">{ele.description}</span>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            )
+        })) : null;
+        return parsedNews.slice(0,6);
+    }
+
     render(){
 
         let parsedData = (this.props.chart[this.props.id]) ? (this.props.chart[this.props.id].map((ele) => {
@@ -68,14 +101,7 @@ class Asset extends React.Component {
 
         let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
 
-        let parsedNews = (this.props.chart.news) ? (this.props.chart.news.map((ele, idx) => {
-            return <div key={idx}>
-                    <span className="headline">{ele.headline}</span>
-                    <span className="summary">{ele.summary}</span>
-                    <span className="news-url">{ele.url}</span>
-                </div>
-        })) : null;
-
+        
         const names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
         const companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
         const latestPrice = (this.props.chart.latestPrice) ? (this.props.chart.latestPrice) : null;
@@ -105,38 +131,40 @@ class Asset extends React.Component {
                             <Search
                                 props={this.props.symbol} />
                         </div>
-                        <div className="home-button-div">
-                            <div className="home-home">
-                                <Link to={"/home"}
-                                    className="home-link">
-                                    Home
-                                </Link>
+                        <div className="home-button-wrapper">
+                            <div className="home-button-div">
+                                <div className="home-home">
+                                    <Link to={"/home"}
+                                        className="home-link">
+                                        Home
+                                    </Link>
+                                </div>
+                                <div className="home-home">
+                                    <Link to={"/home"}
+                                        className="home-link">
+                                        Notifications
+                                    </Link>
+                                </div>
+                                
+                                <button className="asset-header-button"
+                                    onClick={() => this.props.logout()}>Log Out</button>
                             </div>
-                            <div className="home-home">
-                                <Link to={"/home"}
-                                    className="home-link">
-                                    Notifications
-                                </Link>
-                            </div>
-                            
-                            <button className="asset-header-button"
-                                onClick={() => this.props.logout()}>Log Out</button>
                         </div>
                     </nav>
                 </header>
-
-
+            <div className="main-wrapper">
+            <div className="asset-main-wrapper">
+            <div className="asset-main-div">
                 <div className="asset-content-wrapper">
-
-                        <div className="asset-chart">
-                            <div className="sym-price">
-                                <div className="asset-sym">
-                                    {companyName}
-                                </div>
-                                <div className="asset-price">
-                                    $ {latestPrice}
-                                </div>
+                    <div className="asset-chart">
+                        <div className="sym-price">
+                            <div className="asset-sym">
+                                {companyName}
                             </div>
+                            <div className="asset-price">
+                                $ {latestPrice}
+                            </div>
+                        </div>
                             <div className="chart">
                                 <LineChart
                                     margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
@@ -148,7 +176,6 @@ class Asset extends React.Component {
                                         stroke="#21ce99"
                                         strokeWidth={2}
                                         dot={false} 
-                                        
                                     />
                                     <XAxis dataKey="time" 
                                         hide={true}
@@ -169,105 +196,107 @@ class Asset extends React.Component {
                                         // coordinate={{ x: 100, y: 140 }}
                                     />
                                 </LineChart>
-                                <div className="buybox">
-                                    <div className="buy-wrapper">
-                                        <div className="buy-symbol">
-                                            Buy {this.props.chart.symbol}
-                                        </div>
-                                    </div>
-                                    <form className="asset-form"
-                                        onSubmit={this.handleSubmit}>
-                                        <div className="shares">
-                                            <label className="buy-quantity">Shares</label>
-                                            <input className="asset-input"
-                                                type="number"
-                                                placeholder="0"
-                                                value={this.state.quantity}
-                                                onChange={this.update()}
-                                            />
-                                        </div>
-                                        <div className="market">
-                                            <div>
-                                                Market Price
-                                            </div>
-                                            $ {this.props.chart.latestPrice}
-                                        </div>
-                                        <div className="button-div">
-                                            <input 
-                                                className="asset-buy"
-                                                type="submit" 
-                                                value="Buy" />
-                                        </div>
-                                        <div>
-                                            <div className="buy-words">
-
-                                                    ${this.props.currentUser.buying_power}
-
-                                                    <div className="buying">
-                                                        Buying Power Available
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                <div className="date-ranges">
+                                    <div className="oneday"
+                                        onClick={() => this.changeDate("1d")} className="click-date">
+                                            <span className="oneday">1D</span>
+                                    </div> 
+                                    <div className="date-button"
+                                        onClick={() => this.changeDate("1m")} className="click-date">
+                                            <span className="date-button">1M</span>
+                                    </div> 
+                                    <div className="date-button"
+                                        onClick={() => this.changeDate("3m")} className="click-date">
+                                            <span className="date-button">3M</span>
+                                    </div> 
+                                    <div className="date-button"
+                                        onClick={() => this.changeDate("6m")} className="click-date">
+                                            <span className="date-button">6M</span>
+                                    </div> 
+                                    <div className="date-button"
+                                        onClick={() => this.changeDate("1y")} className="click-date">
+                                            <span className="date-button">1Y</span>
+                                    </div> 
+                                    <div className="date-button"
+                                        onClick={() => this.changeDate("5y")} className="click-date">
+                                            <span className="date-button">5Y</span>
+                                    </div> 
                                 </div>
                             </div>
-                        <div className="date-ranges">
-                            <div 
-                                onClick={() => this.changeDate("1d")} className="click-date">
-                                    <span className="date-button">1D</span>
-                            </div> 
-                            <div className="date-button"
-                                onClick={() => this.changeDate("1m")} className="click-date">
-                                    <span className="date-button">1M</span>
-                            </div> 
-                            <div className="date-button"
-                                onClick={() => this.changeDate("3m")} className="click-date">
-                                    <span className="date-button">3M</span>
-                            </div> 
-                            <div className="date-button"
-                                onClick={() => this.changeDate("6m")} className="click-date">
-                                    <span className="date-button">6M</span>
-                            </div> 
-                            <div className="date-button"
-                                onClick={() => this.changeDate("1y")} className="click-date">
-                                    <span className="date-button">1Y</span>
-                            </div> 
-                            <div className="date-button"
-                                onClick={() => this.changeDate("5y")} className="click-date">
-                                    <span className="date-button">5Y</span>
-                            </div> 
-                            
-                            <span className="5y">
-
-                            </span>
-                        </div>
-                        </div>
+                    </div>
 
                     <div className="asset-content">
                         <div className="asset-about">
-                            <div>
-                                About
-                            </div>
-
-                            <div>
-                                {parsedCompany}
+                        <div className="about-div-div">
+                            <div className="about-div">
+                                <span>About</span>
                             </div>
                         </div>
 
-                        <div className="asset-news">
-                            <div>
-                                News
+                            <div className="about-content">
+                                <span>{parsedCompany}</span>
+                            </div>
+                        </div>
+
+                        <div className="asset-about">
+                            <div className="about-div-div">
+                                <div className="about-div">
+                                    <span>News</span>
+                                </div>
                             </div>
 
                             <div>
-                                {parsedNews}
+                                {this.parsedNews()}
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
+                <div className="buybox-wrapper">
+                    <div className="buybox-div">
+                        <div className="buybox">
+                            <div className="buy-wrapper">
+                                <div className="buy-symbol">
+                                    Buy {this.props.chart.symbol}
+                                </div>
+                            </div>
+                            <form className="asset-form"
+                                onSubmit={this.handleSubmit}>
+                                <div className="shares">
+                                    <label className="buy-quantity">Shares</label>
+                                    <input className="asset-input"
+                                        type="number"
+                                        placeholder="0"
+                                        value={this.state.quantity}
+                                        onChange={this.update()}
+                                    />
+                                </div>
+                                <div className="market">
+                                    <div>
+                                        Market Price
+                                                    </div>
+                                    $ {this.props.chart.latestPrice}
+                                </div>
+                                <div className="button-div">
+                                    <input
+                                        className="asset-buy"
+                                        type="submit"
+                                        value="Buy" />
+                                </div>
+                                <div>
+                                    <div className="buy-words">
+                                        ${this.props.currentUser.buying_power}
+                                        <div className="buying">
+                                            Buying Power Available
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
             </div>
         )
     }

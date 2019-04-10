@@ -3,16 +3,70 @@
    margin: 0 1% 1% 1%;
 }
 
+.main-wrapper {
+    display: block;
+    padding-top: 65px;
+}
+
+.asset-main-wrapper {
+    display: flex;
+    margin: 0 auto;
+    width: 1024px;
+}
+
+.asset-main-div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.asset-content-wrapper {
+    flex: 0 0 66.66%;
+}
+
+.asset-about {
+    margin-bottom: 60px;
+}
+
+.about-div-div {
+    padding-bottom: 16px;
+    
+}
+
+.about-div {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 26px;
+    font-weight: bolder;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 16px;
+}
+
+.about-content {
+    max-width: 570px;
+    font-weight: 100;
+    margin: 0 0 24px;
+    line-height: 23px;
+    letter-spacing: 0.7px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+}
+
 .asset-header {
     margin: 0 auto;
-    max-width: 100%;
+    position: fixed;
+    width: 100%;
     height: 64px;
-    display: flex;
+    display: block;
+    z-index: 100;
+    background: white;
+    top: 0;
 }
 
 .asset-nav {
+    max-width: 100%;
     height: 100%;
-    width: 100%;
+    width: 1024px;
+    margin: 0 auto;
     line-height: 19px;
     letter-spacing: 0.25px;
     display: flex;
@@ -21,18 +75,19 @@
 }
 
 .login-nav-logo-link {
-    margin-left: 7%;
+    left: 48px;
     font-size: 17px;
     font-weight: bolder;
-    margin: 1%;
 
+    position: absolute;
+    margin-right: 0;
 }
 
 .asset-search {
     min-width: 160px;
-    margin-right: 37%;
     line-height: 19px;
     letter-spacing: 0.25px;
+    flex-basis: 480px;
 }
 
 .searchbar {
@@ -91,13 +146,11 @@
 } 
 
 .date-ranges {
-    width: 40%;
-    height: 15px;
+    border-bottom: 1px solid #eee;
     display: flex;
-    justify-content: space-between;
 }
-.date-button {
 
+.date-button {
     border: none;
     color: black;
     padding: 1px 1px;
@@ -106,7 +159,23 @@
     display: inline-block;
     font-size: 15px;
     font-weight: 300;
-    margin: 1px 1px;
+    margin: 0 12px;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    padding-bottom: 12px;
+}
+
+.oneday {
+    border: none;
+    color: black;
+    padding: 1px 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 300;
+    margin: 0;
+    margin-right: 12px;
     cursor: pointer;
     font-family: 'Open Sans', sans-serif;
 }
@@ -133,13 +202,14 @@
 }
 
 .chart{
-    display: flex;
+    display: block;
+    margin-bottom: 44px;
 }
 
 .asset-sym {
     font-family: 'Open Sans', sans-serif;
     font-size: 30px;
-    font-weight: bolder;
+    font-weight: 500;
     width: 700px;
 
 }
@@ -149,22 +219,39 @@
     font-size: 30px;
     font-weight: 100;
     width: 700px;
-
 }
 
-.buybox {
-    width: 237px;
-    box-shadow: 0 0 11px rgba(0,0,0,0.2);
-    box-sizing: border-box;
-    height: 100%;
-    margin-left: 7%;
+.buybox-wrapper {
+    width: 275px;
 }
 
 .buy-wrapper {
-
-    padding: 20px 20px 0 20px;
+    display: block;
+    padding: 0 6px;
     border-bottom: 1px solid #eee;
     margin-bottom: 20px;
+}
+
+.buybox-div {
+    position: fixed;
+    top: 95px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+}
+
+.buybox {
+    padding: 20px 20px 0 20px;
+    width: 100%;
+    box-shadow: 0 0 11px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    height: 100%;
+    margin-left: 7%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    position: relative;
+    border-radius: 4px;
 }
 
 .asset-form {
@@ -246,6 +333,13 @@
     max-width: 77%;
 }
 
+.home-button-wrapper {
+    display: block;
+    position: absolute;
+    padding: 0 4px 0 6px;
+    right: 127px;
+}
+
 .home-button-div {
     display: flex;
     align-items: center;
@@ -288,3 +382,59 @@
     color: #21ce99;
     cursor: pointer;
 }
+
+.news-section {
+    margin: 0 -30px;
+    padding: 30px;
+    display: flex;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    display: flex;
+}
+
+.news-picture {
+    background-position: center;
+    background-size: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+    width: auto;
+    max-width: 196px;
+    height: auto;
+    max-height: 144px;
+}
+
+.news-section-div {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 24px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.source-name-div {
+    margin-top: -4px;
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+    color: black;
+}
+
+.headline-summary {
+    margin: 4px 0;
+    max-height: 12.7ex;
+    max-width: 420px;
+    overflow: hidden;
+    display: block;
+    color: black;
+}
+
+.headline-div {
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 22px;
+    margin: 0;
+}
+

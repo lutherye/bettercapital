@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetChart, fetQuote } from '../../actions/asset_actions';
+import { fetChart, fetQuote, fetAllNews } from '../../actions/asset_actions';
 import {logout} from '../../actions/session_actions';
 import { updateUser, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
 import Greeting from './greeting';
@@ -22,6 +22,7 @@ const mdp = dispatch => {
         updateUser: (user) => dispatch(updateUser(user)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
+        fetAllNews: (news) => dispatch(fetAllNews(news)),
     });
 };
 

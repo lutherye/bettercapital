@@ -67,7 +67,14 @@ export const fetSymbol = () => dispatch => {
 export const fetNews = (symbol) => dispatch => {
     return(
         ApiUtilAsset.getNews(symbol)
-            .then(news => dispatch(receiveNews(news)))
+            .then(news => dispatch(receiveNews(news.articles)))
+    );
+};
+
+export const fetAllNews = () => dispatch => {
+    return(
+        ApiUtilAsset.getNews()
+            .then(news => dispatch(receiveNews(news.articles)))
     );
 };
 
