@@ -50,7 +50,6 @@ import Search from '../navbar/search';
 
         parsedNews() {
             const parsedNews = [];
-            debugger
             (this.props.chart.news) ? (this.props.chart.news.forEach((ele, idx) => {
                 parsedNews.push(
                     <a href={ele.url}
@@ -79,7 +78,7 @@ import Search from '../navbar/search';
                     </a>
                 )
             })) : null;
-            return parsedNews.slice(0, 6);
+            return parsedNews.slice(0, 4);
         }
 
         createChart() {
@@ -87,35 +86,47 @@ import Search from '../navbar/search';
                 let chart = [];
                 let that = this;
             debugger
-                let idx = this.props.transactions.length - 1; 
-                    while (idx >= 0) {
-                    if (that.props.transactions) {
-                        debugger
-                        const transaction = that.props.transactions[idx];
-                        let val = 0;
-                        debugger
-                        that.props.fetChart(transaction.asset_symbol, "1y").then(() => {
-                            debugger
-                            for (let i = 0; i < that.props.chart[transaction.asset_symbol].length; i++) {
-                                const ele = transaction.asset_symbol[i];
-                                if (ele.date === transaction.created_at.slice(0,10)) {
-                                    debugger
-                                    val += ele.high;
-                                    if (idx !== 0) {
-                                        debugger
-                                        if (transaction.created_at.slice(0, 10) !== this.props.transactions[idx + 1]) {
-                                        chart.push({ time: `${transaction.created_at.slice(0, 10)}`, price: val });
-                                        }
-                                        break;
-                                    }
-                                    idx -= 1;
-                                }  
-                            }
-                        });
+                this.props.fetChart
+                while (chart.length < 30) {
+                    let today = Math.floor(new Date().getTime()/1000.0);
+                    if (that.props.transactions) {  
+                        that.props.transactions.forEach(transaction => {
+                            let myDate = new Date(transaction.created_at);
+                            let myEpoch = myDate.getTime()/1000.0;
+                            
+
+                        })
                     }
                 }
-            }
 
+                // let idx = this.props.transactions.length - 1; 
+                //     while (idx >= 0) {
+                //     if (that.props.transactions) {
+                //         debugger
+                //         const transaction = that.props.transactions[idx];
+                //         let val = 0;
+                //         debugger
+                //         that.props.fetChart(transaction.asset_symbol, "1y").then(() => {
+                //             debugger
+                //             for (let i = 0; i < that.props.chart[transaction.asset_symbol].length; i++) {
+                //                 const ele = transaction.asset_symbol[i];
+                //                 if (ele.date === transaction.created_at.slice(0,10)) {
+                //                     debugger
+                //                     val += ele.high;
+                //                     if (idx !== 0) {
+                //                         debugger
+                //                         if (transaction.created_at.slice(0, 10) !== this.props.transactions[idx + 1]) {
+                //                         chart.push({ time: `${transaction.created_at.slice(0, 10)}`, price: val });
+                //                         }
+                //                         break;
+                //                     }
+                //                     idx -= 1;
+                //                 }  
+                //             }
+                //         });
+                //     }
+                // }
+            }
 
         render(){   
 
@@ -175,6 +186,7 @@ import Search from '../navbar/search';
             })) : (<li></li>);
 
             return(
+
                 <div className="greet-page">
                     <header className="asset-header">
                         <nav className="asset-nav">
@@ -188,22 +200,24 @@ import Search from '../navbar/search';
                                 <Search
                                     props={this.props.symbol} />
                             </div>
-                            <div className="home-button-div">
-                                <div className="home-home">
-                                    <Link to={"/home"}
-                                        className="home-link">
-                                        Home
-                                </Link>
+                            <div className="home-button-wrapper">
+                                <div className="home-button-div">
+                                    <div className="home-home">
+                                        <Link to={"/home"}
+                                            className="home-link">
+                                            Home
+                                    </Link>
+                                    </div>
+                                    <div className="home-home">
+                                        <Link to={"/home"}
+                                            className="home-link">
+                                            Notifications
+                                    </Link>
+                                    </div>
+
+                                    <button className="asset-header-button"
+                                        onClick={() => this.props.logout()}>Log Out</button>
                                 </div>
-                                <div className="home-home">
-                                    <Link to={"/home"}
-                                        className="home-link">
-                                        Notifications
-                                </Link>
-                                </div>
-                                
-                                <button className="asset-header-button"
-                                    onClick={() => this.props.logout()}>Log Out</button>
                             </div>
                         </nav>
                     </header>

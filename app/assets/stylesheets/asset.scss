@@ -390,6 +390,12 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     display: flex;
+    justify-content: space-between;
+}
+
+.news-picture-div {
+    align-content: center;
+    display: flex;
 }
 
 .news-picture {
@@ -409,6 +415,7 @@
     flex-grow: 1;
     margin-left: 24px;
     font-family: 'Open Sans', sans-serif;
+    max-width: 460px;
 }
 
 .source-name-div {
@@ -423,7 +430,7 @@
 
 .headline-summary {
     margin: 4px 0;
-    max-height: 12.7ex;
+    max-height: 15.8ex;
     max-width: 420px;
     overflow: hidden;
     display: block;
@@ -432,7 +439,7 @@
 
 .headline-div {
     margin-bottom: 7px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     line-height: 22px;
     margin: 0;

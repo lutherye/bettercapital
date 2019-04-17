@@ -48,7 +48,7 @@
 
 .personal-holder {
     width: 270px;
-    box-shadow: 0 0 11px rgba(0,0,0,0.2);
+    box-shadow: 0 0 11px rgba(0,0,0,0.1);
     box-sizing: border-box;
     height: 100%;
     margin-left: 9%;
@@ -59,14 +59,14 @@
     justify-content: space-between;
     font-size: 15px;
     padding: 10px 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     cursor: pointer;
     align-items: center;
     align-content: center;
 }
 
 .personal-asset:hover {
-    background-color: #eee;
+    background-color: rgba(0,0,0,0.03);
 }
 
 .p-asset-chart {
