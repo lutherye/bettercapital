@@ -1,6 +1,7 @@
 
 import * as ApiUtilAsset from '../util/asset_util';
 export const RECEIVE_CHART = "RECEIVE_CHART";
+export const RECEIVE_CHARTS = "RECEIVE_CHARTS";
 export const RECEIVE_QUOTE = "RECEIVE_QUOTE";
 export const RECEIVE_SYMBOL = "RECEIVE_SYMBOL";
 export const RECEIVE_NEWS = "RECEIVE_NEWS";
@@ -11,6 +12,13 @@ export const receiveChart = (symbol, chart) => {
         type: RECEIVE_CHART,
         symbol,
         chart,
+    });
+};
+
+export const receiveCharts = (charts) => {
+    return({
+        type: RECEIVE_CHARTS,
+        charts,
     });
 };
 
@@ -61,6 +69,13 @@ export const fetSymbol = () => dispatch => {
     return(
         ApiUtilAsset.getSymbol()
             .then(symbols => dispatch(receiveSymbol(symbols)))
+    );
+};
+
+export const fetBatch = (symbols, range) => dispatch => {
+    return(
+        ApiUtilAsset.getBatch(symbols, range)
+            .then(charts => dispatch(receiveCharts(charts)))
     );
 };
 

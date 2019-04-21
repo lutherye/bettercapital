@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import merge from 'lodash/merge'
-
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import merge from 'lodash/merge';
 import Search from '../navbar/search';
+import PortfolioChart from '../chart/portfolio_chart_container';
 
 
     
@@ -82,19 +81,20 @@ import Search from '../navbar/search';
         }
 
         createChart() {
-
+            // need this.props.chart to have v chart;
                 let chart = [];
                 let that = this;
+                let num = 30;
             debugger
-                this.props.fetChart
-                while (chart.length < 30) {
+
+                while (chart.length < num) {
                     let today = Math.floor(new Date().getTime()/1000.0);
                     if (that.props.transactions) {  
                         that.props.transactions.forEach(transaction => {
-                            let myDate = new Date(transaction.created_at);
+                            this.props.fetChart(transaction.asset_symbol, num);
+                            let myDate = new Date(transaction.created_at.slice(0,10));
                             let myEpoch = myDate.getTime()/1000.0;
-                            
-
+                            // if (that.props.chart)
                         })
                     }
                 }
@@ -153,14 +153,14 @@ import Search from '../navbar/search';
                 });
             }
 
-            
+            let propbar = []; 
             const sidebar = ( keys.length > 0 ) ? (keys.map((sym, idx) => {
 
-                const symbol = sym;
+                const symbol = sym.toUpperCase();
                 const quantity = object[sym].quantity;
                 const price = that.state.symbolPrices[symbol];
-                that.state.portVal
-
+                that.state.portVal;
+                propbar[symbol] = quantity;
                 return (
                     <li key={idx}
                         className="personal-asset"
@@ -168,7 +168,7 @@ import Search from '../navbar/search';
                     >
                         <div className="key-quantity">
                             <div className="p-key">
-                                {symbol}
+                                {symbol.toUpperCase()}
                             </div>
 
                             <div className="p-quantity">
@@ -179,7 +179,7 @@ import Search from '../navbar/search';
                             </div>
                         </div>
                         <div className="p-price">
-                            ${price}
+                            ${parseFloat(Math.round(price * 100) / 100).toFixed(2)}
                         </div>
                     </li>
                 )
@@ -233,71 +233,18 @@ import Search from '../navbar/search';
                         <div className="p-asset-chart">
                             <div className="port-holder">
                                 <div className="buying-power">
-                                    {/* ${this.props.currentUser.buying_power} */}
+
                                 </div>
                                 <span className="port-val">
-                                    ${this.state.portVal}
+                                        ${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}
+
                                 </span>
                             </div>
-                            <LineChart
-                                margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
-                                width={700}
-                                height={300}>
-                                <Line type="linear"
-                                    dataKey="price"
-                                    stroke="#21ce99"
-                                    strokeWidth={2}
-                                    dot={false}
+                            
+                                <PortfolioChart 
+                                    sidebar={propbar}
+                                />
 
-                                />
-                                <XAxis dataKey="time"
-                                    hide={true}
-                                />
-                                <YAxis dataKey="price"
-                                    type="number"
-                                    domain={["dataMin", 'dataMax']}
-                                    hide={true}
-                                />
-                                <Tooltip
-                                    position={{ y: -30 }}
-                                    contentStyle={{ border: "0", backgroundColor: "transparent", fontSize: "14" }}
-                                // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
-                                // coordinate={{ x: 100, y: 140 }}
-                                />
-                            </LineChart>
-                                <div className="date-ranges">
-                                    <div
-                                        // onClick={() => this.changeDate("1d")} 
-                                        >
-                                        <span className="date-button">1D</span>
-                                    </div>
-                                    <div 
-                                        // onClick={() => this.changeDate("1d")} 
-                                        className="date-button">
-                                        <span className="date-button">1M</span>
-                                    </div>
-                                    <div 
-                                        className="date-button"
-                                        // onClick={() => this.changeDate("3m")} 
-                                        >
-                                        <span className="date-button">3M</span>
-                                    </div>
-                                    <div className="date-button"
-                                        // onClick={() => this.changeDate("6m")} 
-                                        >
-                                        <span className="date-button">6M</span>
-                                    </div>
-                                    <div className="date-button"
-                                        // onClick={() => this.changeDate("1y")} 
-                                        >
-                                        <span className="date-button">1Y</span>
-                                    </div>
-                                    <div className="date-button"
-                                        // onClick={() => this.changeDate("5y")} 
-                                        >
-                                        <span className="date-button">5Y</span>
-                                    </div>
-                                </div>
                                 <div>
                                     {this.parsedNews()}
                                 </div>
@@ -305,8 +252,12 @@ import Search from '../navbar/search';
                         <div className="sidebar">
 
                             <div className="personal-holder">
+                            <div className="stocks">
+                            <span>
+                                Stocks
+                            </span>
+                            </div>
                                 {sidebar}
-
                             </div>
                         </div>
                         </div>

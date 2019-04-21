@@ -19,12 +19,20 @@ export const getSymbol = () => {
         url: "https://api.iextrading.com/1.0/ref-data/symbols"
     });
 };
+
+export const getBatch = (symbols, range) => {
+    return $.ajax ({
+        method: "GET",
+        url: `https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbols}&types=chart&range=${range}`,
+    });
+};
+
 let now = new Date();
 let year = now.getFullYear();
 let mo = now.getMonth();
 let month = mo + 1;
 let day = now.getDate();
-let today = day - 1
+let today = day - 1;
 let yesterday = day - 2;
 export const getNews = (symbol) => {
     return $.ajax ({

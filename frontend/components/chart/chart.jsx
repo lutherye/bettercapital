@@ -12,6 +12,7 @@ class Chart extends React.Component {
     componentDidMount() {
         this.props.fetChart(this.props.symbol, this.state.range);
     }
+    
     changeDate(date) {
         this.setState({range: date});
         this.props.fetChart(this.props.symbol, date);
@@ -19,7 +20,8 @@ class Chart extends React.Component {
 
     render() {
         debugger
-        let parsedData = (this.props.chart[this.props.symbol]) ? (this.props.chart[this.props.symbol].map((ele) => {
+        let parsedData = (this.props.chart[this.props.symbol] && this.props.chart[this.props.symbol].chart === undefined) ? (this.props.chart[this.props.symbol].map((ele) => {
+            debugger
             return { time: ele.label, price: ((ele.high + ele.low) / 2) };
         })) : null;
 

@@ -41,12 +41,14 @@ class Asset extends React.Component {
     }
 
     handleSubmit(e) {
+        debugger
         e.preventDefault();
         this.props.updateTransaction({ user_id: this.props.currentUser.id,
             quantity: this.state.quantity,
-            asset_symbol: this.props.symbol,
+            asset_symbol: this.state.symbol,
             price: this.props.chart.latestPrice,
         });
+        debugger
         this.setState({quantity: ""});
     }
 
@@ -202,8 +204,21 @@ class Asset extends React.Component {
                                 <div className="market">
                                     <div>
                                         Market Price
-                                                    </div>
-                                    $ {this.props.chart.latestPrice}
+                                    </div>
+                                        $ {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2)}
+                                </div>
+                                <div className="estimated">
+                                    <div>
+                                        Estimated Cost
+                                    </div>
+                                        $   {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2) * this.state.quantity}
+                                </div>
+                                <div className="checkbox">
+                                    <div className="box">
+                                        <input type="checkbox" />
+                                        <span className="checkmark"></span>
+                                    </div>
+                                    This order should only execute during normal market hours.
                                 </div>
                                 <div className="button-div">
                                     <input

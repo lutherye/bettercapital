@@ -1,19 +1,25 @@
 import { connect } from 'react-redux';
-import { fetChart, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
-import Asset from './assets';
+import { fetChart, fetBatch, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
+import PortfolioChart from './portfolio_chart';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
 import { updateUser, updateTransaction } from '../../actions/transaction_actions';
 
 const msp = (state, ownProps) => {
+    let symbols = [];
+    if (ownProps.sidebar !== undefined) {
+        Object.keys(ownProps.sidebar).forEach(ele => {
+            symbols.push(ele.toUpperCase());
+        });
+    }
 
-    const chart = state.entities.assets;
-    const id = ownProps.match.params.symbol;
-    return({
+    const chart = state.entities.assets.charts;
+    debugger
+    return ({
         currentUser: state.entities.users[state.session.userId],
         chart,
-        symbol: Object.keys(chart)[0],
-        id,
+        transactions: state.entities.transactions,
+        symbols,
     });
 };
 
@@ -22,6 +28,7 @@ const mdp = dispatch => {
         logout: () => dispatch(logout()),
         // asset
         fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
+        fetBatch: (symbols, range) => dispatch(fetBatch(symbols, range)),
         fetQuote: symbol => dispatch(fetQuote(symbol)),
         fetSymbol: () => dispatch(fetSymbol()),
         fetNews: (symbol) => dispatch(fetNews(symbol)),
@@ -34,4 +41,4 @@ const mdp = dispatch => {
 };
 
 
-export default withRouter(connect(msp,mdp)(Asset));
+export default connect(msp, mdp)(PortfolioChart);

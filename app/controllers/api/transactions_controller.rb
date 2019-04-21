@@ -5,6 +5,7 @@ class Api::TransactionsController < ApplicationController
     end
 
     def create
+        debugger
         @transaction = Transaction.new(transaction_params)
         @transaction.user_id = current_user.id
         if @transaction.save!
