@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
+import merge from 'lodash/merge';
 
 class PortfolioChart extends React.Component {
     constructor(props) {
@@ -42,32 +43,31 @@ class PortfolioChart extends React.Component {
     }
 
     setCharts() {
-        debugger
         let charts = {};
         let chart = [];
         let symb = this.props.symbols[0];
         let easyactions = {};
+        let that = this;
+        const transactionDup = Array.from(this.props.transactions);
         if (this.props.transactions && this.props.chart){
             //symb
             this.props.transactions.forEach(obj => {
-
                 let createDate = new Date(obj.created_at.slice(0,10)).getTime()/1000.0;
-
                 if (easyactions[obj.asset_symbol]) {
-                    if (easyactions[obj.asset_symbol][createDate]) {
+                    if ([createDate] in easyactions[obj.asset_symbol]) {
                         easyactions[obj.asset_symbol][createDate] += obj.quantity;
+                    } else {
+                        easyactions[obj.asset_symbol][createDate] = obj.quantity;
                     }
                 } else {
-                    easyactions[obj.asset_symbol] = {};
-                    easyactions[obj.asset_symbol][createDate] = obj.quantity;
-                }
-
+                        easyactions[obj.asset_symbol] = {};
+                        easyactions[obj.asset_symbol][createDate] = obj.quantity;
+                    }
             });
         }
 
         if (this.props.chart) {
             //symb
-            let that = this;
             this.props.symbols.forEach(sym => {
                 charts[sym] = {};
                 if (that.props.chart[sym] !== undefined) {
@@ -79,25 +79,38 @@ class PortfolioChart extends React.Component {
                     }
                 }
             });
+            // let today = new Date().getTime() / 1000.0;
+            // chart.push({date: today, price: that.props.portVal});
 
             while(chart.length < that.props.chart[symb].chart.length) {
-                that.props.chart[symb].chart.forEach(obj => {
+                // that.props.chart[symb].chart.reverse.forEach(obj => {
+                for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {
+                    const obj = that.props.chart[symb].chart[i];
                         let chartEpoch = new Date(obj.date).getTime()/1000.0;
+                        debugger
                         let price = 0;
                         if (that.props.symbols) {
                             for (let i = 0; i < that.props.symbols.length; i++) {
                                 const ele = that.props.symbols[i];
                                 price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
-                                debugger
-                                if (easyactions[ele]) {
-                                    if (easyactions[ele][chartEpoch]) {
-                                        that.props.sidebar[ele] -= easyactions[ele][chartEpoch];
-                                    }
-                                }
+                                // if (easyactions[ele] && transactionDup.length > 0) {
+                                //     debugger
+                                //     transactionDup.forEach((arr, idx) => {
+                                //         let createdAt = new Date(arr.created_at).getTime() / 1000.0;
+                                //         debugger
+                                //         if (chartEpoch < createdAt) {
+                                //             debugger
+                                //             that.props.sidebar[ele] -= easyactions[ele][createdAt];
+                                //             debugger
+                                //             transactionDup.splice(idx, 1);
+                                //         }
+                                //     });
+                                // }
                             }
                         }
-                        chart.push({date: chartEpoch, price: price});
-                });
+                        chart.unshift({date: chartEpoch, price: price});
+                    }
+                // });
                 console.log(chart);
                 if (that.state.chart !== chart) {
                     that.setState({chart: chart});
@@ -108,9 +121,7 @@ class PortfolioChart extends React.Component {
 
     render(){
         if (this.state.chart.length > 0) {
-            debugger
             if (Number.isNaN(this.state.chart[0].price)) {
-                debugger
                 this.props.fetBatch(this.props.symbols.join(","), this.state.range);
             }
         }

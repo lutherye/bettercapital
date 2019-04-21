@@ -14,7 +14,6 @@ const msp = (state, ownProps) => {
     }
 
     const chart = state.entities.assets.charts;
-    debugger
     return ({
         currentUser: state.entities.users[state.session.userId],
         chart,

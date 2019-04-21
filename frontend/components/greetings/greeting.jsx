@@ -80,53 +80,6 @@ import PortfolioChart from '../chart/portfolio_chart_container';
             return parsedNews.slice(0, 4);
         }
 
-        createChart() {
-            // need this.props.chart to have v chart;
-                let chart = [];
-                let that = this;
-                let num = 30;
-            debugger
-
-                while (chart.length < num) {
-                    let today = Math.floor(new Date().getTime()/1000.0);
-                    if (that.props.transactions) {  
-                        that.props.transactions.forEach(transaction => {
-                            this.props.fetChart(transaction.asset_symbol, num);
-                            let myDate = new Date(transaction.created_at.slice(0,10));
-                            let myEpoch = myDate.getTime()/1000.0;
-                            // if (that.props.chart)
-                        })
-                    }
-                }
-
-                // let idx = this.props.transactions.length - 1; 
-                //     while (idx >= 0) {
-                //     if (that.props.transactions) {
-                //         debugger
-                //         const transaction = that.props.transactions[idx];
-                //         let val = 0;
-                //         debugger
-                //         that.props.fetChart(transaction.asset_symbol, "1y").then(() => {
-                //             debugger
-                //             for (let i = 0; i < that.props.chart[transaction.asset_symbol].length; i++) {
-                //                 const ele = transaction.asset_symbol[i];
-                //                 if (ele.date === transaction.created_at.slice(0,10)) {
-                //                     debugger
-                //                     val += ele.high;
-                //                     if (idx !== 0) {
-                //                         debugger
-                //                         if (transaction.created_at.slice(0, 10) !== this.props.transactions[idx + 1]) {
-                //                         chart.push({ time: `${transaction.created_at.slice(0, 10)}`, price: val });
-                //                         }
-                //                         break;
-                //                     }
-                //                     idx -= 1;
-                //                 }  
-                //             }
-                //         });
-                //     }
-                // }
-            }
 
         render(){   
 
@@ -243,6 +196,7 @@ import PortfolioChart from '../chart/portfolio_chart_container';
                             
                                 <PortfolioChart 
                                     sidebar={propbar}
+                                    portVal={this.state.portVal}
                                 />
 
                                 <div>
