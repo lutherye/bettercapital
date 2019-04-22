@@ -23,6 +23,7 @@ const mdp = dispatch => {
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
         fetAllNews: (news) => dispatch(fetAllNews(news)),
+        fetBatch: (symbols, range) => dispatch(fetBatch(symbols, range)),
     });
 };
 

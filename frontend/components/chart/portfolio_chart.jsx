@@ -48,7 +48,7 @@ class PortfolioChart extends React.Component {
         let symb = this.props.symbols[0];
         let easyactions = {};
         let that = this;
-        const transactionDup = Array.from(this.props.transactions);
+        const transactionDup = Array.from(this.props.transactions).reverse();
         if (this.props.transactions && this.props.chart){
             //symb
             this.props.transactions.forEach(obj => {
@@ -66,7 +66,7 @@ class PortfolioChart extends React.Component {
             });
         }
 
-        if (this.props.chart) {
+        if (this.props.chart !== undefined) {
             //symb
             this.props.symbols.forEach(sym => {
                 charts[sym] = {};
@@ -79,41 +79,57 @@ class PortfolioChart extends React.Component {
                     }
                 }
             });
-            // let today = new Date().getTime() / 1000.0;
-            // chart.push({date: today, price: that.props.portVal});
 
-            while(chart.length < that.props.chart[symb].chart.length) {
-                // that.props.chart[symb].chart.reverse.forEach(obj => {
-                for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {
-                    const obj = that.props.chart[symb].chart[i];
-                        let chartEpoch = new Date(obj.date).getTime()/1000.0;
-                        debugger
-                        let price = 0;
-                        if (that.props.symbols) {
-                            for (let i = 0; i < that.props.symbols.length; i++) {
-                                const ele = that.props.symbols[i];
-                                price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
-                                // if (easyactions[ele] && transactionDup.length > 0) {
-                                //     debugger
-                                //     transactionDup.forEach((arr, idx) => {
-                                //         let createdAt = new Date(arr.created_at).getTime() / 1000.0;
-                                //         debugger
-                                //         if (chartEpoch < createdAt) {
-                                //             debugger
-                                //             that.props.sidebar[ele] -= easyactions[ele][createdAt];
-                                //             debugger
-                                //             transactionDup.splice(idx, 1);
-                                //         }
-                                //     });
-                                // }
+            if (that.props.portVal && that.props.symbols) {
+
+                // let currentDate = new Date().getTime() / 1000.0;
+                // chart.push({date: currentDate, price: that.props.portVal});
+                debugger
+    
+                while(chart.length < that.props.chart[symb].chart.length) {
+                    // that.props.chart[symb].chart.reverse.forEach(obj => {
+                    for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {        // iterating through dates
+                        const obj = that.props.chart[symb].chart[i];
+                            let chartEpoch = new Date(obj.date).getTime()/1000.0;
+                            debugger
+                            let price = 0;
+                            // if (that.props.symbols) {
+                                debugger
+                                for (let i = 0; i < that.props.symbols.length; i++) {           // iterating through symbols
+                                    debugger
+                                    const ele = that.props.symbols[i];                          // getting ele to grab quantity
+                                    price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
+                                    debugger
+                                    if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array
+                                    //     debugger
+                                        // transactionDup.forEach((arr, idx) => {                  // iterate through array
+                                        for (let idx= 0; idx< transactionDup.length; idx++) {
+                                            const arr = transactionDup[idx];
+                                            let createdAt = new Date(arr.created_at.slice(0,10)).getTime() / 1000.0;
+                                            debugger
+                                            if (chartEpoch < createdAt) {                       // if transaction is created after date
+                                                debugger
+                                                that.props.sidebar[arr.asset_symbol] -= transactionDup[idx].quantity;     // 
+                                                debugger
+                                                transactionDup.splice(idx, 1);
+                                                idx= 0;
+                                            }
+                                        }
+                                        // });
+                                    } 
+                                }
+                            if (transactionDup.length === 0) {
+                                chart.unshift({ date: chartEpoch, price: 0 });
+                            } else {
+                                chart.unshift({date: chartEpoch, price: price});
                             }
+                            // }
                         }
-                        chart.unshift({date: chartEpoch, price: price});
+                    // });
+                    console.log(chart);
+                    if (that.state.chart !== chart) {
+                        that.setState({chart: chart});
                     }
-                // });
-                console.log(chart);
-                if (that.state.chart !== chart) {
-                    that.setState({chart: chart});
                 }
             }
         }

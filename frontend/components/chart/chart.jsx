@@ -33,6 +33,7 @@ class Chart extends React.Component {
             let prices = filteredData.map(obj => obj.price);
             this.min = Math.min(...prices);
         }
+        
         debugger
         return(
             <div className="chart-chart-chart">

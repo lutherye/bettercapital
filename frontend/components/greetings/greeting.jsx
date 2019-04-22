@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import merge from 'lodash/merge';
 import Search from '../navbar/search';
 import PortfolioChart from '../chart/portfolio_chart_container';
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
+import MiniChart from '../chart/mini_chart';
 
     
     class Greeting extends React.Component {
@@ -131,6 +132,9 @@ import PortfolioChart from '../chart/portfolio_chart_container';
                                 </div>
                             </div>
                         </div>
+                        <div className="minichart">
+                            <MiniChart symbol={symbol}/>
+                        </div>
                         <div className="p-price">
                             ${parseFloat(Math.round(price * 100) / 100).toFixed(2)}
                         </div>
@@ -186,19 +190,15 @@ import PortfolioChart from '../chart/portfolio_chart_container';
                         <div className="p-asset-chart">
                             <div className="port-holder">
                                 <div className="buying-power">
-
                                 </div>
                                 <span className="port-val">
                                         ${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}
-
                                 </span>
                             </div>
-                            
                                 <PortfolioChart 
                                     sidebar={propbar}
                                     portVal={this.state.portVal}
                                 />
-
                                 <div>
                                     {this.parsedNews()}
                                 </div>
