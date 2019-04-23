@@ -68,7 +68,7 @@ class MiniChart extends React.Component {
         if (parsedChart[0].price < parsedChart[parsedChart.length - 1].price) {
             color = "#21ce99";
         } else {
-            color = "red";
+            color = "#ff3700";
         }
 
         return (

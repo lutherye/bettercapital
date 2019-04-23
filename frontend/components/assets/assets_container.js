@@ -3,13 +3,15 @@ import { fetChart, fetQuote, fetSymbol, fetNews, fetCompany } from '../../action
 import Asset from './assets';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
-import { updateUser, updateTransaction } from '../../actions/transaction_actions';
+import { updateUser, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
 
 const msp = (state, ownProps) => {
 
     const chart = state.entities.assets;
+    const entities = state.entities;
     const id = ownProps.match.params.symbol;
     return({
+        entities,
         currentUser: state.entities.users[state.session.userId],
         chart,
         symbol: Object.keys(chart)[0],
@@ -29,6 +31,7 @@ const mdp = dispatch => {
         // transaction
         updateUser: (user) => dispatch(updateUser(user)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
+        fetTransaction: (id) => dispatch(fetTransaction(id)),
 
     });
 };

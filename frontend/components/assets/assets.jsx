@@ -11,7 +11,8 @@ class Asset extends React.Component {
             symbol: `${props.id}`,
             range: "1d",
             quantity: "",
-            price: `${this.props.chart.latestPrice}`
+            price: `${this.props.chart.latestPrice}`,
+            buying: true,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -33,7 +34,9 @@ class Asset extends React.Component {
             this.props.fetQuote(symbol).then(() => {
                 this.props.fetSymbol().then(() => {
                     this.props.fetNews(symbol).then(() => {
-                        this.props.fetCompany(symbol);
+                        this.props.fetCompany(symbol).then(() => {
+                            this.props.fetTransaction(this.props.currentUser.id);
+                        });
                     });
                 });
             });
@@ -41,14 +44,21 @@ class Asset extends React.Component {
     }
 
     handleSubmit(e) {
-        debugger
         e.preventDefault();
-        this.props.updateTransaction({ user_id: this.props.currentUser.id,
-            quantity: this.state.quantity,
-            asset_symbol: this.state.symbol,
-            price: this.props.chart.latestPrice,
-        });
-        debugger
+        if (this.state.buying) {
+            this.props.updateTransaction({ user_id: this.props.currentUser.id,
+                quantity: this.state.quantity,
+                asset_symbol: this.state.symbol,
+                price: this.props.chart.latestPrice,
+            });
+        } else {
+            this.props.updateTransaction({
+                user_id: this.props.currentUser.id,
+                quantity: (this.state.quantity) * -1,
+                asset_symbol: this.state.symbol,
+                price: this.props.chart.latestPrice,
+            });
+        }
         this.setState({quantity: ""});
     }
 
@@ -93,12 +103,118 @@ class Asset extends React.Component {
 
     render(){
         let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
-        debugger
         const names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
         const companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
         const latestPrice = (this.props.chart.latestPrice) ? (this.props.chart.latestPrice) : null;
-        
-        debugger
+        let thisCount = 0;
+            if (this.props.entities.transactions.length > 0) {
+                for (let i = 0; i < this.props.entities.transactions.length; i++) {
+                    const obj = this.props.entities.transactions[i];
+                    if (obj.asset_symbol === this.state.symbol) {
+                        thisCount += obj.quantity
+                    }
+                }
+        }
+
+        let buy = (
+                        <form className="asset-form"
+                            onSubmit={this.handleSubmit}>
+                            <div className="shares">
+                                <label className="buy-quantity">Shares</label>
+                                <input className="asset-input"
+                                    type="number"
+                                    placeholder="0"
+                                    value={this.state.quantity}
+                                    onChange={this.update()}
+                                />
+                            </div>
+                            <div className="market">
+                                <div>
+                                    Market Price
+                                    </div>
+                                $ {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2)}
+                            </div>
+                            <div className="estimated">
+                                <div>
+                                    Estimated Cost
+                                    </div>
+                                $   {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2) * this.state.quantity}
+                            </div>
+                            <div className="checkbox">
+                                <div className="box">
+                                    <input type="checkbox" />
+                                    <span className="checkmark"></span>
+                                </div>
+                                This order should only execute during normal market hours.
+                                </div>
+                            <div className="button-div">
+                                <input
+                                    className="asset-buy"
+                                    type="submit"
+                                    value=" Buy" />
+                            </div>
+                            <div>
+                                <div className="buy-words">
+                                    ${this.props.currentUser.buying_power}
+                                    <div className="buying">
+                                        Buying Power Available
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+        )
+
+        let sell = (
+                        <form className="asset-form"
+                            onSubmit={this.handleSubmit}>
+                            <div className="shares">
+                                <label className="buy-quantity">Shares</label>
+                                <input className="asset-input"
+                                    type="number"
+                                    placeholder="0"
+                                    value={this.state.quantity}
+                                    onChange={this.update()}
+                                />
+                            </div>
+                            <div className="market">
+                                <div>
+                                    Market Price
+                                    </div>
+                                $ {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2)}
+                            </div>
+                            <div className="estimated">
+                                <div>
+                                    Estimated Credit
+                                    </div>
+                                $   {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2) * this.state.quantity}
+                            </div>
+                            <div className="checkbox">
+                                <div className="box">
+                                    <input type="checkbox" />
+                                    <span className="checkmark"></span>
+                                </div>
+                                This order should only execute during normal market hours.
+                                </div>
+                            <div className="button-div">
+                                <input
+                                    className="asset-buy"
+                                    type="submit"
+                                    value="Sell" />
+                            </div>
+                            <div>
+                                <div className="buy-words">
+                                    {thisCount}
+                                    <div className="buying">
+                                        Shares Available
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+        )
+        let box = (this.state.buying) ? buy: sell
+
+
         return(
 
             <div className="asset-page">
@@ -144,15 +260,16 @@ class Asset extends React.Component {
                             <div className="asset-sym">
                                 {companyName}
                             </div>
-                            <div className="asset-price">
-                                $ {latestPrice}
+                            <div className="asset-price"
+                                id="assetPrice"
+                            >
+                                <>$ {}</>
                             </div>
                         </div>
                             <div className="chart">
                                 <Chart 
                                     symbol={this.state.symbol}
                                     range={this.state.range}/>
-
                             </div>
                     </div>
 
@@ -182,62 +299,27 @@ class Asset extends React.Component {
                         </div>
                     </div>
                 </div>
+
                 <div className="buybox-wrapper">
                     <div className="buybox-div">
                         <div className="buybox">
                             <div className="buy-wrapper">
-                                <div className="buy-symbol">
+                                <div className={(this.state.buying) ? "buy-active" : "buy-symbol"}
+                                    onClick={()=> this.setState({buying: true})}
+                                >
                                     Buy {this.props.chart.symbol}
                                 </div>
+                                <div className={(this.state.buying) ? "buy-symbol" : "buy-active"}
+                                    onClick={()=> this.setState({buying: false})}
+                                >
+                                    Sell {this.props.chart.symbol}
+                                </div>
                             </div>
-                            <form className="asset-form"
-                                onSubmit={this.handleSubmit}>
-                                <div className="shares">
-                                    <label className="buy-quantity">Shares</label>
-                                    <input className="asset-input"
-                                        type="number"
-                                        placeholder="0"
-                                        value={this.state.quantity}
-                                        onChange={this.update()}
-                                    />
-                                </div>
-                                <div className="market">
-                                    <div>
-                                        Market Price
-                                    </div>
-                                        $ {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2)}
-                                </div>
-                                <div className="estimated">
-                                    <div>
-                                        Estimated Cost
-                                    </div>
-                                        $   {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2) * this.state.quantity}
-                                </div>
-                                <div className="checkbox">
-                                    <div className="box">
-                                        <input type="checkbox" />
-                                        <span className="checkmark"></span>
-                                    </div>
-                                    This order should only execute during normal market hours.
-                                </div>
-                                <div className="button-div">
-                                    <input
-                                        className="asset-buy"
-                                        type="submit"
-                                        value="Buy" />
-                                </div>
-                                <div>
-                                    <div className="buy-words">
-                                        ${this.props.currentUser.buying_power}
-                                        <div className="buying">
-                                            Buying Power Available
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                                        {box}
                         </div>
                     </div>
                 </div>
+
                 </div>
                 </div>
             </div>

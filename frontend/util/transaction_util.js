@@ -22,7 +22,6 @@ export const getTransactions = (id) => {
 };
 
 export const updateTransaction = (transaction) => {
-    debugger
     return $.ajax({
         method: "POST",
         url: `/api/users/${transaction.user_id}/transactions`,

@@ -42,12 +42,25 @@ class PortfolioChart extends React.Component {
         this.props.fetBatch(this.props.symbols.join(","), date);
     }
 
+    ToolTipContent(e) {
+        if (e.payload && e.payload.length > 0) {
+            let datePoint = new Date(e.payload[0].payload["date"] * 1000).toString().slice(0,10);
+            let pricePoint = parseFloat(Math.round(e.payload[0].payload["price"] * 100) / 100).toFixed(2);
+
+            document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
+            return ( <div className="dateTool">{datePoint}</div>)
+        } else if (this.state.chart.length > 0) {
+            let pricePoint = this.state.chart[this.state.chart.length -1]["price"];
+            document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
+        }
+    }
+
     setCharts() {
         let charts = {};
         let chart = [];
         let symb = this.props.symbols[0];
-        let easyactions = {};
         let that = this;
+        let easyactions = {};
         const transactionDup = Array.from(this.props.transactions).reverse();
         if (this.props.transactions && this.props.chart){
             //symb
@@ -82,40 +95,26 @@ class PortfolioChart extends React.Component {
 
             if (that.props.portVal && that.props.symbols) {
 
-                // let currentDate = new Date().getTime() / 1000.0;
-                // chart.push({date: currentDate, price: that.props.portVal});
-                debugger
-    
                 while(chart.length < that.props.chart[symb].chart.length) {
                     // that.props.chart[symb].chart.reverse.forEach(obj => {
                     for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {        // iterating through dates
                         const obj = that.props.chart[symb].chart[i];
                             let chartEpoch = new Date(obj.date).getTime()/1000.0;
-                            debugger
                             let price = 0;
                             // if (that.props.symbols) {
-                                debugger
                                 for (let i = 0; i < that.props.symbols.length; i++) {           // iterating through symbols
-                                    debugger
                                     const ele = that.props.symbols[i];                          // getting ele to grab quantity
                                     price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
-                                    debugger
-                                    if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array
-                                    //     debugger
-                                        // transactionDup.forEach((arr, idx) => {                  // iterate through array
+                                    if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
                                         for (let idx= 0; idx< transactionDup.length; idx++) {
                                             const arr = transactionDup[idx];
                                             let createdAt = new Date(arr.created_at.slice(0,10)).getTime() / 1000.0;
-                                            debugger
                                             if (chartEpoch < createdAt) {                       // if transaction is created after date
-                                                debugger
                                                 that.props.sidebar[arr.asset_symbol] -= transactionDup[idx].quantity;     // 
-                                                debugger
                                                 transactionDup.splice(idx, 1);
                                                 idx= 0;
                                             }
                                         }
-                                        // });
                                     } 
                                 }
                             if (transactionDup.length === 0) {
@@ -123,9 +122,7 @@ class PortfolioChart extends React.Component {
                             } else {
                                 chart.unshift({date: chartEpoch, price: price});
                             }
-                            // }
                         }
-                    // });
                     console.log(chart);
                     if (that.state.chart !== chart) {
                         that.setState({chart: chart});
@@ -164,6 +161,7 @@ class PortfolioChart extends React.Component {
                     />
                     <Tooltip
                         position={{ y: -30 }}
+                        content={this.ToolTipContent.bind(this)}
                         offset={-45}
                         isAnimationActive={false}
                         contentStyle={{

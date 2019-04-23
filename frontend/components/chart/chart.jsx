@@ -8,6 +8,7 @@ class Chart extends React.Component {
         this.state = {
             range: "1d",
         };
+        this.parsedData = undefined;
     }
     componentDidMount() {
         this.props.fetChart(this.props.symbol, this.state.range);
@@ -17,34 +18,53 @@ class Chart extends React.Component {
         this.setState({range: date});
         this.props.fetChart(this.props.symbol, date);
     }
+    ToolTipContent(e) {
+            if (e.payload && e.payload.length > 0) {
+                let datePoint = e.payload[0].payload["time"];
+                let pricePoint = parseFloat(Math.round(e.payload[0].value * 100) / 100).toFixed(2);
+    
+                document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+                return (<div className="dateTool">{datePoint}</div>)
+            } else if (this.parsedData > 0) {
+                let pricePoint = this.parsedData[this.parsedData.length - 1]["price"];
+                document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+            } 
+    }
 
     render() {
-        debugger
-        let parsedData = (this.props.chart[this.props.symbol] && this.props.chart[this.props.symbol].chart === undefined) ? (this.props.chart[this.props.symbol].map((ele) => {
-            debugger
+        this.parsedData = (this.props.chart[this.props.symbol] && this.props.chart[this.props.symbol].chart === undefined) ? (this.props.chart[this.props.symbol].map((ele) => {
             return { time: ele.label, price: ((ele.high + ele.low) / 2) };
         })) : null;
 
         this.min = "dataMin";
 
-        if (parsedData) {
-            let filteredData = parsedData.filter(obj => obj.price > 0);
-            parsedData = filteredData;
+        if (this.parsedData) {
+            let filteredData = this.parsedData.filter(obj => obj.price > 0);
+            this.parsedData = filteredData;
             let prices = filteredData.map(obj => obj.price);
             this.min = Math.min(...prices);
         }
         
-        debugger
+        let color;
+
+        if (this.parsedData) {
+            if (this.parsedData[0].price < this.parsedData[this.parsedData.length - 1].price) {
+                color = "#21ce99";
+            } else {
+                color = "#ff4700";
+            }
+        }
+
         return(
             <div className="chart-chart-chart">
                 <LineChart
                     margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
                     width={700}
                     height={300}
-                    data={parsedData}>
+                    data={this.parsedData}>
                     <Line type="linear"
                         dataKey="price"
-                        stroke="#21ce99"
+                        stroke={color}
                         strokeWidth={2}
                         dot={false}
                     />
@@ -57,7 +77,8 @@ class Chart extends React.Component {
                         hide={true}
                     />
                     <Tooltip
-                        position={{ y: -30 }}
+                        position={{ y: 0 }}
+                        content={this.ToolTipContent.bind(this)}
                         offset={-45}
                         isAnimationActive={false}
                         contentStyle={{

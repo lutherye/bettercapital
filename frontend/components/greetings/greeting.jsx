@@ -191,8 +191,9 @@ import MiniChart from '../chart/mini_chart';
                             <div className="port-holder">
                                 <div className="buying-power">
                                 </div>
-                                <span className="port-val">
-                                        ${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}
+                                <span className="port-val"
+                                    id="portfolioVal">
+                                        <>${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}</>
                                 </span>
                             </div>
                                 <PortfolioChart 

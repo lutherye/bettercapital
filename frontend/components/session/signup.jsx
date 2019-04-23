@@ -27,7 +27,6 @@ class Signup extends React.Component {
     }
 
     renderErrors() {
-        debugger
         return (
             this.props.errors.map((error, idx) => {
 
