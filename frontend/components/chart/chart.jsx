@@ -25,9 +25,11 @@ class Chart extends React.Component {
     
                 document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
                 return (<div className="dateTool">{datePoint}</div>)
-            } else if (this.parsedData > 0) {
-                let pricePoint = this.parsedData[this.parsedData.length - 1]["price"];
-                document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+            } else if (this.parsedData) {
+                if(this.parsedData.length > 0) { 
+                    let pricePoint = parseFloat(Math.round(this.parsedData[this.parsedData.length - 1]["price"] * 100) / 100).toFixed(2);
+                    document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+                }
             } 
     }
 

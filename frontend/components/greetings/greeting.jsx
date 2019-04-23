@@ -171,7 +171,6 @@ import MiniChart from '../chart/mini_chart';
                                             Notifications
                                     </Link>
                                     </div>
-
                                     <button className="asset-header-button"
                                         onClick={() => this.props.logout()}>Log Out</button>
                                 </div>
@@ -183,10 +182,6 @@ import MiniChart from '../chart/mini_chart';
                 <div className="main-wrapper">
                     <div className="greet-chart">
                     <br/>
-                    <span>
-                        {/* {this.createChart()} */}
-                    </span>
-    
                         <div className="p-asset-chart">
                             <div className="port-holder">
                                 <div className="buying-power">
@@ -204,15 +199,19 @@ import MiniChart from '../chart/mini_chart';
                                     {this.parsedNews()}
                                 </div>
                         </div>
-                        <div className="sidebar">
+                        <div className="sidebar-div">
+                            <div className="sidebar-holder">
+                                <div className="sidebar">
 
-                            <div className="personal-holder">
-                            <div className="stocks">
-                            <span>
-                                Stocks
-                            </span>
-                            </div>
-                                {sidebar}
+                                    <div className="personal-holder">
+                                    <div className="stocks">
+                                    <span>
+                                        Stocks
+                                    </span>
+                                    </div>
+                                        {sidebar}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         </div>

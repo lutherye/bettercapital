@@ -106,11 +106,33 @@ class Asset extends React.Component {
         let names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
         let companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
         let companyCEO = (this.props.chart.company) ? (this.props.chart.company.CEO) : null;
-        let avgTotalVolume = (this.props.chart.avgTotalVolume) ? (this.props.chart.avgTotalVolume) : null;
-        let marketCap = (this.props.chart.marketCap) ? (this.props.chart.marketCap) : null;
+
+        let avgTotalVolume = null;
+        if (this.props.chart.avgTotalVolume) {
+            let temp = this.props.chart.avgTotalVolume.toString();
+            if (temp.length > 6 && temp.length <= 9) {
+                let num = temp.length - 6;
+                avgTotalVolume = temp.slice(0,num) + "." + temp.slice(num, num + 1) + "M";
+            } else if (temp.length > 9) {
+                let num = temp.length - 9;
+                avgTotalVolume = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "B";
+            }
+        }
+        let marketCap = null;
+        if (this.props.chart.marketCap) {
+            let temp = this.props.chart.marketCap.toString();
+            if (temp.length > 6 && temp.length <= 9) {
+                let num = temp.length - 6;
+                marketCap = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "M";
+            } else if (temp.length > 9) {
+                let num = temp.length - 9;
+                marketCap = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "B";
+            }
+        }
+
         let peRatio = (this.props.chart.peRatio) ? (this.props.chart.peRatio) : null;
         let ytdChange = (this.props.chart.ytdChange) ? ((this.props.chart.ytdChange).toFixed(2) + "%") : null;
-        let weekHigh = (this.props.chart.week52High) ? (this.props.chart.week52High) : null;
+        let weekHigh = (this.props.chart.week52High) ? ("$" + (this.props.chart.week52High).toFixed(2)) : null;
         let week52Low = (this.props.chart.week52Low) ? (this.props.chart.week52Low) : null;
         let industry = (this.props.chart.company) ? (this.props.chart.company.industry) : null;
             {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytdChange, week52High, week52Low, industry */ }

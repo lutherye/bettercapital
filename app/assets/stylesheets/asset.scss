@@ -36,7 +36,7 @@
 .about-div {
     font-family: 'Open Sans', sans-serif;
     font-size: 26px;
-    font-weight: bolder;
+    font-weight: 600;
     border-bottom: 1px solid #eee;
     padding-bottom: 16px;
 }
@@ -109,6 +109,7 @@
     padding-left: 37px;
     border-radius: 5px;
     border: 1px solid #eee;
+    outline: none;
 }
 
 .search-input::placeholder {
@@ -118,6 +119,10 @@
 .search-input:hover {
     box-shadow: 0px 0px 11px rgba(0,0,0,0.2);
     border: none;
+}
+
+.search-input:focus {
+    box-shadow: 0px 0px 11px rgba(0,0,0,0.2);
 }
 
 .drop-ul {
@@ -208,7 +213,7 @@
 
 .asset-sym {
     font-family: 'Open Sans', sans-serif;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 500;
     width: 700px;
 
@@ -216,7 +221,7 @@
 
 .asset-price {
     font-family: 'Open Sans', sans-serif;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 100;
     width: 700px;
 }
@@ -238,19 +243,18 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    width: 275px;
+    width: 277px;
 }
 
 .buybox {
-    padding: 20px 20px 0 20px;
+    padding: 20px 23px 0 25px;
     width: 100%;
-    box-shadow: 0 0 11px rgba(0,0,0,0.3);
+    box-shadow: 0 0 11px rgba(0,0,0,0.15);
     box-sizing: border-box;
     height: 100%;
     margin-left: 7%;
     font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 13px;
     position: relative;
     border-radius: 4px;
 }
@@ -265,8 +269,8 @@
 
 .buy-symbol {
     color: black;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 15.5px;
+    font-weight: bold;
     display: inline-block;
     padding-bottom: 10px;
     margin-right: 10px;
@@ -280,8 +284,8 @@
 
 .buy-active {
     color: #21ce99;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 15.5px;
+    font-weight: bold;
     border-bottom: 2px solid #21ce99;
     display: inline-block;
     padding-bottom: 10px;
@@ -342,9 +346,9 @@ input[type=number] {
     border-radius: 4px;
 }
 
-.checkbox:hover input ~ .checkmark {
-  background-color: #eee;
-}
+// .checkbox:hover input ~ .checkmark {
+//   background-color: #eee;
+// }
 
 .market {
     display: flex;
@@ -512,7 +516,7 @@ input[type=number] {
 .headline-div {
     margin-bottom: 7px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 400;
     line-height: 22px;
     margin: 0;
 }
@@ -532,10 +536,10 @@ input[type=number] {
 }
 
 .grid-title {
-    font-size: 13.5px;
-    font-weight: bold;
+    font-size: 13.3px;
     line-height: 19px;
     letter-spacing: 0.25px;
+    font-weight: bold;
 }
 
 .grid-content {
