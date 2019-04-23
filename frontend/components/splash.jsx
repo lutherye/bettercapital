@@ -163,7 +163,7 @@ const Splash = () => {
                                     <h1>No Manual Needed</h1>  
                                 </div>
                                 <span className="manual-content-description">
-                                    Intuitively designed for newcomers and experts alike, BetterCapital gives you a clear picture of your portfolio's performance over time, so you can adjust your positions and learn by doing
+                                    Intuitively designed for newcomers and experts alike, BetterCapital gives you a clear picture of your portfolio's performance over time, so you can adjust your positions and learn by doing.
                                 </span>
                             </div>
                         </div>

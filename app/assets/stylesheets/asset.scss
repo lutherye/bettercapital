@@ -517,3 +517,29 @@ input[type=number] {
     margin: 0;
 }
 
+.about-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 18px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.about-grid-wrapper {
+    margin-left: 0;
+    margin: 0 6px 12px;
+    display: block;
+    width: 160px;
+}
+
+.grid-title {
+    font-size: 13.5px;
+    font-weight: bold;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+}
+
+.grid-content {
+    font-size: 13.5px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+}

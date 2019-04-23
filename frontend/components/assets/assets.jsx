@@ -103,9 +103,18 @@ class Asset extends React.Component {
 
     render(){
         let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
-        const names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
-        const companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
-        const latestPrice = (this.props.chart.latestPrice) ? (this.props.chart.latestPrice) : null;
+        let names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
+        let companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
+        let companyCEO = (this.props.chart.company) ? (this.props.chart.company.CEO) : null;
+        let avgTotalVolume = (this.props.chart.avgTotalVolume) ? (this.props.chart.avgTotalVolume) : null;
+        let marketCap = (this.props.chart.marketCap) ? (this.props.chart.marketCap) : null;
+        let peRatio = (this.props.chart.peRatio) ? (this.props.chart.peRatio) : null;
+        let ytdChange = (this.props.chart.ytdChange) ? ((this.props.chart.ytdChange).toFixed(2) + "%") : null;
+        let weekHigh = (this.props.chart.week52High) ? (this.props.chart.week52High) : null;
+        let week52Low = (this.props.chart.week52Low) ? (this.props.chart.week52Low) : null;
+        let industry = (this.props.chart.company) ? (this.props.chart.company.industry) : null;
+            {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytdChange, week52High, week52Low, industry */ }
+
         let thisCount = 0;
             if (this.props.entities.transactions.length > 0) {
                 for (let i = 0; i < this.props.entities.transactions.length; i++) {
@@ -284,6 +293,75 @@ class Asset extends React.Component {
                             <div className="about-content">
                                 <span>{parsedCompany}</span>
                             </div>
+                            <div className="about-grid">
+                                {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytd, week52High, week52Low, industry */}
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        CEO
+                                    </div>
+                                    <div className="grid-content">
+                                        {companyCEO}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        Avg Total Volume
+                                    </div>
+                                    <div className="grid-content">
+                                        {avgTotalVolume}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        Market Cap
+                                    </div>
+                                    <div className="grid-content">
+                                        {marketCap}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        Price-Earnings Ratio
+                                    </div>
+                                    <div className="grid-content">
+                                        {peRatio}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        YTD Change
+                                    </div>
+                                    <div className="grid-content">
+                                        {ytdChange}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        52 Week High
+                                    </div>
+                                    <div className="grid-content">
+                                        {weekHigh}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        52 Week Low
+                                    </div>
+                                    <div className="grid-content">
+                                        {week52Low}
+                                    </div>
+                                </div>
+                                <div className="about-grid-wrapper">
+                                    <div className="grid-title">
+                                        Industry
+                                    </div>
+                                    <div className="grid-content">
+                                        {industry}
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>  
                         </div>
 
                         <div className="asset-about">
@@ -315,7 +393,7 @@ class Asset extends React.Component {
                                     Sell {this.props.chart.symbol}
                                 </div>
                             </div>
-                                        {box}
+                                {box}
                         </div>
                     </div>
                 </div>

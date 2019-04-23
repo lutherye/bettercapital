@@ -160,7 +160,7 @@ class PortfolioChart extends React.Component {
                         hide={true}
                     />
                     <Tooltip
-                        position={{ y: -30 }}
+                        position={{ y: 0 }}
                         content={this.ToolTipContent.bind(this)}
                         offset={-45}
                         isAnimationActive={false}

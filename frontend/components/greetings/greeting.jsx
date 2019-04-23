@@ -78,7 +78,7 @@ import MiniChart from '../chart/mini_chart';
                     </a>
                 )
             })) : null;
-            return parsedNews.slice(0, 4);
+            return parsedNews.slice(0, 7);
         }
 
 
