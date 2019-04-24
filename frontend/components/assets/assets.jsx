@@ -65,7 +65,7 @@ class Asset extends React.Component {
                     });
                         that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power - (Number(that.state.quantity) * that.props.chart.latestPrice));
                 } else {
-                    {alert("Please input a different quantity");}
+                    {alert("Not enough buy power");}
                 }
             } else {
                 if (thisCount > this.state.quantity) {

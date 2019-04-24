@@ -26,12 +26,10 @@ class Search extends React.Component {
     }
 
     componentDidMount(){
-
         this.props.fetSymbol();
     }
 
     handleInput(e) {
-
         this.setState({inputVal: e.target.value});
     }
 
@@ -44,7 +42,6 @@ class Search extends React.Component {
             this.props.symbols.forEach(asset => {
                 if ((asset.symbol.includes(this.state.inputVal.toUpperCase())) || 
                 (asset.name.toUpperCase().includes(this.state.inputVal.toUpperCase()))) {
-
                     matches.push(asset);
                 }
             });
@@ -57,7 +54,6 @@ class Search extends React.Component {
 
     selectAsset(result) { 
         return () => {
-    
             if (this.props.match.url.includes("asset")) {
                 this.setState({inputVal: ""});
                 this.props.history.push(`/asset/${result.symbol}`);
@@ -72,7 +68,6 @@ class Search extends React.Component {
     render() {
         const results = (this.matches()) ? (
             this.matches().map((result, i) => {
-
                 return(
                     <li 
                         className="drop-li"
