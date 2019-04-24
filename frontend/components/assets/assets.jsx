@@ -210,7 +210,7 @@ class Asset extends React.Component {
                             </div>
                             <div>
                                 <div className="buy-words">
-                                    ${this.props.currentUser.buying_power}
+                                    ${(Math.round(this.props.currentUser.buying_power * 100) / 100).toFixed(2)}
                                     <div className="buying">
                                         Buying Power Available
                                     </div>

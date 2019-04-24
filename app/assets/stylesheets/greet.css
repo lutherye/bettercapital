@@ -130,23 +130,6 @@
     margin-right: 10px;
 }
 
-.logout-section {
-    padding: 10px 20px;
-}
-
-.button-holder {
-    padding: 0 20px;
-}
-
-.transfer-button {
-    padding: 12px 20px;
-    color: white;
-    background-color: #21ce99;
-    border-radius: 5px;
-
-}
-
-
 .word-holder {
     border-bottom: 1px solid #eee;
 }

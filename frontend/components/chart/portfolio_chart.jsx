@@ -85,7 +85,6 @@ class PortfolioChart extends React.Component {
         let easyactions = {};
         const transactionDup = Array.from(this.props.transactions).reverse();
         if (this.props.transactions && this.props.chart){
-            //symb
             this.props.transactions.forEach(obj => {
                 let createDate = new Date(obj.created_at.slice(0,10)).getTime()/1000.0;
                 if (easyactions[obj.asset_symbol]) {
@@ -102,7 +101,6 @@ class PortfolioChart extends React.Component {
         }
 
         if (this.props.chart !== undefined) {
-            //symb
             this.props.symbols.forEach(sym => {
                 charts[sym] = {};
                 if (that.props.chart[sym] !== undefined) {

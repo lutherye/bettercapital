@@ -26,6 +26,7 @@
 }
 
 .dropdown-div {
+    background-color: white;
     display: flex;
     flex-direction: row;
     position: fixed;
@@ -68,10 +69,10 @@
     cursor: pointer;
 }
 
-.logout {
-    padding: 0 20px;
-
+.logout-section {
+    padding: 16px 20px;
 }
+
 
 .logout:hover {
     cursor: pointer;
@@ -97,9 +98,10 @@
 }
 
 .makebelieve {
-    padding: 10px 20px;
+    padding: 20px 20px 10px 20px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .bank-of {
@@ -107,13 +109,14 @@
 }
 
 .amount-words {
-    padding: 10px 0px 10px 20px;
+    padding: 10px 20px 10px 20px;
     height: 20px;
 }
 
 .transaction-holder {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .drop-port-val {
@@ -129,5 +132,13 @@
 }
 
 .transfer-button {
+    width: 100px;
     margin: 0 auto;
+}
+
+.transfer-button {
+    padding: 12px 66px;
+    color: white;
+    background-color: #21ce99;
+    border-radius: 5px;
 }

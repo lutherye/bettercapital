@@ -76,7 +76,7 @@ class NavBar extends React.Component {
                                 onBlur={this.dropdown}
                             >
                                 <div className="home-home"
-                                
+
                                 >
                                     <span className="home-link">Account</span>
                                 </div>
@@ -114,7 +114,7 @@ class NavBar extends React.Component {
                                                 </div>
                                                     <div className="makebelieve">
                                                         From 
-                                                        <div className="bank-of">Bank of Makebelieve</div>
+                                                        <div className="bank-of">Makebelieve Bank</div>
                                                     </div>
                                                 <div className="transaction-holder">
                                                     <div className="amount-words">
