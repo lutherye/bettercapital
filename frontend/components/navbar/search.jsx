@@ -76,7 +76,6 @@ class Search extends React.Component {
                         <div className="res-sym">
                             {result.symbol}
                         </div>
-
                         <div className="res-name">
                             {(result.name) ? (result.name.split(" ")
                                 .slice(0, (result.name.split(" ").length - 1)).join(" ")) : ("We're unable to find any results.")}

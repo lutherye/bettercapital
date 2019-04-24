@@ -5,7 +5,7 @@ import Search from '../navbar/search';
 import PortfolioChart from '../chart/portfolio_chart_container';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
 import MiniChart from '../chart/mini_chart';
-
+import NavBar from '../navbar/nav_bar';
     
     class Greeting extends React.Component {
         constructor(props){
@@ -153,40 +153,11 @@ import MiniChart from '../chart/mini_chart';
             return(
 
                 <div className="greet-page">
-                    <header className="asset-header">
-                        <nav className="asset-nav">
-                            <div className="login-nav-logo-link">
-                                <Link to={"/home"}
-                                    className="logo-link">
-                                    BetterCapital
-                            </Link>
-                            </div>
-                            <div className="asset-search">
-                                <Search
-                                    props={this.props.symbol} />
-                            </div>
-                            <div className="home-button-wrapper">
-                                <div className="home-button-div">
-                                    <div className="home-home">
-                                        <Link to={"/home"}
-                                            className="home-link">
-                                            Home
-                                    </Link>
-                                    </div>
-                                    <div className="home-home">
-                                        <Link to={"/home"}
-                                            className="home-link">
-                                            Notifications
-                                    </Link>
-                                    </div>
-                                    <button className="asset-header-button"
-                                        onClick={() => this.props.logout()}>Log Out</button>
-                                </div>
-                            </div>
-                        </nav>
-                    </header>
+                    <NavBar 
+                        portVal={this.state.portVal}
+                        currentUser={this.props.currentUser}
+                    />
 
-                
                 <div className="main-wrapper">
                     <div className="greet-chart">
                     <br/>
@@ -196,9 +167,21 @@ import MiniChart from '../chart/mini_chart';
                                 </div>
                                 <span className="port-val"
                                     id="portfolioVal">
-                                        {/* <>${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}</> */}
                                         <>${this.state.portVal}</>
                                 </span>
+                                <div className="changes">
+                                    <span className="port-change"
+                                        id="portChange"
+                                    >
+                                        <>{}</>
+                                    </span>
+                                    <span className="port-per"
+                                        id="portPer"
+                                    >
+                                            <>{}</>
+                                    </span>
+                                   
+                                </div>
                             </div>
                                 <PortfolioChart 
                                     sidebar={propbar}

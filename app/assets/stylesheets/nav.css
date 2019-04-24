@@ -1,0 +1,135 @@
+.account-holder {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.home-home {
+    z-index: 10;
+}
+
+.home-link {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.home-link:hover {
+    cursor: pointer;
+    color: #21ce99;
+}
+
+.home-link:focus {
+    border-bottom: 2px solid #21ce99;
+}
+
+.dropdown-div {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    right: 20px;
+    top: 50px;
+    z-index: 0;
+    border: 1px solid #eee;
+}
+
+.number-holder {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.value-holder {
+    padding: 0 20px;
+}
+
+.value-holder:hover {
+    cursor: pointer;
+    background-color: #eee
+}
+
+.buy-holder {
+    padding: 0 20px;
+}
+
+.buy-holder:hover {
+    cursor: pointer;
+    background-color: #eee
+}
+
+
+.buy-input {
+    margin: 10px 20px;
+    overflow: hidden;
+    outline: none;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 0;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 28px;
+}
+
+.bank-holder:hover {
+    cursor: pointer;
+    background-color: #eee
+}
+
+.logout {
+    padding: 0 20px;
+}
+
+.logout:hover {
+    cursor: pointer;
+    background-color: #eee
+}
+
+.bank-holder {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.port-val, .buying-power {
+    margin-left: 7%;
+    font-size: 37px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.port-holder {
+    margin-top: 16px;
+}
+
+.makebelieve {
+    padding: 10px 20px;
+}
+
+.amount-words {
+    padding: 10px 20px;
+    height: 20px;
+}
+
+.transaction-holder {
+    display: flex;
+    align-items: center;
+}
+
+.drop-port-val {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.deposit {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.transfer-button {
+    margin: 0 auto;
+}

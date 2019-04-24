@@ -43,16 +43,37 @@ class PortfolioChart extends React.Component {
     }
 
     ToolTipContent(e) {
+        debugger
         if (e.payload && e.payload.length > 0) {
-            let datePoint = new Date(e.payload[0].payload["date"] * 1000).toString().slice(0,10);
-            let pricePoint = parseFloat(Math.round(e.payload[0].payload["price"] * 100) / 100).toFixed(2);
-
+            let datePoint = new Date(e.payload[0].payload.date * 1000).toString().slice(0,10);
+            let pricePoint = parseFloat(Math.round(e.payload[0].payload.price * 100) / 100).toFixed(2);
+            let startPoint = parseFloat(Math.round(this.state.chart[0].price * 100) /100).toFixed(2);
+            let change = parseFloat(Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
+            let temp = change.slice(1);
+            if (change < 0) {
+                change = "-" + "$" + temp;
+            } else {
+                change = "+" + "$" + temp;
+            }
+            let percentChange = parseFloat(Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
             document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
+            document.getElementById("portChange").innerHTML = change;
+            document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
             return ( <div className="dateTool">{datePoint}</div>)
         } else if (this.state.chart.length > 0) {
             let pricePoint = this.state.chart[this.state.chart.length -1]["price"];
-            debugger
+            let startPoint = parseFloat(Math.round(this.state.chart[0].price * 100) / 100).toFixed(2);
+            let change = parseFloat(Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
+            let percentChange = parseFloat(Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
+            let temp = change.slice(1);
+            if (change < 0) {
+                change = "-" + "$" + temp;
+            } else {
+                change = "+" + "$" + temp;
+            }
             document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
+            document.getElementById("portChange").innerHTML = change;
+            document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
         }
     }
 

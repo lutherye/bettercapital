@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
+import { get } from 'https';
 
 class Chart extends React.Component {
     constructor(props) {
@@ -23,12 +24,40 @@ class Chart extends React.Component {
             if (e.payload && e.payload.length > 0) {
                 let datePoint = e.payload[0].payload["time"];
                 let pricePoint = parseFloat(Math.round(e.payload[0].value * 100) / 100).toFixed(2);
+                let startPoint = parseFloat(Math.round(this.parsedData[0].price * 100) / 100).toFixed(2);
+                let change = (Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
+                debugger
+                let percentChange = (Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
+                let temp = change.slice(1);
+                debugger
+                if (change < 0) {
+                    change = "-" + "$" + temp;
+                } else {
+                    change = "+" + "$" + temp;
+                }
                 document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+                document.getElementById("portChange").innerHTML = change;
+                document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
                 return (<div className="dateTool">{datePoint}</div>)
             } else if (this.parsedData) {
                 if(this.parsedData.length > 0) { 
+                    debugger
                     let pricePoint = parseFloat(Math.round(this.parsedData[this.parsedData.length - 1]["price"] * 100) / 100).toFixed(2);
+                    let startPoint = parseFloat(Math.round(this.parsedData[0].price * 100) / 100).toFixed(2);
+                    let change = (Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
+                    debugger
+                    let percentChange = (Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
+                    let temp = change.slice(1);
+                    debugger
+                    if (change < 0) {
+                        change = "-" + "$" + temp;
+                    } else {
+                        change = "+" + "$" + temp;
+                    }
+
                     document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+                    document.getElementById("portChange").innerHTML = change;
+                    document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
                 }
             } 
         }

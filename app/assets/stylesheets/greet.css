@@ -51,16 +51,6 @@
     color: #21ce99;
 }
 
-.port-val, .buying-power {
-    margin-left: 7%;
-    font-size: 37px;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.port-holder {
-    margin-top: 17px;
-}
-
 .personal-holder {
     width: 100%;
     min-width: 280px;
@@ -126,4 +116,37 @@
     top: 10px;
     left: 12px;
     color: #ccc;
+}
+
+.changes {
+    margin-left: 7%;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+    font-size: 13px;
+
+}
+
+.port-change {
+    margin-right: 10px;
+}
+
+.logout-section {
+    padding: 10px 20px;
+}
+
+.button-holder {
+    padding: 0 20px;
+}
+
+.transfer-button {
+    padding: 12px 20px;
+    color: white;
+    background-color: #21ce99;
+    border-radius: 5px;
+
+}
+
+
+.word-holder {
+    border-bottom: 1px solid #eee;
 }

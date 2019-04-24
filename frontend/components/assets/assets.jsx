@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
 import Search from '../navbar/search';
 import Chart from '../chart/chart_container';
+import NavBar from '../navbar/nav_bar';
 
 class Asset extends React.Component {
     constructor(props){
@@ -272,39 +273,8 @@ class Asset extends React.Component {
         return(
 
             <div className="asset-page">
-                <header className="asset-header">
-                    <nav className="asset-nav">
-                        <div className="login-nav-logo-link">
-                            <Link to={"/home"}
-                                className="logo-link">
-                                BetterCapital
-                            </Link>
-                        </div>
-                        <div className="asset-search">
-                            <Search
-                                props={this.props.symbol} />
-                        </div>
-                        <div className="home-button-wrapper">
-                            <div className="home-button-div">
-                                <div className="home-home">
-                                    <Link to={"/home"}
-                                        className="home-link">
-                                        Home
-                                    </Link>
-                                </div>
-                                <div className="home-home">
-                                    <Link to={"/home"}
-                                        className="home-link">
-                                        Notifications
-                                    </Link>
-                                </div>
-                                
-                                <button className="asset-header-button"
-                                    onClick={() => this.props.logout()}>Log Out</button>
-                            </div>
-                        </div>
-                    </nav>
-                </header>
+                <NavBar/>
+                
             <div className="main-wrapper">
             <div className="asset-main-wrapper">
             <div className="asset-main-div">
@@ -317,8 +287,20 @@ class Asset extends React.Component {
                             <div className="asset-price"
                                 id="assetPrice"
                             >
-                                <>$ {}</>
                             </div>
+                                <div className="changes">
+                                    <span className="port-change"
+                                        id="portChange"
+                                    >
+                                        <>{}</>
+                                    </span>
+                                    <span className="port-per"
+                                        id="portPer"
+                                    >
+                                        <>{}</>
+                                    </span>
+
+                                </div>
                         </div>
                             <div className="chart">
                                 <Chart 
