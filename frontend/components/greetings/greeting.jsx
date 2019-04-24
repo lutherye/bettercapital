@@ -24,14 +24,22 @@ import MiniChart from '../chart/mini_chart';
                     this.props.fetAllNews();
                     (this.props.transactions.length < 1) ? null :
                         (this.props.transactions.map(transaction => {
-
-                            if (transaction.user_id === this.props.currentUser.id) {let that = this;
-                            this.props.fetQuote(transaction.asset_symbol).then(quote => {
-                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: quote.quote.latestPrice });
-                                that.setState({ symbolPrices: newPrices });
-                                let val = (quote.quote.latestPrice * transaction.quantity);
-                            this.setState({portVal: that.state.portVal + val});
-                            });}
+                            if (transaction.user_id === this.props.currentUser.id) {
+                                let that = this;
+                                if (transaction.quantity < 0) {
+                                    let sellVal = (transaction.quantity * transaction.price);
+                                    this.setState({portVal: that.state.portVal + sellVal});
+                                } else if (transaction.quantity >= 0){
+                                    this.props.fetQuote(transaction.asset_symbol).then(quote => {
+                                    let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: quote.quote.latestPrice });
+                                    that.setState({ symbolPrices: newPrices });
+                                    let val = (quote.quote.latestPrice * transaction.quantity);
+                                    if (val === undefined) {
+                                        val = quote.quote.latestPrice * transaction.quantity;
+                                    }
+                                    this.setState({portVal: that.state.portVal + val});
+                                    });}
+                                }
                         }));
                     this.setState({ firstRender: false });
                 });
@@ -188,7 +196,8 @@ import MiniChart from '../chart/mini_chart';
                                 </div>
                                 <span className="port-val"
                                     id="portfolioVal">
-                                        <>${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}</>
+                                        {/* <>${parseFloat(Math.round(this.state.portVal * 100) / 100).toFixed(2)}</> */}
+                                        <>${this.state.portVal}</>
                                 </span>
                             </div>
                                 <PortfolioChart 

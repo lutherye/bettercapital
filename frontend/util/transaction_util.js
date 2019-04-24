@@ -7,7 +7,6 @@ export const getUserInfo = (id) => {
 };
 
 export const updateUserInfo = (id, buyingPower) => {
-    debugger
     return $.ajax({
         method: "PATCH",
         url: `/api/users/${id}`,

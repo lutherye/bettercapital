@@ -23,12 +23,10 @@ class Chart extends React.Component {
             if (e.payload && e.payload.length > 0) {
                 let datePoint = e.payload[0].payload["time"];
                 let pricePoint = parseFloat(Math.round(e.payload[0].value * 100) / 100).toFixed(2);
-    
                 document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
                 return (<div className="dateTool">{datePoint}</div>)
             } else if (this.parsedData) {
                 if(this.parsedData.length > 0) { 
-                    debugger
                     let pricePoint = parseFloat(Math.round(this.parsedData[this.parsedData.length - 1]["price"] * 100) / 100).toFixed(2);
                     document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
                 }

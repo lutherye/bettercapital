@@ -51,6 +51,7 @@ class PortfolioChart extends React.Component {
             return ( <div className="dateTool">{datePoint}</div>)
         } else if (this.state.chart.length > 0) {
             let pricePoint = this.state.chart[this.state.chart.length -1]["price"];
+            debugger
             document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
         }
     }
@@ -96,20 +97,22 @@ class PortfolioChart extends React.Component {
             if (that.props.portVal && that.props.symbols) {
 
                 while(chart.length < that.props.chart[symb].chart.length) {
-                    // that.props.chart[symb].chart.reverse.forEach(obj => {
                     for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {        // iterating through dates
                         const obj = that.props.chart[symb].chart[i];
                             let chartEpoch = new Date(obj.date).getTime()/1000.0;
                             let price = 0;
-                            // if (that.props.symbols) {
+                            debugger
                                 for (let i = 0; i < that.props.symbols.length; i++) {           // iterating through symbols
                                     const ele = that.props.symbols[i];                          // getting ele to grab quantity
+                                    debugger
                                     price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
+                                    debugger
                                     if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
                                         for (let idx= 0; idx< transactionDup.length; idx++) {
                                             const arr = transactionDup[idx];
                                             let createdAt = new Date(arr.created_at.slice(0,10)).getTime() / 1000.0;
                                             if (chartEpoch < createdAt) {                       // if transaction is created after date
+                                                debugger
                                                 that.props.sidebar[arr.asset_symbol] -= transactionDup[idx].quantity;     // 
                                                 transactionDup.splice(idx, 1);
                                                 idx= 0;
@@ -120,7 +123,9 @@ class PortfolioChart extends React.Component {
                             if (transactionDup.length === 0) {
                                 chart.unshift({ date: chartEpoch, price: 0 });
                             } else {
-                                chart.unshift({date: chartEpoch, price: price});
+                                debugger
+                                chart.unshift({ date: chartEpoch, price: (parseFloat(Math.round( price * 100) / 100).toFixed(2))});
+                                debugger
                             }
                         }
                     console.log(chart);
