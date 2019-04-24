@@ -100,6 +100,7 @@ class Search extends React.Component {
                     onChange={this.handleInput}
                     value={this.state.inputVal}
                     placeholder="Search"/>
+                    <i className="fas fa-search mag"></i>
                 <ul className="drop-ul">
                     {results}
                 </ul>
