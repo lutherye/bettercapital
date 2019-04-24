@@ -44,22 +44,44 @@ class Asset extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
-        if (this.state.buying) {
-            this.props.updateTransaction({ user_id: this.props.currentUser.id,
-                quantity: this.state.quantity,
-                asset_symbol: this.state.symbol,
-                price: this.props.chart.latestPrice,
-            });
-        } else {
-            this.props.updateTransaction({
-                user_id: this.props.currentUser.id,
-                quantity: (this.state.quantity) * -1,
-                asset_symbol: this.state.symbol,
-                price: this.props.chart.latestPrice,
-            });
+        let thisCount = 0;
+        if (this.props.entities.transactions.length > 0) {
+            for (let i = 0; i < this.props.entities.transactions.length; i++) {
+                const obj = this.props.entities.transactions[i];
+                if (obj.asset_symbol === this.state.symbol) {
+                    thisCount += obj.quantity;
+                }
+            }
         }
-        this.setState({quantity: ""});
+        let that = this;
+            e.preventDefault();
+            if (this.state.buying) {
+                if (this.props.currentUser.buying_power > this.state.quantity * this.props.chart.latestPrice) {
+                    debugger
+                    this.props.updateTransaction({ user_id: this.props.currentUser.id,
+                        quantity: this.state.quantity,
+                        asset_symbol: this.state.symbol,
+                        price: this.props.chart.latestPrice,
+                    });
+                        that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power - (Number(that.state.quantity) * that.props.chart.latestPrice));
+                } else {
+                    {alert("Please input a different quantity");}
+                }
+            } else {
+                if (thisCount > this.state.quantity) {
+                    this.props.updateTransaction({
+                        user_id: this.props.currentUser.id,
+                        quantity: (this.state.quantity) * -1,
+                        asset_symbol: this.state.symbol,
+                        price: this.props.chart.latestPrice,
+                    });
+                        debugger
+                        that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power + (Number(that.state.quantity) * that.props.chart.latestPrice));
+                } else {
+                    {alert("Please input a different quantity");}
+                }
+            }
+            this.setState({quantity: ""});
     }
 
     update(){
@@ -102,6 +124,7 @@ class Asset extends React.Component {
     }
 
     render(){
+        debugger
         let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
         let names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
         let companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
@@ -142,7 +165,7 @@ class Asset extends React.Component {
                 for (let i = 0; i < this.props.entities.transactions.length; i++) {
                     const obj = this.props.entities.transactions[i];
                     if (obj.asset_symbol === this.state.symbol) {
-                        thisCount += obj.quantity
+                        thisCount += obj.quantity;
                     }
                 }
         }
@@ -169,8 +192,8 @@ class Asset extends React.Component {
                                 <div>
                                     Estimated Cost
                                     </div>
-                                $   {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2) * this.state.quantity}
-                            </div>
+                                        $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
+                                    </div>
                             <div className="checkbox">
                                 <div className="box">
                                     <input type="checkbox" />
@@ -217,8 +240,8 @@ class Asset extends React.Component {
                                 <div>
                                     Estimated Credit
                                     </div>
-                                $   {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2) * this.state.quantity}
-                            </div>
+                                        $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
+                                    </div>
                             <div className="checkbox">
                                 <div className="box">
                                     <input type="checkbox" />

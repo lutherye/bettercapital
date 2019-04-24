@@ -141,14 +141,14 @@ class PortfolioChart extends React.Component {
         return (
             <div className="chart-chart-chart">
                 <LineChart
-                    margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
+                    margin={{ top: 37, right: 30, left: 20, bottom: 30 }}
                     width={700}
-                    height={300}
+                    height={270}
                     data={this.state.chart}>
                     <Line type="linear"
                         dataKey="price"
                         stroke="#21ce99"
-                        strokeWidth={2}
+                        strokeWidth={1.7}
                         dot={false}
                     />
                     <XAxis dataKey="date"
@@ -167,7 +167,7 @@ class PortfolioChart extends React.Component {
                         contentStyle={{
                             border: "0",
                             backgroundColor: "transparent",
-                            fontSize: "14"
+                            fontSize: "10"
                         }}
                     // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
                     // coordinate={{ x: 100, y: 140 }}

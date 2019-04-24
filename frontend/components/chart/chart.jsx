@@ -19,6 +19,7 @@ class Chart extends React.Component {
         this.props.fetChart(this.props.symbol, date);
     }
     ToolTipContent(e) {
+        if (document.getElementById("assetPrice")) {
             if (e.payload && e.payload.length > 0) {
                 let datePoint = e.payload[0].payload["time"];
                 let pricePoint = parseFloat(Math.round(e.payload[0].value * 100) / 100).toFixed(2);
@@ -27,10 +28,12 @@ class Chart extends React.Component {
                 return (<div className="dateTool">{datePoint}</div>)
             } else if (this.parsedData) {
                 if(this.parsedData.length > 0) { 
+                    debugger
                     let pricePoint = parseFloat(Math.round(this.parsedData[this.parsedData.length - 1]["price"] * 100) / 100).toFixed(2);
                     document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
                 }
             } 
+        }
     }
 
     render() {
@@ -60,14 +63,14 @@ class Chart extends React.Component {
         return(
             <div className="chart-chart-chart">
                 <LineChart
-                    margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
+                    margin={{ top: 37, right: 30, left: 20, bottom: 30 }}
                     width={700}
-                    height={300}
+                    height={270}
                     data={this.parsedData}>
                     <Line type="linear"
                         dataKey="price"
                         stroke={color}
-                        strokeWidth={2}
+                        strokeWidth={1.7}
                         dot={false}
                     />
                     <XAxis dataKey="time"
@@ -86,7 +89,7 @@ class Chart extends React.Component {
                         contentStyle={{
                             border: "0",
                             backgroundColor: "transparent",
-                            fontSize: "14"
+                            fontSize: "10"
                         }}
                     // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
                     // coordinate={{ x: 100, y: 140 }}

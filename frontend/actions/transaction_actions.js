@@ -18,9 +18,9 @@ const receiveUser = user => {
     });
 };
 
-export const updateUser = user => dispatch => {
+export const updateUserInfo = (id, buyingPower) => dispatch => {
     return(
-        ApiUtilTransaction.updateUserInfo(user)
+        ApiUtilTransaction.updateUserInfo(id, buyingPower)
             .then( user => dispatch(receiveUser(user)))
     );
 };

@@ -18,7 +18,9 @@ class Api::UsersController < ApplicationController
 
     def update
         @user = User.find(params[:id])
-        if (@user) && (current_user.id == @user.id) && (@user.update(user_params))
+        debugger
+        if (@user) && (current_user.id == @user.id) && (@user.update(buying_power: params[:buyingPower]))
+            debugger
            render :show
         else
             render json: @user.errors.full_messages, status: 406

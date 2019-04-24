@@ -3,7 +3,7 @@ import { fetChart, fetBatch, fetQuote, fetSymbol, fetNews, fetCompany } from '..
 import PortfolioChart from './portfolio_chart';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
-import { updateUser, updateTransaction } from '../../actions/transaction_actions';
+import { updateUserInfo, updateTransaction } from '../../actions/transaction_actions';
 
 const msp = (state, ownProps) => {
     let symbols = [];
@@ -33,7 +33,7 @@ const mdp = dispatch => {
         fetNews: (symbol) => dispatch(fetNews(symbol)),
         fetCompany: (symbol) => dispatch(fetCompany(symbol)),
         // transaction
-        updateUser: (user) => dispatch(updateUser(user)),
+        updateUserInfo: (user) => dispatch(updateUserInfo(user)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
 
     });

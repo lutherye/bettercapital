@@ -6,11 +6,12 @@ export const getUserInfo = (id) => {
     });
 };
 
-export const updateUserInfo = (user) => {
+export const updateUserInfo = (id, buyingPower) => {
+    debugger
     return $.ajax({
         method: "PATCH",
-        url: `/api/users/${user.id}`,
-        data: {user},       // user obj needs id and buying power
+        url: `/api/users/${id}`,
+        data: {buyingPower},       // user obj needs id and buying power
     }); // {id: 17, buying_power: 1000}
 };
 

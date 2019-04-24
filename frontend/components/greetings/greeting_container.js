@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { fetChart, fetQuote, fetAllNews } from '../../actions/asset_actions';
 import {logout} from '../../actions/session_actions';
-import { updateUser, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
+import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
 import Greeting from './greeting';
 import { withRouter } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ const mdp = dispatch => {
         logout: () => dispatch(logout()),
         fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
         fetQuote: (symbol) => dispatch(fetQuote(symbol)),
-        updateUser: (user) => dispatch(updateUser(user)),
+        updateUserInfo: (user) => dispatch(updateUserInfo(user)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
         fetAllNews: (news) => dispatch(fetAllNews(news)),

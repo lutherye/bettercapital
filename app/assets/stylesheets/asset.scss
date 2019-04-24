@@ -232,7 +232,6 @@
 
 .buy-wrapper {
     display: block;
-    padding: 0 6px;
     border-bottom: 1px solid #eee;
     margin-bottom: 20px;
 }
@@ -247,7 +246,7 @@
 }
 
 .buybox {
-    padding: 20px 23px 0 25px;
+    padding: 20px 23px 0 23px;
     width: 100%;
     box-shadow: 0 0 11px rgba(0,0,0,0.15);
     box-sizing: border-box;
@@ -269,7 +268,7 @@
 
 .buy-symbol {
     color: black;
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: bold;
     display: inline-block;
     padding-bottom: 10px;
@@ -284,7 +283,7 @@
 
 .buy-active {
     color: #21ce99;
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: bold;
     border-bottom: 2px solid #21ce99;
     display: inline-block;
@@ -379,6 +378,7 @@ input[type=number] {
     border: none;
     font-size: 12.5px;
     font-weight: 100;
+    outline: none;
 }
 .asset-buy:hover {
     background-color: #21ec99;
@@ -546,4 +546,8 @@ input[type=number] {
     font-size: 13.5px;
     line-height: 19px;
     letter-spacing: 0.25px;
+}
+
+.dateTool {
+    color: #ccc;
 }
