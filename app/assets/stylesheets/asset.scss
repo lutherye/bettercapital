@@ -127,7 +127,7 @@
 
 .drop-ul {
     padding: 0;
-    padding-left: 3%;
+    // padding-left: 3%;
     margin: 0;
     position: absolute;
     display: block;
@@ -142,12 +142,12 @@
 
 .drop-li {
     display: flex;
-    padding: 3%;
+    padding: 3% 0 3% 6%;
     width: 94%;
 }
 
 .drop-li:hover {
-    background-color: #eee;
+    background-color: hsl(0, 0%, 97%);
 } 
 
 .date-ranges {

@@ -273,8 +273,11 @@ class Asset extends React.Component {
         return(
 
             <div className="asset-page">
-                <NavBar/>
-                
+                <NavBar 
+                    portVal={0}
+                    currentUser={this.props.currentUser}
+                />
+
             <div className="main-wrapper">
             <div className="asset-main-wrapper">
             <div className="asset-main-div">
