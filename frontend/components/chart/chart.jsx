@@ -79,7 +79,7 @@ class Chart extends React.Component {
         
         let color;
 
-        if (this.parsedData) {
+        if (this.parsedData && this.parsedData.length > 0) {
             if (this.parsedData[0].price < this.parsedData[this.parsedData.length - 1].price) {
                 color = "#21ce99";
             } else {
