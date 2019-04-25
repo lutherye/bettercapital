@@ -7,6 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 U1 = User.find(1).update(buying_power: 50000)
 
+T_delete = Transaction.destroy_all
+
 T0 = Transaction.create(user_id: 1, asset_symbol: "NFLX", quantity: 7, price: 65.58, created_at: "2014-08-15")
 T1 = Transaction.create(user_id: 1, asset_symbol: "TSLA", quantity: 7, price: 231.77, created_at: "2015-04-28")
 T2 = Transaction.create(user_id: 1, asset_symbol: "AMZN", quantity: 6, price: 514.24, created_at: "2015-08-31")
