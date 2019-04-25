@@ -120,7 +120,13 @@ import NavBar from '../navbar/nav_bar';
 
                 const symbol = sym.toUpperCase();
                 const quantity = object[sym].quantity;
-                const price = that.state.symbolPrices[symbol];
+                let price;
+                if (that.state.symbolPrices[symbol]) {
+                    price = that.state.symbolPrices[symbol].toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                }
                 that.state.portVal;
                 propbar[symbol] = quantity;
                 return (
@@ -144,7 +150,7 @@ import NavBar from '../navbar/nav_bar';
                             <MiniChart symbol={symbol}/>
                         </div>
                         <div className="p-price">
-                            ${parseFloat(Math.round(price * 100) / 100).toFixed(2)}
+                            ${price}
                         </div>
                     </li>
                 )

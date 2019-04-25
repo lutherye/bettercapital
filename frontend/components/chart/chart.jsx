@@ -22,35 +22,61 @@ class Chart extends React.Component {
     ToolTipContent(e) {
         if (document.getElementById("assetPrice")) {
             if (e.payload && e.payload.length > 0) {
-                let datePoint = e.payload[0].payload["time"];
-                let pricePoint = parseFloat(Math.round(e.payload[0].value * 100) / 100).toFixed(2);
-                let startPoint = parseFloat(Math.round(this.parsedData[0].price * 100) / 100).toFixed(2);
-                let change = (Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
-                let percentChange = (Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
+                let datePoint = e.payload[0].payload.time;
+                let pricePoint = Number(e.payload[0].value);
+                let startPoint = Number(this.parsedData[0].price);
+                let change = (pricePoint - startPoint).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                let percentChange = ((pricePoint - startPoint) / pricePoint).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
                 let temp = change.slice(1);
                 if (change < 0) {
                     change = "-" + "$" + temp;
                 } else {
-                    change = "+" + "$" + temp;
+                    change = "+" + "$" + change;
                 }
-                document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+
+                if (percentChange > 0) {
+                    percentChange = "+" + percentChange;
+                }
+                document.getElementById("assetPrice").innerHTML = "$" + pricePoint.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
                 document.getElementById("portChange").innerHTML = change;
                 document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
                 return (<div className="dateTool">{datePoint}</div>)
             } else if (this.parsedData) {
                 if(this.parsedData.length > 0) { 
-                    let pricePoint = parseFloat(Math.round(this.parsedData[this.parsedData.length - 1]["price"] * 100) / 100).toFixed(2);
-                    let startPoint = parseFloat(Math.round(this.parsedData[0].price * 100) / 100).toFixed(2);
-                    let change = (Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
-                    let percentChange = (Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
+                    let pricePoint = Number(this.parsedData[this.parsedData.length - 1].price);
+                    let startPoint = Number(this.parsedData[0].price);
+                    let change = Number(pricePoint - startPoint).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                    let percentChange = Number((pricePoint - startPoint) / pricePoint).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
                     let temp = change.slice(1);
                     if (change < 0) {
                         change = "-" + "$" + temp;
                     } else {
-                        change = "+" + "$" + temp;
+                        change = "+" + "$" + change;
                     }
 
-                    document.getElementById("assetPrice").innerHTML = "$" + pricePoint;
+                    if (percentChange > 0) {
+                        percentChange = "+" + percentChange;
+                    }
+
+                    document.getElementById("assetPrice").innerHTML = "$" + pricePoint.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });;
                     document.getElementById("portChange").innerHTML = change;
                     document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
                 }

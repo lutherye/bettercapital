@@ -167,6 +167,13 @@ class Asset extends React.Component {
                     }
                 }
         }
+        let showPrice; 
+        if (this.props.chart.latestPrice) {
+            showPrice = this.props.chart.latestPrice.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
 
         let buy = (
                         <form className="asset-form"
@@ -184,7 +191,7 @@ class Asset extends React.Component {
                                 <div>
                                     Market Price
                                     </div>
-                                $ {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2)}
+                                $ {showPrice}
                             </div>
                             <div className="estimated">
                                 <div>
@@ -231,8 +238,8 @@ class Asset extends React.Component {
                             <div className="market">
                                 <div>
                                     Market Price
-                                    </div>
-                                $ {parseFloat(Math.round(this.props.chart.latestPrice * 100) / 100).toFixed(2)}
+                                </div>
+                                    $ {showPrice}
                             </div>
                             <div className="estimated">
                                 <div>

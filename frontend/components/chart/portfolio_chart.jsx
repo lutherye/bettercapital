@@ -45,32 +45,67 @@ class PortfolioChart extends React.Component {
     ToolTipContent(e) {
         if (e.payload && e.payload.length > 0) {
             let datePoint = new Date(e.payload[0].payload.date * 1000).toString().slice(0,10);
-            let pricePoint = parseFloat(Math.round(e.payload[0].payload.price * 100) / 100).toFixed(2);
-            let startPoint = parseFloat(Math.round(this.state.chart[0].price * 100) /100).toFixed(2);
-            let change = parseFloat(Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
+
+            let pricePoint = Number(e.payload[0].payload.price);
+
+            let startPoint = Number(this.state.chart[0].price);
+
+            let change = (Number(pricePoint) - Number(startPoint)).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            let percentChange = ((Number(pricePoint) - Number(startPoint)) / Number(pricePoint)).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
             let temp = change.slice(1);
             if (change < 0) {
                 change = "-" + "$" + temp;
             } else {
-                change = "+" + "$" + temp;
+                change = "+" + "$" + change;
             }
-            let percentChange = parseFloat(Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
-            document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
+
+            if (percentChange > 0) {
+                percentChange = "+" + percentChange;
+            }
+
+            document.getElementById("portfolioVal").innerHTML = "$" + pricePoint.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
             document.getElementById("portChange").innerHTML = change;
             document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
             return ( <div className="dateTool">{datePoint}</div>)
         } else if (this.state.chart.length > 0) {
-            let pricePoint = this.state.chart[this.state.chart.length -1]["price"];
-            let startPoint = parseFloat(Math.round(this.state.chart[0].price * 100) / 100).toFixed(2);
-            let change = parseFloat(Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
-            let percentChange = parseFloat(Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
+            let pricePoint = Number(this.state.chart[this.state.chart.length - 1].price);
+
+            let startPoint = Number(this.state.chart[0].price);
+
+            let change = (Number(pricePoint) - Number(startPoint)).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            let percentChange = ((Number(pricePoint )- Number(startPoint)) / Number(pricePoint)).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
             let temp = change.slice(1);
             if (change < 0) {
                 change = "-" + "$" + temp;
             } else {
-                change = "+" + "$" + temp;
+                change = "+" + "$" + change;
             }
-            document.getElementById("portfolioVal").innerHTML = "$" + pricePoint;
+
+            if (percentChange > 0) {
+                percentChange = "+" + percentChange;
+            }
+
+            document.getElementById("portfolioVal").innerHTML = "$" + pricePoint.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });;;
             document.getElementById("portChange").innerHTML = change;
             document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
         }
