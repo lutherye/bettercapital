@@ -43,7 +43,6 @@ class PortfolioChart extends React.Component {
     }
 
     ToolTipContent(e) {
-        debugger
         if (e.payload && e.payload.length > 0) {
             let datePoint = new Date(e.payload[0].payload.date * 1000).toString().slice(0,10);
             let pricePoint = parseFloat(Math.round(e.payload[0].payload.price * 100) / 100).toFixed(2);
@@ -120,18 +119,14 @@ class PortfolioChart extends React.Component {
                         const obj = that.props.chart[symb].chart[i];
                             let chartEpoch = new Date(obj.date).getTime()/1000.0;
                             let price = 0;
-                            debugger
                                 for (let i = 0; i < that.props.symbols.length; i++) {           // iterating through symbols
                                     const ele = that.props.symbols[i];                          // getting ele to grab quantity
-                                    debugger
                                     price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
-                                    debugger
                                     if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
                                         for (let idx= 0; idx< transactionDup.length; idx++) {
                                             const arr = transactionDup[idx];
                                             let createdAt = new Date(arr.created_at.slice(0,10)).getTime() / 1000.0;
                                             if (chartEpoch < createdAt) {                       // if transaction is created after date
-                                                debugger
                                                 that.props.sidebar[arr.asset_symbol] -= transactionDup[idx].quantity;     // 
                                                 transactionDup.splice(idx, 1);
                                                 idx= 0;
@@ -142,9 +137,7 @@ class PortfolioChart extends React.Component {
                             if (transactionDup.length === 0) {
                                 chart.unshift({ date: chartEpoch, price: 0 });
                             } else {
-                                debugger
                                 chart.unshift({ date: chartEpoch, price: (parseFloat(Math.round( price * 100) / 100).toFixed(2))});
-                                debugger
                             }
                         }
                     console.log(chart);

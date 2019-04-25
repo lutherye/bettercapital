@@ -26,10 +26,8 @@ class Chart extends React.Component {
                 let pricePoint = parseFloat(Math.round(e.payload[0].value * 100) / 100).toFixed(2);
                 let startPoint = parseFloat(Math.round(this.parsedData[0].price * 100) / 100).toFixed(2);
                 let change = (Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
-                debugger
                 let percentChange = (Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
                 let temp = change.slice(1);
-                debugger
                 if (change < 0) {
                     change = "-" + "$" + temp;
                 } else {
@@ -41,14 +39,11 @@ class Chart extends React.Component {
                 return (<div className="dateTool">{datePoint}</div>)
             } else if (this.parsedData) {
                 if(this.parsedData.length > 0) { 
-                    debugger
                     let pricePoint = parseFloat(Math.round(this.parsedData[this.parsedData.length - 1]["price"] * 100) / 100).toFixed(2);
                     let startPoint = parseFloat(Math.round(this.parsedData[0].price * 100) / 100).toFixed(2);
                     let change = (Math.round((pricePoint - startPoint) * 100) / 100).toFixed(2).toString();
-                    debugger
                     let percentChange = (Math.round(((pricePoint - startPoint) / pricePoint) * 100) / 100).toFixed(2);
                     let temp = change.slice(1);
-                    debugger
                     if (change < 0) {
                         change = "-" + "$" + temp;
                     } else {

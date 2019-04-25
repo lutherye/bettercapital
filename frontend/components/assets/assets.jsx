@@ -58,7 +58,6 @@ class Asset extends React.Component {
             e.preventDefault();
             if (this.state.buying) {
                 if (this.props.currentUser.buying_power > this.state.quantity * this.props.chart.latestPrice) {
-                    debugger
                     this.props.updateTransaction({ user_id: this.props.currentUser.id,
                         quantity: this.state.quantity,
                         asset_symbol: this.state.symbol,
@@ -76,7 +75,6 @@ class Asset extends React.Component {
                         asset_symbol: this.state.symbol,
                         price: this.props.chart.latestPrice,
                     });
-                        debugger
                         that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power + (Number(that.state.quantity) * that.props.chart.latestPrice));
                 } else {
                     {alert("Please input a different quantity");}
@@ -125,7 +123,6 @@ class Asset extends React.Component {
     }
 
     render(){
-        debugger
         let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
         let names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
         let companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;

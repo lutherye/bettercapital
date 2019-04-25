@@ -7,7 +7,6 @@ import Search from '../navbar/search';
 
 
 const mdp = dispatch => {
-    debugger
     return({
         logout: () => dispatch(logout()),
     });
@@ -32,7 +31,6 @@ class NavBar extends React.Component {
     }
 
     dropdown() {
-        debugger
         let myDropdown = document.getElementById("myDropdown");
         if (myDropdown.classList.contains("show")) {
             myDropdown.classList.remove("show");
@@ -42,7 +40,6 @@ class NavBar extends React.Component {
     }
 
     dropdownRemove() {
-        debugger
         let myDropdown = document.getElementById("myDropdown");
         if (myDropdown.classList.contains("show")) {
             myDropdown.classList.remove("show");
