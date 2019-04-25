@@ -175,6 +175,14 @@ class Asset extends React.Component {
             });
         }
 
+        let buyingPower;
+        if (this.props.currentUser.buying_power) {
+            buyingPower = this.props.currentUser.buying_power.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
         let buy = (
                         <form className="asset-form"
                             onSubmit={this.handleSubmit}>
@@ -214,7 +222,7 @@ class Asset extends React.Component {
                             </div>
                             <div>
                                 <div className="buy-words">
-                                    ${(Math.round(this.props.currentUser.buying_power * 100) / 100).toFixed(2)}
+                                    ${buyingPower}
                                     <div className="buying">
                                         Buying Power Available
                                     </div>
@@ -222,6 +230,7 @@ class Asset extends React.Component {
                             </div>
                         </form>
         )
+        
 
         let sell = (
                         <form className="asset-form"
