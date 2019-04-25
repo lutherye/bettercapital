@@ -16,9 +16,14 @@ const mdp = dispatch => {
 class NavBar extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            value: "",
+            isFocused: false,
+        };
         this.logoutHandle = this.logoutHandle.bind(this);
         this.dropdown = this.dropdown.bind(this);
-        this.removeDrop = this.removeDrop.bind(this);
+        this.dropdownRemove = this.dropdownRemove.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
     logoutHandle() {
@@ -29,17 +34,23 @@ class NavBar extends React.Component {
     dropdown() {
         debugger
         let myDropdown = document.getElementById("myDropdown");
-        debugger
         if (myDropdown.classList.contains("show")) {
             myDropdown.classList.remove("show");
-            debugger
         } else {
             myDropdown.classList.toggle("show");
         }
     }
 
-    removeDrop() {
+    dropdownRemove() {
+        debugger
+        let myDropdown = document.getElementById("myDropdown");
+        if (myDropdown.classList.contains("show")) {
+            myDropdown.classList.remove("show");
+        }
+    }
 
+    handleInput(e) {
+        this.setState({ value: e.target.value });
     }
 
     render() {
@@ -73,12 +84,11 @@ class NavBar extends React.Component {
                             <div
                                 tabIndex="1"
                                 onFocus={this.dropdown}
-                                onBlur={this.dropdown}
+                                onBlur={this.dropdownRemove}
                             >
                                 <div className="home-home"
-
                                 >
-                                    <span className="home-link">Account</span>
+                                    <span className="dropdown-home-link">Account</span>
                                 </div>
                                 <div className="dropdown-div">
                                     <div className="">
@@ -103,7 +113,7 @@ class NavBar extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="bank-holder">
+                                            <form className="bank-holder">
                                                 <div>
 
                                                 </div>
@@ -116,18 +126,31 @@ class NavBar extends React.Component {
                                                         From 
                                                         <div className="bank-of">Makebelieve Bank</div>
                                                     </div>
-                                                <div className="transaction-holder">
+                                                <div className="transaction-holder"
+                                                    onClick={e => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation()
+                                                    }}>
                                                     <div className="amount-words">
                                                         Amount
                                                     </div>
-                                                    <input type="integer" className="buy-input"/>
+                                                    <input 
+                                                        onClick={e => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation()}}
+                                                        type="integer" 
+                                                        className="buy-input" 
+                                                        value={this.state.value}
+                                                        onChange={this.handleInput}
+                                                        placeholder="0"
+                                                        />
                                                 </div>
                                                     <div className="button-holder">
                                                         <div className="transfer-button">
                                                             Make Transfer
                                                         </div>
                                                     </div>
-                                            </div>
+                                            </form>
                                             <div className="logout-section">
                                                 <div className="asset-header-button"
                                                     onClick={this.logoutHandle}>Log Out</div>

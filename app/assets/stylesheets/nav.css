@@ -11,19 +11,33 @@
     z-index: 10;
 }
 
-.home-link {
+.dropdown-home-link {
+    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: bolder;
+    padding: 0;
+    margin: 0;
+    color: black;
 }
 
-.home-link:hover {
+.dropdown-home-link:hover {
     cursor: pointer;
     color: #21ce99;
 }
 
-.home-link:focus {
+.dropdown-home-link:focus-within {
     border-bottom: 2px solid #21ce99;
 }
+
+/* .dropdown-home-link:focus-within input{
+    border-bottom: 2px solid;
+
+} */
+/* .buy-input:focus {
+    border-bottom: 2px solid;
+} */
+
+
 
 .dropdown-div {
     background-color: white;
@@ -37,6 +51,18 @@
     border-radius: 2px;
     box-shadow: 0px 0px 11px rgba(0,0,0,0.2);
 }
+
+/* .dropdown-div:focus-within > input {
+    border-bottom: 2px solid;
+}
+
+.dropdown-div input:focus {
+    border-bottom: 2px solid;
+}
+
+.transaction-holder {
+    border-bottom: 2px solid;
+} */
 
 .number-holder {
     display: flex;
@@ -65,17 +91,12 @@
     line-height: 28px;
 }
 
-.bank-holder:hover {
-    cursor: pointer;
-}
-
 .logout-section {
     padding: 16px 20px;
 }
 
 
 .logout:hover {
-    cursor: pointer;
     background-color: #eee
 }
 
