@@ -35,7 +35,6 @@ export const fetUser = id => dispatch => {
 export const updateTransaction = transaction => dispatch => {
     return(
         ApiUtilTransaction.updateTransaction(transaction)
-            // .then( transaction => dispatch(receiveTransaction(transaction)))
     );
 };
 

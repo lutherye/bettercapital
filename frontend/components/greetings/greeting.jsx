@@ -202,12 +202,18 @@ import NavBar from '../navbar/nav_bar';
                                 <div className="sidebar">
 
                                     <div className="personal-holder">
-                                    <div className="stocks">
-                                    <span>
-                                        Stocks
-                                    </span>
-                                    </div>
+                                        <div className="stocks">
+                                            <span>
+                                                Stocks
+                                            </span>
+                                        </div>
                                         {sidebar}
+                                        <div className="stocks">
+                                            <span>
+                                                Watchlist
+                                            </span>
+                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>

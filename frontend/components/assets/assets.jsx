@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
 import Search from '../navbar/search';
 import Chart from '../chart/chart_container';
 import NavBar from '../navbar/nav_bar';
@@ -14,6 +13,8 @@ class Asset extends React.Component {
             quantity: "",
             price: `${this.props.chart.latestPrice}`,
             buying: true,
+            owned: false,
+            have: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -27,6 +28,31 @@ class Asset extends React.Component {
             this.setState({symbol: `${this.props.id}`}, () => {
                 this.getStuff(this.state.symbol, this.state.range);
             });
+            
+        }
+        if ((prevState.owned !== this.state.owned) || (prevState.have !== this.state.have)) {
+            if (this.props.transactions) {
+                if (this.props.transactions.length > 0) {
+                    this.props.transactions.forEach(ele => {
+                        if (ele.asset_symbol === this.state.symbol) {
+                            this.setState({ owned: true })
+                        }
+                    });
+                } else {
+                    this.setState({ owned: false })
+                }
+            }
+
+            if (this.props.watchlists.length > 0) {
+                this.props.watchlists.forEach(ele => {
+                    if (ele.asset_symbol === this.state.symbol) {
+                        this.setState({ have: true })
+                    }
+                });
+            } else {
+                this.setState({ have: false })
+            }
+
         }
     }
 
@@ -281,7 +307,21 @@ class Asset extends React.Component {
 
         )
         let box = (this.state.buying) ? buy: sell
+        
+        
+        let removeButton = (
+            <button className="watchButton">Remove from Watchlist</button>
+        )
 
+        let addButton = (
+            <button className="watchButton">Add to Watchlist</button>
+        )
+
+        let watchlistButton = (this.state.have) ? removeButton : addButton;
+
+        if (this.state.owned) {
+            watchlistButton = null;
+        }
 
         return(
 
@@ -437,6 +477,11 @@ class Asset extends React.Component {
                                 </div>
                             </div>
                                 {box}
+                        </div>
+                        <div className="sidebar-buttons">
+                            <div className="buybox-button">
+                                {watchlistButton}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@
 #  updated_at   :datetime         not null
 #  quantity     :integer          not null
 #  asset_symbol :string           not null
+#  price        :float            not null
 #
 
 class Transaction < ApplicationRecord

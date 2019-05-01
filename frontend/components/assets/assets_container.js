@@ -4,14 +4,18 @@ import Asset from './assets';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
 import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
+import { fetWatchlists, createWatchlist, destroyWatchlist } from '../../actions/watchlist_actions';
 
 const msp = (state, ownProps) => {
 
     const chart = state.entities.assets;
     const entities = state.entities;
     const id = ownProps.match.params.symbol;
+    const watchlists = state.entities.watchlists;
+    const transactions = state.entities.transactions;
     return({
         entities,
+        watchlists,
         currentUser: state.entities.users[state.session.userId],
         chart,
         symbol: Object.keys(chart)[0],
@@ -21,6 +25,7 @@ const msp = (state, ownProps) => {
 
 const mdp = dispatch => {
     return ({
+        // user
         logout: () => dispatch(logout()),
         // asset
         fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
@@ -32,7 +37,10 @@ const mdp = dispatch => {
         updateUserInfo: (id, buyingPower) => dispatch(updateUserInfo(id, buyingPower)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
-
+        // watchlist
+        fetWatchlists: (id) => dispatch(fetWatchlists(id)),
+        createWatchlist: (watchlist) => dispatch(createWatchlist(watchlist)),
+        destroyWatchlist: (watchlist) => dispatch(destroyWatchlist(watchlist)),
     });
 };
 
