@@ -20,6 +20,7 @@ const msp = (state, ownProps) => {
         chart,
         symbol: Object.keys(chart)[0],
         id,
+        transactions,
     });
 };
 

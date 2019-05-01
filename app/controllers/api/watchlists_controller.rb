@@ -7,7 +7,7 @@ class Api::WatchlistsController < ApplicationController
     def create
         @watchlist = Watchlist.new(watchlist_params)
         @watchlist.user_id = current_user.id
-        if @watchlist.save!
+        if @watchlist.save
 
         else
             render json: @watchlist.errors.full_messages, status: 422
@@ -15,9 +15,10 @@ class Api::WatchlistsController < ApplicationController
     end
 
     def destroy
+        # @watchlist = Watchlist.find_by(user_id: params[:user_id], asset_symbol: params[:asset_symbol])
         @watchlist = Watchlist.find(params[:id])
         @watchlist.delete
-        end
+
     end
 
     private

@@ -13,17 +13,17 @@ export const receiveWatchLists = (watchlists) => {
 export const fetWatchlists = (id) => dispatch => {
     return (
         ApiUtilWatchlist.getWatchlists(id)
-            .then(watchlist => dispatch(receiveWatchlists(watchlist)))
+            .then(watchlist => dispatch(receiveWatchLists(watchlist)))
     );
 };
 
-export const createWatchlist = watchlist => dispatch => {
+export const createWatchlist = (user_id, asset_symbol) => dispatch => {
     return(
-        ApiUtilWatchlist.createWatchlist(watchlist)
+        ApiUtilWatchlist.createWatchlist(user_id, asset_symbol)
     );
 };
 
-export const destroyWatchlist = watchlist => dispatch => {
+export const destroyWatchlist = (watchlist) => dispatch => {
     return(
         ApiUtilWatchlist.destroyWatchlist(watchlist)
     );

@@ -6,19 +6,19 @@ export const getWatchlists = (id) => {
     });
 };
 
-export const createWatchlist = (user_id, asset_symbol) => {
+export const createWatchlist = (watchlist) => {
     return $.ajax({
         method: "POST",
         url: `/api/users/${watchlist.user_id}/watchlists`,
-        data: {user_id, asset_symbol}
+        data: {watchlist}
     });
 };
 
 export const destroyWatchlist = (watchlist) => {
-    let id = watchlist.id;
+
     return $.ajax({
         method: "DELETE",
         url: `/api/users/${watchlist.user_id}/watchlists/${watchlist.id}`,
-        data: {id}
+        data: {id: watchlist.id}
     });
 };

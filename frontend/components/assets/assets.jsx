@@ -17,10 +17,41 @@ class Asset extends React.Component {
             have: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleWatchAdd = this.handleWatchAdd.bind(this);
+        this.handleWatchRemove = this.handleWatchRemove.bind(this);
     }
 
     componentDidMount(){
         this.getStuff(this.state.symbol, this.state.range);
+        if (this.props.transactions) {
+            debugger
+            if (this.props.transactions.length > 0) {
+                debugger
+                this.props.transactions.forEach(ele => {
+                    if ((ele.asset_symbol === this.state.symbol) &&
+                        (ele.user_id === this.props.currentUser.id)) {
+                            debugger
+                        this.setState({ owned: true });
+                    } else if (this.props.watchlists.length > 0) {
+                        debugger
+                        this.props.watchlists.forEach(ele => {
+                            if ((ele.asset_symbol === this.state.symbol) &&
+                                (ele.user_id === this.props.currentUser.id) && (this.state.have !== true)) {
+                                this.setState({ have: true });
+                            }
+                        });
+                    }
+                });
+            } 
+        }
+            // if (this.props.watchlists.length > 0) {
+            //     this.props.watchlists.forEach(ele => {
+            //         if ((ele.asset_symbol === this.state.symbol) &&
+            //             (ele.user_id === this.props.currentUser.id)) {
+            //             this.setState({ have: true });
+            //         }
+            //     });
+            // } 
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -30,30 +61,30 @@ class Asset extends React.Component {
             });
             
         }
-        if ((prevState.owned !== this.state.owned) || (prevState.have !== this.state.have)) {
-            if (this.props.transactions) {
-                if (this.props.transactions.length > 0) {
-                    this.props.transactions.forEach(ele => {
-                        if (ele.asset_symbol === this.state.symbol) {
-                            this.setState({ owned: true })
-                        }
-                    });
-                } else {
-                    this.setState({ owned: false })
-                }
-            }
-
-            if (this.props.watchlists.length > 0) {
-                this.props.watchlists.forEach(ele => {
-                    if (ele.asset_symbol === this.state.symbol) {
-                        this.setState({ have: true })
+        if ((prevState.owned !== this.state.owned) || (prevState.have !== this.state.have) ||
+            (prevProps.match.params.symbol !== this.props.match.params.symbol)) {
+                    if (this.props.transactions) {
+                        debugger
+                        if (this.props.transactions.length > 0) {
+                            debugger
+                            this.props.transactions.forEach(ele => {
+                                if ((ele.asset_symbol === this.state.symbol) &&
+                                    (ele.user_id === this.props.currentUser.id)) {
+                                    this.setState({ owned: true });
+                                } else if (this.props.watchlists.length > 0) {
+                                    debugger
+                                    this.props.watchlists.forEach(ele => {
+                                        if ((ele.asset_symbol === this.state.symbol) &&
+                                            (ele.user_id === this.props.currentUser.id) && (this.state.have !== true)) {
+                                            this.setState({ have: true });
+                                        }
+                                    });
+                                }
+                            });
+                        } 
                     }
-                });
-            } else {
-                this.setState({ have: false })
-            }
-
         }
+
     }
 
     getStuff(symbol, range) {
@@ -62,7 +93,9 @@ class Asset extends React.Component {
                 this.props.fetSymbol().then(() => {
                     this.props.fetNews(symbol).then(() => {
                         this.props.fetCompany(symbol).then(() => {
-                            this.props.fetTransaction(this.props.currentUser.id);
+                            this.props.fetTransaction(this.props.currentUser.id).then(()=> {
+                                this.props.fetWatchlists(this.props.currentUser.id);
+                            });
                         });
                     });
                 });
@@ -146,6 +179,31 @@ class Asset extends React.Component {
             )
         })) : null;
         return parsedNews.slice(0, 4);
+    }
+
+    handleWatchAdd() {
+            debugger
+            this.props.createWatchlist(
+                { user_id: this.props.currentUser.id, asset_symbol: this.props.id }
+            );
+            this.setState({ have: true });
+            this.props.fetWatchlists(this.props.currentUser.id);
+    }
+
+    handleWatchRemove() {
+        let object;
+        if (this.props.watchlists.length > 0) {
+            this.props.watchlists.forEach((ele, idx) => {
+                if ((ele.user_id === this.props.currentUser.id) && (ele.asset_symbol === this.props.id)) {
+                    object = ele;
+                    this.props.watchlists.splice(idx,1);
+                }
+            })
+        }
+        debugger
+            this.props.destroyWatchlist(object);
+            this.setState({ have: false });
+            this.props.fetWatchlists(this.props.currentUser.id);
     }
 
     render(){
@@ -257,7 +315,6 @@ class Asset extends React.Component {
                         </form>
         )
         
-
         let sell = (
                         <form className="asset-form"
                             onSubmit={this.handleSubmit}>
@@ -304,24 +361,55 @@ class Asset extends React.Component {
                                 </div>
                             </div>
                         </form>
-
         )
         let box = (this.state.buying) ? buy: sell
         
         
         let removeButton = (
-            <button className="watchButton">Remove from Watchlist</button>
+            <button className="watchButton" 
+                onClick={this.handleWatchRemove}>
+                Remove from Watchlist</button>
         )
 
         let addButton = (
-            <button className="watchButton">Add to Watchlist</button>
+            <button className="watchButton"
+                onClick={this.handleWatchAdd}>
+            Add to Watchlist</button>
         )
 
+        let noButton = (
+            <button className="noButton"></button>
+        )
+
+        if (this.props.transactions) {
+            debugger
+            if (this.props.transactions.length > 0) {
+                debugger
+                this.props.transactions.forEach(ele => {
+                    if ((ele.asset_symbol === this.state.symbol) &&
+                        (ele.user_id === this.props.currentUser.id) && (this.state.owned !== true))  {
+                        this.setState({ owned: true });
+                        watchlistButton = noButton;
+                    } else if (this.props.watchlists.length > 0){
+                        this.props.watchlists.forEach(ele => {
+                            if ((ele.asset_symbol === this.state.symbol) &&
+                                (ele.user_id === this.props.currentUser.id) && (this.state.have !== true)) {
+                                this.setState({ have: true });
+                            }
+                        });
+                    }
+                });
+            } 
+        
+        }
         let watchlistButton = (this.state.have) ? removeButton : addButton;
 
         if (this.state.owned) {
-            watchlistButton = null;
+            watchlistButton = noButton;
+            document.getElementById("watchButton").style.display = "none";
+            debugger
         }
+
 
         return(
 
@@ -479,7 +567,7 @@ class Asset extends React.Component {
                                 {box}
                         </div>
                         <div className="sidebar-buttons">
-                            <div className="buybox-button">
+                            <div className="buybox-button" id="watchButton">
                                 {watchlistButton}
                             </div>
                         </div>
