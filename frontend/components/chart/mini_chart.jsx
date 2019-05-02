@@ -41,8 +41,11 @@ class MiniChart extends React.Component {
         };
     }
 
-    render() {
+    // componentDidMount() {
+    //     this.props.fetChart(this.props.symbol, this.state.range);
+    // }
 
+    render() {
         let parsedChart;
         if (this.props.chart.charts) {
             if (this.props.chart.charts[this.props.symbol]) {
@@ -56,20 +59,18 @@ class MiniChart extends React.Component {
             return null;
         }
         this.min = "dataMin";
-
+        let color;
         if (parsedChart) {
             let filteredData = parsedChart.filter(obj => obj.price > 0);
             parsedChart = filteredData;
             let prices = filteredData.map(obj => obj.price);
             this.min = Math.min(...prices);
-        }
-
-        let color;
-        if (parsedChart.length > 0) {
-            if (parsedChart[0].price < parsedChart[parsedChart.length - 1].price) {
-                color = "#21ce99";
-            } else {
-                color = "#ff3700";
+            if (parsedChart.length > 0) {
+                if (parsedChart[0].price < parsedChart[parsedChart.length - 1].price) {
+                    color = "#21ce99";
+                } else {
+                    color = "#ff3700";
+                }
             }
         }
 

@@ -20,6 +20,16 @@ import NavBar from '../navbar/nav_bar';
         }
     
         componentDidMount(){
+            this.props.fetWatchlists(this.props.currentUser.id).then(() => {
+                let that = this;
+                if (this.props.watchlists.length > 0) {
+                    this.props.watchlists.forEach(ele => {
+                        this.props.fetQuote(ele.asset_symbol).then(quote => {
+                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: quote.quote.latestPrice});
+                            that.setState({ symbolPrices: newPrice });
+                        });
+                    });
+                }
                 this.props.fetTransaction(this.props.currentUser.id).then(() => {
                     this.props.fetAllNews();
                     (this.props.transactions.length < 1) ? null :
@@ -43,6 +53,7 @@ import NavBar from '../navbar/nav_bar';
                         }));
                     this.setState({ firstRender: false });
                 });
+            });
         }
         
         updateSearch(e) {
@@ -96,13 +107,10 @@ import NavBar from '../navbar/nav_bar';
             const keys = [];
             let that = this;
             if (this.props.transactions) {
-
                 this.props.transactions.forEach((obj) => {
-
                 if (obj.user_id === this.props.currentUser.id) {const symbol = obj.asset_symbol;
                     const quantity = obj.quantity;
                     const price = that.state.symbolPrices[symbol];
-
                     if (object[symbol]) {
                         object[symbol].quantity += quantity;
                     } else {
@@ -156,6 +164,51 @@ import NavBar from '../navbar/nav_bar';
                 )
             })) : (<li></li>);
 
+            const hash = {};
+            const watchies = [];
+
+            if (this.props.watchlists) {
+                this.props.watchlists.forEach(ele => {
+                    if (ele.user_id === that.props.currentUser.id) {
+                        const symbol = ele.asset_symbol;
+                        const price = that.state.symbolPrices[symbol];
+                        hash[symbol] =  {};
+                        hash[symbol].price = price;
+                        watchies.push(symbol);
+                    }
+                })
+            }
+            const watchbar = ( watchies.length > 0 ) ? ( watchies.map((sym, idx) => {
+                const symbol = sym.toUpperCase();
+                let price; 
+                if ( that.state.symbolPrices[symbol]) {
+                    price = that.state.symbolPrices[symbol].toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                    });
+                }
+                propbar[symbol] = 0;
+                return (
+                    <li key={idx}
+                        className="personal-asset"
+                        onClick={() => { this.handleClick(symbol)}}
+                        >
+                            <div className="key-quantity">
+                                <div className="p-key">
+                                    {symbol.toUpperCase()}
+                                </div>
+
+                            </div>
+                            <div className="minichart">
+                                <MiniChart symbol={symbol} 
+                                    />
+                            </div>
+                            <div className="p-price">
+                                ${price}
+                            </div>
+                        </li>
+                )
+            })) : (<li></li>)
             return(
 
                 <div className="greet-page">
@@ -190,7 +243,7 @@ import NavBar from '../navbar/nav_bar';
                                 </div>
                             </div>
                                 <PortfolioChart 
-                                    sidebar={propbar}
+                                    sidebar={propbar} 
                                     portVal={this.state.portVal}
                                 />
                                 <div>
@@ -212,8 +265,8 @@ import NavBar from '../navbar/nav_bar';
                                             <span>
                                                 Watchlist
                                             </span>
-                                        
                                         </div>
+                                        {watchbar}
                                     </div>
                                 </div>
                             </div>

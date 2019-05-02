@@ -8,7 +8,7 @@ class Api::TransactionsController < ApplicationController
         @transaction = Transaction.new(transaction_params)
         @transaction.user_id = current_user.id
         if @transaction.save!
-            # render "/api/transactions/index"
+            render :show
         else
             render json: @transaction.errors.full_messages, status: 422
         end

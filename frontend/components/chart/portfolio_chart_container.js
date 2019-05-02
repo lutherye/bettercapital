@@ -12,7 +12,6 @@ const msp = (state, ownProps) => {
             symbols.push(ele.toUpperCase());
         });
     }
-
     const chart = state.entities.assets.charts;
     return ({
         currentUser: state.entities.users[state.session.userId],

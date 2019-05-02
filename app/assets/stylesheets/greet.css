@@ -60,6 +60,12 @@
     height: 100%;
     margin-left: 9%;
     border-radius: 5px;
+    max-height: 85vh;
+    overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 .personal-asset {

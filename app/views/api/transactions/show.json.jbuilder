@@ -1,0 +1,1 @@
+json.extract! @transaction, :id, :user_id, :asset_symbol, :quantity, :price, :created_at

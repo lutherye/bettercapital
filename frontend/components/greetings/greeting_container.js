@@ -4,6 +4,7 @@ import {logout} from '../../actions/session_actions';
 import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
 import Greeting from './greeting';
 import { withRouter } from 'react-router-dom';
+import { fetWatchlists } from '../../actions/watchlist_actions';
 
 const msp = (state) => {
 
@@ -11,6 +12,7 @@ const msp = (state) => {
         currentUser: state.entities.users[state.session.userId],
         chart: state.entities.assets,
         transactions: state.entities.transactions,
+        watchlists: state.entities.watchlists,
     });
 };
 
@@ -24,6 +26,7 @@ const mdp = dispatch => {
         fetTransaction: (id) => dispatch(fetTransaction(id)),
         fetAllNews: (news) => dispatch(fetAllNews(news)),
         fetBatch: (symbols, range) => dispatch(fetBatch(symbols, range)),
+        fetWatchlists: (id) => dispatch(fetWatchlists(id)),
     });
 };
 

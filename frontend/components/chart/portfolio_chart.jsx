@@ -20,6 +20,12 @@ class PortfolioChart extends React.Component {
         if (prevProps.symbols[0] !== this.props.symbols[0]) {
             this.props.fetBatch(this.props.symbols.join(","), this.state.range);
         }
+        if (prevProps.symbols.length !== this.props.symbols.length) {
+            
+            this.props.fetBatch(this.props.symbols.join(","), this.state.range).then(() => {
+                this.setCharts();
+            });
+        }
         if (this.state.chart[0] === undefined && this.props.transactions[0] !== undefined) {
             this.setCharts();
         }
@@ -147,39 +153,43 @@ class PortfolioChart extends React.Component {
                 }
             });
 
-            if (that.props.portVal && that.props.symbols) {
+            if (that.props.portVal && that.props.symbols && that.props.chart[symb]) {
+                
 
-                while(chart.length < that.props.chart[symb].chart.length) {
-                    for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {        // iterating through dates
-                        const obj = that.props.chart[symb].chart[i];
-                            let chartEpoch = new Date(obj.date).getTime()/1000.0;
-                            let price = 0;
-                                for (let i = 0; i < that.props.symbols.length; i++) {           // iterating through symbols
-                                    const ele = that.props.symbols[i];                          // getting ele to grab quantity
-                                    price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
-                                    if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
-                                        for (let idx= 0; idx< transactionDup.length; idx++) {
-                                            const arr = transactionDup[idx];
-                                            let createdAt = new Date(arr.created_at.slice(0,10)).getTime() / 1000.0;
-                                            if (chartEpoch < createdAt) {                       // if transaction is created after date
-                                                that.props.sidebar[arr.asset_symbol] -= transactionDup[idx].quantity;     // 
-                                                transactionDup.splice(idx, 1);
-                                                idx= 0;
+                    
+                    while(chart.length < that.props.chart[symb].chart.length) {
+                        for (let i = that.props.chart[symb].chart.length - 1; i > 0 ; i--) {        // iterating through dates
+                            const obj = that.props.chart[symb].chart[i];
+                                let chartEpoch = new Date(obj.date).getTime()/1000.0;
+                                let price = 0;
+                                    for (let i = 0; i < that.props.symbols.length; i++) {           // iterating through symbols
+                                        const ele = that.props.symbols[i];                          // getting ele to grab quantity
+                                        price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
+                                        if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
+                                            for (let idx= 0; idx< transactionDup.length; idx++) {
+                                                const arr = transactionDup[idx];
+                                                let createdAt = new Date(arr.created_at.slice(0,10)).getTime() / 1000.0;
+                                                if (chartEpoch < createdAt) {                       // if transaction is created after date
+                                                    that.props.sidebar[arr.asset_symbol] -= transactionDup[idx].quantity;     // 
+                                                    transactionDup.splice(idx, 1);
+                                                    idx= 0;
+                                                }
                                             }
-                                        }
-                                    } 
+                                        } 
+                                    }
+                                if (transactionDup.length === 0) {
+                                    chart.unshift({ date: chartEpoch, price: 0 });
+                                } else {
+                                    chart.unshift({ date: chartEpoch, price: (parseFloat(Math.round( price * 100) / 100).toFixed(2))});
                                 }
-                            if (transactionDup.length === 0) {
-                                chart.unshift({ date: chartEpoch, price: 0 });
-                            } else {
-                                chart.unshift({ date: chartEpoch, price: (parseFloat(Math.round( price * 100) / 100).toFixed(2))});
                             }
+                            
+                        console.log(chart);
+                        if (that.state.chart !== chart) {
+                            that.setState({chart: chart});
                         }
-                    console.log(chart);
-                    if (that.state.chart !== chart) {
-                        that.setState({chart: chart});
                     }
-                }
+
             }
         }
     }
