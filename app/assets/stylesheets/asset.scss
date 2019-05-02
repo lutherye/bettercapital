@@ -276,11 +276,19 @@
     height: 48px;
 }
 
+.buybox-button:hover {
+    color: #26ecb1;
+}
+
 .watchButton {
     border: none;
     color: #21ce99;
     cursor: pointer;
     outline: none;
+}
+
+.watchButton:hover {
+    color: inherit
 }
 
 .noButton {

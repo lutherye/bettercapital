@@ -47,10 +47,34 @@ class Asset extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
         if (prevProps.match.params.symbol !== this.props.match.params.symbol){
-            this.setState({symbol: `${this.props.id}`}, () => {
+            this.setState({
+                symbol: `${this.props.id}`,
+                owned: false,
+                have: false,
+            }, () => {
+                    let that = this;
+                    this.props.fetTransaction(this.props.currentUser.id).then(() => {
+                        if (that.props.transactions) {
+                            if (that.props.transactions.length > 0) {
+                                that.props.transactions.forEach(ele => {
+                                    if ((ele.asset_symbol === that.state.symbol) &&
+                                        (ele.user_id === that.props.currentUser.id)) {
+                                        that.setState({ owned: true });
+                                    } else if (that.props.watchlists.length > 0) {
+                                        that.props.watchlists.forEach(ele => {
+                                            if ((ele.asset_symbol === that.state.symbol) &&
+                                                (ele.user_id === that.props.currentUser.id) && (that.state.have !== true)) {
+                                                that.setState({ have: true });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    });
                 this.getStuff(this.state.symbol, this.state.range);
             });
-            
+    
         }
     }
 
