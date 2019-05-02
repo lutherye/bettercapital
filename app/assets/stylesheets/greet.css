@@ -72,7 +72,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 15px;
-    padding: 13px 23px;
+    padding: 13px 25px;
     /* border-bottom: 1px solid rgba(0,0,0,0.1); */
     cursor: pointer;
     align-items: center;
@@ -91,6 +91,7 @@
 .p-key {
     font-size: 13px;
     margin-right: 10px;
+    min-width: 33px;
 }
 
 .p-quantity {
