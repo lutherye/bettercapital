@@ -17,3 +17,13 @@ T4 = Transaction.create(user_id: 1, asset_symbol: "BAC", quantity: 7, price: 17.
 T5 = Transaction.create(user_id: 1, asset_symbol: "VTI", quantity: 17, price: 112.28, created_at: "2016-09-02")
 T6 = Transaction.create(user_id: 1, asset_symbol: "AAPL", quantity: 7, price: 156.10, created_at: "2017-05-17")
 T7 = Transaction.create(user_id: 1, asset_symbol: "NVDA", quantity: 3, price: 281.02, created_at: "2018-09-28")
+
+W1 = Watchlist.create(user_id: 1, asset_symbol: "COF")
+W2 = Watchlist.create(user_id: 1, asset_symbol: "MSFT")
+W3 = Watchlist.create(user_id: 1, asset_symbol: "TWTR")
+W4 = Watchlist.create(user_id: 1, asset_symbol: "GPRO")
+W5 = Watchlist.create(user_id: 1, asset_symbol: "VOO")
+W6 = Watchlist.create(user_id: 1, asset_symbol: "COST")
+W7 = Watchlist.create(user_id: 1, asset_symbol: "FB")
+W8 = Watchlist.create(user_id: 1, asset_symbol: "NVDA")
+W8 = Watchlist.create(user_id: 1, asset_symbol: "VGT")
