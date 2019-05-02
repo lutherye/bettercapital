@@ -184,7 +184,6 @@ class PortfolioChart extends React.Component {
                                 }
                             }
                             
-                        console.log(chart);
                         if (that.state.chart !== chart) {
                             that.setState({chart: chart});
                         }

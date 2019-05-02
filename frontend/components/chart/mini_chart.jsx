@@ -53,7 +53,6 @@ class MiniChart extends React.Component {
                     return { time: ele.label, price: ele.high };
 
                 });
-                console.log(parsedChart);
             }
         } else {
             return null;
