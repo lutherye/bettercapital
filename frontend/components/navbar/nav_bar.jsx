@@ -103,7 +103,7 @@ class NavBar extends React.Component {
                                                 </div>
                                                 <div className="buy-holder">
                                                     <div className="drop-port-val">
-                                                        {"$" + this.props.currentUser.buying_power}
+                                                        {"$" + (Math.round(this.props.currentUser.buying_power * 100) / 100).toFixed(2)}
                                                     </div>
                                                     <div>
                                                         Buying Power

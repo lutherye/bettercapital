@@ -85,7 +85,7 @@ class Login extends React.Component {
                         <div className="login-button">
                          <input className="login-submit" type="submit" value="Log In" />
                             or use our
-                                <Link to={"/"} className="demo-link" onClick={this.handleDemo}>demo</Link>
+                                <Link to={"/"} className="demo-link" onClick={this.handleDemo}>DEMO</Link>
                         </div>
                     </form>
                 </div>
