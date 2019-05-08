@@ -15,7 +15,7 @@ const Splash = () => {
                                 BetterCapital
                             </Link>
                             <a href="https://github.com/lutherye/bettercapital"
-                                className="github">github</a>
+                                className="github">Github</a>
                             <a href="https://www.linkedin.com/in/lutherye/"
                                 className="linkedin">LinkedIn</a>
 
