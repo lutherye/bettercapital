@@ -18,8 +18,7 @@ const Splash = () => {
                                 className="github">github</a>
                             <a href="https://www.linkedin.com/in/lutherye/"
                                 className="linkedin">LinkedIn</a>
-                            <a href="https://www.appacademy.io/?location=new-york-city"
-                                className="app">App Academy</a> 
+
                         </div>
                             
                         <div className="splash-auth">
