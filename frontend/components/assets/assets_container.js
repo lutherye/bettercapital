@@ -3,7 +3,7 @@ import { fetChart, fetQuote, fetSymbol, fetNews, fetCompany } from '../../action
 import Asset from './assets';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
-import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
+import { updateUserInfo, updateTransaction, fetTransaction, destroyTransaction } from '../../actions/transaction_actions';
 import { fetWatchlists, createWatchlist, destroyWatchlist } from '../../actions/watchlist_actions';
 
 const msp = (state, ownProps) => {
@@ -38,6 +38,7 @@ const mdp = dispatch => {
         updateUserInfo: (id, buyingPower) => dispatch(updateUserInfo(id, buyingPower)),
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
+        destroyTransaction: (transaction) => dispatch(destroyTransaction(transaction)),
         // watchlist
         fetWatchlists: (id) => dispatch(fetWatchlists(id)),
         createWatchlist: (watchlist) => dispatch(createWatchlist(watchlist)),

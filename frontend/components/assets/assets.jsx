@@ -116,7 +116,7 @@ class Asset extends React.Component {
                     {alert("Not enough buy power");}
                 }
             } else {
-                if (thisCount > this.state.quantity) {
+                if (thisCount >= this.state.quantity) {
                     this.props.updateTransaction({
                         user_id: this.props.currentUser.id,
                         quantity: (this.state.quantity) * -1,
@@ -124,8 +124,6 @@ class Asset extends React.Component {
                         price: this.props.chart.latestPrice,
                     });
                         that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power + (Number(that.state.quantity) * that.props.chart.latestPrice));
-                } else if (thisCount === this.state.quantity) {
-                    
                 } else {
                     {alert("Please input a different quantity");}
                 }

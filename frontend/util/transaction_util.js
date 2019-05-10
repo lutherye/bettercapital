@@ -28,3 +28,11 @@ export const updateTransaction = (transaction) => {
         data: {transaction}
     });
 };
+
+export const destroyTransaction = (transaction) => {
+    return $.ajax({
+        method: "DELETE",
+        url: `/api/users/${transaction.user_id}/transactions/${transaction.id}`,
+        data: {id: transaction.id}
+    });
+};

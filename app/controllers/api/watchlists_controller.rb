@@ -18,7 +18,6 @@ class Api::WatchlistsController < ApplicationController
         # @watchlist = Watchlist.find_by(user_id: params[:user_id], asset_symbol: params[:asset_symbol])
         @watchlist = Watchlist.find(params[:id])
         @watchlist.destroy
-
     end
 
     private

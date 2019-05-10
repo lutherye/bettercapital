@@ -14,6 +14,11 @@ class Api::TransactionsController < ApplicationController
         end
     end
 
+    def destroy
+        @transaction = Transaction.find(params[:id])
+        @transaction.destroy
+    end
+
     private
 
     def transaction_params

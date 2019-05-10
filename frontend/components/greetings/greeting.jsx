@@ -136,32 +136,34 @@ import NavBar from '../navbar/nav_bar';
                     });
                 }
                 that.state.portVal;
-                propbar[symbol] = quantity;
-                return (
-                    <li key={idx}
-                        className="personal-asset"
-                        onClick={() => { this.handleClick(symbol) }}
-                    >
-                        <div className="key-quantity">
-                            <div className="p-key">
-                                {symbol.toUpperCase()}
-                            </div>
-
-                            <div className="p-quantity">
-                                {quantity}
-                                <div className="p-shares">
-                                    Shares
+                if (quantity > 0) {
+                    propbar[symbol] = quantity;
+                    return (
+                        <li key={idx}
+                            className="personal-asset"
+                            onClick={() => { this.handleClick(symbol) }}
+                        >
+                            <div className="key-quantity">
+                                <div className="p-key">
+                                    {symbol.toUpperCase()}
+                                </div>
+    
+                                <div className="p-quantity">
+                                    {quantity}
+                                    <div className="p-shares">
+                                        Shares
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="minichart">
-                            <MiniChart symbol={symbol}/>
-                        </div>
-                        <div className="p-price">
-                            ${price}
-                        </div>
-                    </li>
-                )
+                            <div className="minichart">
+                                <MiniChart symbol={symbol}/>
+                            </div>
+                            <div className="p-price">
+                                ${price}
+                            </div>
+                        </li>
+                    )
+                }
             })) : (<li></li>);
 
             const hash = {};

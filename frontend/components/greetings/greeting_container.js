@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { fetChart, fetQuote, fetAllNews } from '../../actions/asset_actions';
 import {logout} from '../../actions/session_actions';
-import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
+import { updateUserInfo, updateTransaction, fetTransaction, destroyTransaction } from '../../actions/transaction_actions';
 import Greeting from './greeting';
 import { withRouter } from 'react-router-dom';
 import { fetWatchlists } from '../../actions/watchlist_actions';

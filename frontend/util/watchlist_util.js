@@ -15,7 +15,6 @@ export const createWatchlist = (watchlist) => {
 };
 
 export const destroyWatchlist = (watchlist) => {
-
     return $.ajax({
         method: "DELETE",
         url: `/api/users/${watchlist.user_id}/watchlists/${watchlist.id}`,

@@ -45,3 +45,8 @@ export const fetTransaction = id => dispatch => {
     );
 };
 
+export const destroyTransaction = (transaction) => dispatch => {
+    return(
+        ApiUtilTransaction.destroyTransaction(transaction)
+    );
+};
