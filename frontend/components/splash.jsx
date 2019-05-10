@@ -15,9 +15,11 @@ const Splash = () => {
                                 BetterCapital
                             </Link>
                             <a href="https://github.com/lutherye/bettercapital"
-                                className="github">Github</a>
+                                className="github">GitHub</a>
                             <a href="https://www.linkedin.com/in/lutherye/"
                                 className="linkedin">LinkedIn</a>
+                            <a href="https://samuel-ye.com"
+                                className="personal">Personal Site</a>
 
                         </div>
                             
