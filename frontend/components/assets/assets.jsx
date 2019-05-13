@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Search from '../navbar/search';
 import Chart from '../chart/chart_container';
 import NavBar from '../navbar/nav_bar';
+import ReactLoading from 'react-loading';
 
 class Asset extends React.Component {
     constructor(props){
@@ -15,6 +16,7 @@ class Asset extends React.Component {
             buying: true,
             owned: false,
             have: false,
+            count: 0,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleWatchAdd = this.handleWatchAdd.bind(this);
@@ -40,6 +42,17 @@ class Asset extends React.Component {
                         }
                     });
                 }
+            }
+        }).then(() => {
+            let thisCount = 0;
+            if (this.props.entities.transactions.length > 0) {
+                for (let i = 0; i < this.props.entities.transactions.length; i++) {
+                    const obj = this.props.entities.transactions[i];
+                    if (obj.asset_symbol === this.state.symbol) {
+                        thisCount += obj.quantity;
+                    }
+                }
+                this.setState({ count: thisCount });
             }
         });
         this.getStuff(this.state.symbol, this.state.range);
@@ -74,7 +87,6 @@ class Asset extends React.Component {
                     });
                 this.getStuff(this.state.symbol, this.state.range);
             });
-    
         }
     }
 
@@ -111,18 +123,24 @@ class Asset extends React.Component {
                         asset_symbol: this.state.symbol,
                         price: this.props.chart.latestPrice,
                     });
-                        that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power - (Number(that.state.quantity) * that.props.chart.latestPrice));
+                    let newCount = this.state.count + Number(this.state.quantity);
+                    debugger
+                    this.setState({ count: newCount });
+                    that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power - (Number(that.state.quantity) * that.props.chart.latestPrice));
                 } else {
                     {alert("Not enough buy power");}
                 }
             } else {
-                if (thisCount >= this.state.quantity) {
+                if (this.state.count >= this.state.quantity) {
                     this.props.updateTransaction({
                         user_id: this.props.currentUser.id,
                         quantity: (this.state.quantity) * -1,
                         asset_symbol: this.state.symbol,
                         price: this.props.chart.latestPrice,
                     });
+                    let newCount = this.state.count - Number(this.state.quantity);
+                    debugger
+                    this.setState({ count: newCount });
                         that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power + (Number(that.state.quantity) * that.props.chart.latestPrice));
                 } else {
                     {alert("Please input a different quantity");}
@@ -227,15 +245,6 @@ class Asset extends React.Component {
         let industry = (this.props.chart.company) ? (this.props.chart.company.industry) : null;
             {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytdChange, week52High, week52Low, industry */ }
 
-        let thisCount = 0;
-            if (this.props.entities.transactions.length > 0) {
-                for (let i = 0; i < this.props.entities.transactions.length; i++) {
-                    const obj = this.props.entities.transactions[i];
-                    if (obj.asset_symbol === this.state.symbol) {
-                        thisCount += obj.quantity;
-                    }
-                }
-        }
         let showPrice; 
         if (this.props.chart.latestPrice) {
             showPrice = this.props.chart.latestPrice.toLocaleString(undefined, {
@@ -276,13 +285,13 @@ class Asset extends React.Component {
                                     </div>
                                         $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
-                            <div className="checkbox">
+                            {/* <div className="checkbox">
                                 <div className="box">
                                     <input type="checkbox" />
                                     <span className="checkmark"></span>
                                 </div>
                                 Transaction may take up to 2 business days to complete.
-                                </div>
+                                </div> */}
                             <div className="button-div">
                                 <input
                                     className="asset-buy"
@@ -324,13 +333,13 @@ class Asset extends React.Component {
                                     </div>
                                         $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
-                            <div className="checkbox">
+                            {/* <div className="checkbox">
                                 <div className="box">
                                     <input type="checkbox" />
                                     <span className="checkmark"></span>
                                 </div>
                                 Transaction may take up to 3 business days to complete.
-                                </div>
+                                </div> */}
                             <div className="button-div">
                                 <input
                                     className="asset-buy"
@@ -339,7 +348,7 @@ class Asset extends React.Component {
                             </div>
                             <div>
                                 <div className="buy-words">
-                                    {thisCount}
+                                    {this.state.count}
                                     <div className="buying">
                                         Shares Available
                                     </div>

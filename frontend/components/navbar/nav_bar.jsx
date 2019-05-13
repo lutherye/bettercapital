@@ -72,12 +72,12 @@ class NavBar extends React.Component {
                                     Home
                                 </Link>
                             </div>
-                            <div className="home-home">
+                            {/* <div className="home-home">
                                 <Link to={"/home"}
                                     className="home-link">
                                     Notifications
                                 </Link>
-                            </div>
+                            </div> */}
                             <div
                                 tabIndex="1"
                                 onFocus={this.dropdown}
@@ -110,7 +110,7 @@ class NavBar extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <form className="bank-holder">
+                                            {/* <form className="bank-holder">
                                                 <div>
 
                                                 </div>
@@ -147,7 +147,7 @@ class NavBar extends React.Component {
                                                             Make Transfer
                                                         </div>
                                                     </div>
-                                            </form>
+                                            </form> */}
                                             <div className="logout-section">
                                                 <div className="asset-header-button"
                                                     onClick={this.logoutHandle}>Log Out</div>

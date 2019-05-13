@@ -6,7 +6,7 @@ import PortfolioChart from '../chart/portfolio_chart_container';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
 import MiniChart from '../chart/mini_chart';
 import NavBar from '../navbar/nav_bar';
-    
+import ReactLoading from 'react-loading';
     class Greeting extends React.Component {
         constructor(props){
             super(props);
@@ -211,72 +211,86 @@ import NavBar from '../navbar/nav_bar';
                         </li>
                 )
             })) : (<li></li>)
-            return(
+            if (document.getElementById("portfolioVal")) {
+                var loadingVal = document.getElementById("portfolioVal").innerHTML;
+            }
 
-                <div className="greet-page">
-                    <NavBar 
-                        portVal={this.state.portVal}
-                        currentUser={this.props.currentUser}
-                    />
-
-                <div className="main-wrapper">
-                    <div className="greet-chart">
-                    <br/>
-                        <div className="p-asset-chart">
-                            <div className="port-holder">
-                                <div className="buying-power">
-                                </div>
-                                <span className="port-val"
-                                    id="portfolioVal">
-                                        <>${this.state.portVal}</>
-                                </span>
-                                <div className="changes">
-                                    <span className="port-change"
-                                        id="portChange"
-                                    >
-                                        <>{}</>
+                if ( !this.props.chart.news || !this.props.chart.symbol ) {
+                    return (
+                        <ReactLoading
+                            type={"spinningBubbles"}
+                            color={"#21ce99"}
+                            height={100}
+                            width={100}
+                        />
+                    )
+                } else {
+                return(
+                    <div className="greet-page">
+                        <NavBar 
+                            portVal={this.state.portVal}
+                            currentUser={this.props.currentUser}
+                        />
+    
+                    <div className="main-wrapper">
+                        <div className="greet-chart">
+                        <br/>
+                            <div className="p-asset-chart">
+                                <div className="port-holder">
+                                    <div className="buying-power">
+                                    </div>
+                                    <span className="port-val"
+                                        id="portfolioVal">
+                                            <>${this.state.portVal}</>
                                     </span>
-                                    <span className="port-per"
-                                        id="portPer"
-                                    >
+                                    <div className="changes">
+                                        <span className="port-change"
+                                            id="portChange"
+                                        >
                                             <>{}</>
-                                    </span>
-                                   
+                                        </span>
+                                        <span className="port-per"
+                                            id="portPer"
+                                        >
+                                                <>{}</>
+                                        </span>
+                                       
+                                    </div>
                                 </div>
+                                    <PortfolioChart 
+                                        sidebar={propbar} 
+                                        portVal={this.state.portVal}
+                                    />
+                                    <div>
+                                        {this.parsedNews()}
+                                    </div>
                             </div>
-                                <PortfolioChart 
-                                    sidebar={propbar} 
-                                    portVal={this.state.portVal}
-                                />
-                                <div>
-                                    {this.parsedNews()}
-                                </div>
-                        </div>
-                        <div className="sidebar-div">
-                            <div className="sidebar-holder">
-                                <div className="sidebar">
-
-                                    <div className="personal-holder">
-                                        <div className="stocks">
-                                            <span>
-                                                Stocks
-                                            </span>
+                            <div className="sidebar-div">
+                                <div className="sidebar-holder">
+                                    <div className="sidebar">
+    
+                                        <div className="personal-holder">
+                                            <div className="stocks">
+                                                <span>
+                                                    Stocks
+                                                </span>
+                                            </div>
+                                            {sidebar}
+                                            <div className="stocks">
+                                                <span>
+                                                    Watchlist
+                                                </span>
+                                            </div>
+                                            {watchbar}
                                         </div>
-                                        {sidebar}
-                                        <div className="stocks">
-                                            <span>
-                                                Watchlist
-                                            </span>
-                                        </div>
-                                        {watchbar}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        </div>
-                </div>
-                </div>
-            )
+                            </div>
+                    </div>
+                    </div>
+                )
+            }
         }
     }
 

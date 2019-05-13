@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
 import { get } from 'https';
+import ReactLoading from 'react-loading';
 
 class Chart extends React.Component {
     constructor(props) {
@@ -108,69 +109,80 @@ class Chart extends React.Component {
             }
         }
 
-        return(
-            <div className="chart-chart-chart">
-                <LineChart
-                    margin={{ top: 37, right: 30, left: 20, bottom: 30 }}
-                    width={700}
-                    height={270}
-                    data={this.parsedData}>
-                    <Line type="linear"
-                        dataKey="price"
-                        stroke={color}
-                        strokeWidth={1.7}
-                        dot={false}
-                    />
-                    <XAxis dataKey="time"
-                        hide={true}
-                    />
-                    <YAxis dataKey="price"
-                        type="number"
-                        domain={["dataMin", 'dataMax']}
-                        hide={true}
-                    />
-                    <Tooltip
-                        position={{ y: 0 }}
-                        content={this.ToolTipContent.bind(this)}
-                        offset={-45}
-                        isAnimationActive={false}
-                        contentStyle={{
-                            border: "0",
-                            backgroundColor: "transparent",
-                            fontSize: "10"
-                        }}
-                    // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
-                    // coordinate={{ x: 100, y: 140 }}
-                    />
-                </LineChart>
-                <div className="date-ranges">
-                    <div className="oneday"
-                        onClick={() => this.changeDate("1d")} className="click-date">
-                        <span className="oneday">1D</span>
-                    </div>
-                    <div className="date-button"
-                        onClick={() => this.changeDate("1m")} className="click-date">
-                        <span className="date-button">1M</span>
-                    </div>
-                    <div className="date-button"
-                        onClick={() => this.changeDate("3m")} className="click-date">
-                        <span className="date-button">3M</span>
-                    </div>
-                    <div className="date-button"
-                        onClick={() => this.changeDate("6m")} className="click-date">
-                        <span className="date-button">6M</span>
-                    </div>
-                    <div className="date-button"
-                        onClick={() => this.changeDate("1y")} className="click-date">
-                        <span className="date-button">1Y</span>
-                    </div>
-                    <div className="date-button"
-                        onClick={() => this.changeDate("5y")} className="click-date">
-                        <span className="date-button">5Y</span>
+        if (!this.parsedData) {
+            return (
+                <ReactLoading
+                    type={"spinningBubbles"}
+                    color={"#21ce99"}
+                    height={100}
+                    width={100}
+                />
+            )
+        } else {
+            return(
+                <div className="chart-chart-chart">
+                    <LineChart
+                        margin={{ top: 37, right: 30, left: 20, bottom: 30 }}
+                        width={700}
+                        height={270}
+                        data={this.parsedData}>
+                        <Line type="linear"
+                            dataKey="price"
+                            stroke={color}
+                            strokeWidth={1.7}
+                            dot={false}
+                        />
+                        <XAxis dataKey="time"
+                            hide={true}
+                        />
+                        <YAxis dataKey="price"
+                            type="number"
+                            domain={["dataMin", 'dataMax']}
+                            hide={true}
+                        />
+                        <Tooltip
+                            position={{ y: 0 }}
+                            content={this.ToolTipContent.bind(this)}
+                            offset={-45}
+                            isAnimationActive={false}
+                            contentStyle={{
+                                border: "0",
+                                backgroundColor: "transparent",
+                                fontSize: "10"
+                            }}
+                        // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
+                        // coordinate={{ x: 100, y: 140 }}
+                        />
+                    </LineChart>
+                    <div className="date-ranges">
+                        <div className="oneday"
+                            onClick={() => this.changeDate("1d")} className="click-date">
+                            <span className="oneday">1D</span>
+                        </div>
+                        <div className="date-button"
+                            onClick={() => this.changeDate("1m")} className="click-date">
+                            <span className="date-button">1M</span>
+                        </div>
+                        <div className="date-button"
+                            onClick={() => this.changeDate("3m")} className="click-date">
+                            <span className="date-button">3M</span>
+                        </div>
+                        <div className="date-button"
+                            onClick={() => this.changeDate("6m")} className="click-date">
+                            <span className="date-button">6M</span>
+                        </div>
+                        <div className="date-button"
+                            onClick={() => this.changeDate("1y")} className="click-date">
+                            <span className="date-button">1Y</span>
+                        </div>
+                        <div className="date-button"
+                            onClick={() => this.changeDate("5y")} className="click-date">
+                            <span className="date-button">5Y</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 

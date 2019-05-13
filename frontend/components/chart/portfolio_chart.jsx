@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
 import merge from 'lodash/merge';
+import ReactLoading from 'react-loading';
 
 class PortfolioChart extends React.Component {
     constructor(props) {
@@ -197,6 +198,14 @@ class PortfolioChart extends React.Component {
         if (this.state.chart.length > 0) {
             if (Number.isNaN(this.state.chart[0].price)) {
                 this.props.fetBatch(this.props.symbols.join(","), this.state.range);
+                return (
+                    <ReactLoading
+                        type={"spinningBubbles"}
+                        color={"#21ce99"}
+                        height={100}
+                        width={100}
+                    />
+                )
             }
         }
         return (
