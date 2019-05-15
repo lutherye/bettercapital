@@ -124,7 +124,6 @@ class Asset extends React.Component {
                         price: this.props.chart.latestPrice,
                     });
                     let newCount = this.state.count + Number(this.state.quantity);
-                    debugger
                     this.setState({ count: newCount });
                     that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power - (Number(that.state.quantity) * that.props.chart.latestPrice));
                 } else {
@@ -216,10 +215,8 @@ class Asset extends React.Component {
         }
         let companyName = (this.props.chart.company) ? (names.slice(0, names.length - 1)).join(" ") : null;
         let companyCEO = (this.props.chart.company) ? (this.props.chart.company.CEO) : null;
-        debugger
         let avgTotalVolume = null;
         if (this.props.chart.avgTotalVolume) {
-            debugger
             let temp = this.props.chart.avgTotalVolume.toString();
             if (temp.length > 6 && temp.length <= 9) {
                 let num = temp.length - 6;

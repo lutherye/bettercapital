@@ -89,7 +89,7 @@ class NavBar extends React.Component {
                                             <div className="number-holder">
                                                 <div className="value-holder">
                                                     <div className="drop-port-val">
-                                                        {"$" + (Math.round(this.props.portVal * 100) / 100).toFixed(2)}
+                                                        {this.props.portVal}
                                                     </div>
                                                     <div>
                                                         Portfolio Value

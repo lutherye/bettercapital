@@ -109,7 +109,6 @@ class PortfolioChart extends React.Component {
                 maximumFractionDigits: 2
             });
             let temp = change.slice(1);
-            debugger
             if ((pricePoint - startPoint) < 0) {
                 change = "-" + "$" + temp;
             } else {
@@ -181,7 +180,6 @@ class PortfolioChart extends React.Component {
                                         } else {
                                             price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
                                         }
-                                        debugger
                                         if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
                                             for (let idx= 0; idx< transactionDup.length; idx++) {
                                                 const arr = transactionDup[idx];
@@ -203,7 +201,6 @@ class PortfolioChart extends React.Component {
                         if (that.state.chart.length !== chart.length) {
                             that.setState({chart: chart});
                             that.dateChart = chart;
-                            debugger
                         }
                     }
             }

@@ -11,9 +11,9 @@ import ReactLoading from 'react-loading';
         constructor(props){
             super(props);
             this.state = {
-                portVal: 0,
             };
-           this.handleClick = this.handleClick.bind(this);
+            this.portVal = "";
+            this.handleClick = this.handleClick.bind(this);
         }
     
         componentDidMount(){
@@ -66,7 +66,8 @@ import ReactLoading from 'react-loading';
 
             const propbar = {};
             let that = this;
-
+            this.portVal = document.getElementById("portfolioVal") ? document.getElementById("portfolioVal").innerHTML : 0;
+            debugger
             if (this.props.transactions && this.props.watchlists ) {
                 this.props.transactions.forEach((obj) => {
                 if (obj.user_id === this.props.currentUser.id) {const symbol = obj.asset_symbol;
@@ -105,6 +106,7 @@ import ReactLoading from 'react-loading';
                     <div className="greet-page">
                         <NavBar 
                             currentUser={this.props.currentUser}
+                            portVal={this.portVal}
                         />
     
                     <div className="main-wrapper">
@@ -116,7 +118,7 @@ import ReactLoading from 'react-loading';
                                     </div>
                                     <span className="port-val"
                                         id="portfolioVal">
-                                            <>${this.state.portVal}</>
+                                            <>${}</>
                                     </span>
                                     <div className="changes">
                                         <span className="port-change"
