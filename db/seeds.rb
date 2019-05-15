@@ -10,12 +10,12 @@ U1 = User.find(1).update(buying_power: 50000)
 T_delete = Transaction.destroy_all
 W_delete = Watchlist.destroy_all
 
-T0 = Transaction.create(user_id: 1, asset_symbol: "NFLX", quantity: 7, price: 65.58, created_at: "2014-08-15")
-T1 = Transaction.create(user_id: 1, asset_symbol: "TSLA", quantity: 7, price: 231.77, created_at: "2015-04-28")
-T2 = Transaction.create(user_id: 1, asset_symbol: "AMZN", quantity: 6, price: 514.24, created_at: "2015-08-31")
-T3 = Transaction.create(user_id: 1, asset_symbol: "GOOG", quantity: 3, price: 631.24, created_at: "2015-09-15")
-T5 = Transaction.create(user_id: 1, asset_symbol: "VTI", quantity: 17, price: 112.28, created_at: "2016-09-02")
-T6 = Transaction.create(user_id: 1, asset_symbol: "AAPL", quantity: 7, price: 156.10, created_at: "2017-05-17")
+T0 = Transaction.create(user_id: 1, asset_symbol: "NFLX", quantity: 7, price: 47.27, created_at: "2014-05-12")
+T1 = Transaction.create(user_id: 1, asset_symbol: "TSLA", quantity: 7, price: 183.87, created_at: "2014-05-12")
+T2 = Transaction.create(user_id: 1, asset_symbol: "AMZN", quantity: 6, price: 294.30, created_at: "2014-05-12")
+T3 = Transaction.create(user_id: 1, asset_symbol: "GOOG", quantity: 3, price: 520.65, created_at: "2014-05-12")
+T5 = Transaction.create(user_id: 1, asset_symbol: "VTI", quantity: 17, price: 97.61, created_at: "2014-05-12")
+T6 = Transaction.create(user_id: 1, asset_symbol: "AAPL", quantity: 7, price: 83.93, created_at: "2014-05-12")
 
 
 W1 = Watchlist.create(user_id: 1, asset_symbol: "COF")

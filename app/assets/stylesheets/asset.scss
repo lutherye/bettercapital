@@ -505,6 +505,10 @@ input[type=number] {
     justify-content: space-between;
 }
 
+.news-section > a{
+    cursor: pointer;
+}
+
 .news-picture-div {
     align-content: center;
     display: flex;
@@ -589,3 +593,15 @@ input[type=number] {
     color: #ccc;
 }
 
+.loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.load-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

@@ -72,12 +72,6 @@ class NavBar extends React.Component {
                                     Home
                                 </Link>
                             </div>
-                            {/* <div className="home-home">
-                                <Link to={"/home"}
-                                    className="home-link">
-                                    Notifications
-                                </Link>
-                            </div> */}
                             <div
                                 tabIndex="1"
                                 onFocus={this.dropdown}
@@ -110,44 +104,6 @@ class NavBar extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* <form className="bank-holder">
-                                                <div>
-
-                                                </div>
-                                                <div className="word-holder">
-                                                    <div className="deposit">
-                                                        <span>Deposit Funds</span>
-                                                    </div>
-                                                </div>
-                                                    <div className="makebelieve">
-                                                        From 
-                                                        <div className="bank-of">Makebelieve Bank</div>
-                                                    </div>
-                                                <div className="transaction-holder"
-                                                    onClick={e => {
-                                                        e.preventDefault();
-                                                        e.stopPropagation()
-                                                    }}>
-                                                    <div className="amount-words">
-                                                        Amount
-                                                    </div>
-                                                    <input 
-                                                        onClick={e => {
-                                                            e.preventDefault();
-                                                            e.stopPropagation()}}
-                                                        type="integer" 
-                                                        className="buy-input" 
-                                                        value={this.state.value}
-                                                        onChange={this.handleInput}
-                                                        placeholder="0"
-                                                        />
-                                                </div>
-                                                    <div className="button-holder">
-                                                        <div className="transfer-button">
-                                                            Make Transfer
-                                                        </div>
-                                                    </div>
-                                            </form> */}
                                             <div className="logout-section">
                                                 <div className="asset-header-button"
                                                     onClick={this.logoutHandle}>Log Out</div>

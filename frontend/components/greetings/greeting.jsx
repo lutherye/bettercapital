@@ -1,59 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import merge from 'lodash/merge';
-import Search from '../navbar/search';
 import PortfolioChart from '../chart/portfolio_chart_container';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine } from 'recharts';
-import MiniChart from '../chart/mini_chart';
 import NavBar from '../navbar/nav_bar';
+import Sidebar from '../sidebar/sidebar_container';
 import ReactLoading from 'react-loading';
+
+
     class Greeting extends React.Component {
         constructor(props){
             super(props);
             this.state = {
                 portVal: 0,
-                symbolQuants: [],
-                firstRender: true,
-                symbolPrices: {},
             };
            this.handleClick = this.handleClick.bind(this);
         }
     
         componentDidMount(){
-            this.props.fetWatchlists(this.props.currentUser.id).then(() => {
-                let that = this;
-                if (this.props.watchlists.length > 0) {
-                    this.props.watchlists.forEach(ele => {
-                        this.props.fetQuote(ele.asset_symbol).then(quote => {
-                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: quote.quote.latestPrice});
-                            that.setState({ symbolPrices: newPrice });
-                        });
-                    });
-                }
-                this.props.fetTransaction(this.props.currentUser.id).then(() => {
-                    this.props.fetAllNews();
-                    (this.props.transactions.length < 1) ? null :
-                        (this.props.transactions.map(transaction => {
-                            if (transaction.user_id === this.props.currentUser.id) {
-                                let that = this;
-                                if (transaction.quantity < 0) {
-                                    let sellVal = (transaction.quantity * transaction.price);
-                                    this.setState({portVal: that.state.portVal + sellVal});
-                                } else if (transaction.quantity >= 0){
-                                    this.props.fetQuote(transaction.asset_symbol).then(quote => {
-                                    let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: quote.quote.latestPrice });
-                                    that.setState({ symbolPrices: newPrices });
-                                    let val = (quote.quote.latestPrice * transaction.quantity);
-                                    if (val === undefined) {
-                                        val = quote.quote.latestPrice * transaction.quantity;
-                                    }
-                                    this.setState({portVal: that.state.portVal + val});
-                                    });}
-                                }
-                        }));
-                    this.setState({ firstRender: false });
-                });
-            });
+            this.props.fetAllNews();
         }
         
         updateSearch(e) {
@@ -62,9 +26,6 @@ import ReactLoading from 'react-loading';
 
         handleClick(symbol) {
             this.props.history.push(`/asset/${symbol}`);
-            this.props.fetChart(symbol, "1d").then(() => {
-                this.props.fetQuote(symbol);
-             });
         }
 
         parsedNews() {
@@ -103,132 +64,46 @@ import ReactLoading from 'react-loading';
 
         render(){   
 
-            const object = {};
-            const keys = [];
+            const propbar = {};
             let that = this;
-            if (this.props.transactions) {
+
+            if (this.props.transactions && this.props.watchlists ) {
                 this.props.transactions.forEach((obj) => {
                 if (obj.user_id === this.props.currentUser.id) {const symbol = obj.asset_symbol;
                     const quantity = obj.quantity;
-                    const price = that.state.symbolPrices[symbol];
-                    if (object[symbol]) {
-                        object[symbol].quantity += quantity;
+                    if (propbar[symbol]) {
+                        propbar[symbol] += quantity;
                     } else {
-                        object[symbol] = {};
-                        object[symbol].quantity = quantity;
-                        object[symbol].price = price;
-                        keys.push(symbol);
+                        propbar[symbol] = {};
+                        propbar[symbol]= quantity;
                     }
                 }
                 });
-            }
-
-            let propbar = []; 
-            const sidebar = ( keys.length > 0 ) ? (keys.map((sym, idx) => {
-
-                const symbol = sym.toUpperCase();
-                const quantity = object[sym].quantity;
-                let price;
-                if (that.state.symbolPrices[symbol]) {
-                    price = that.state.symbolPrices[symbol].toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    });
-                }
-                that.state.portVal;
-                if (quantity > 0) {
-                    propbar[symbol] = quantity;
-                    return (
-                        <li key={idx}
-                            className="personal-asset"
-                            onClick={() => { this.handleClick(symbol) }}
-                        >
-                            <div className="key-quantity">
-                                <div className="p-key">
-                                    {symbol.toUpperCase()}
-                                </div>
-    
-                                <div className="p-quantity">
-                                    {quantity}
-                                    <div className="p-shares">
-                                        Shares
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="minichart">
-                                <MiniChart symbol={symbol}/>
-                            </div>
-                            <div className="p-price">
-                                ${price}
-                            </div>
-                        </li>
-                    )
-                }
-            })) : (<li></li>);
-
-            const hash = {};
-            const watchies = [];
-
-            if (this.props.watchlists) {
                 this.props.watchlists.forEach(ele => {
                     if (ele.user_id === that.props.currentUser.id) {
                         const symbol = ele.asset_symbol;
-                        const price = that.state.symbolPrices[symbol];
-                        hash[symbol] =  {};
-                        hash[symbol].price = price;
-                        watchies.push(symbol);
+                        propbar[symbol] = 0;
                     }
                 })
             }
-            const watchbar = ( watchies.length > 0 ) ? ( watchies.map((sym, idx) => {
-                const symbol = sym.toUpperCase();
-                let price; 
-                if ( that.state.symbolPrices[symbol]) {
-                    price = that.state.symbolPrices[symbol].toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                    });
-                }
-                propbar[symbol] = 0;
-                return (
-                    <li key={idx}
-                        className="personal-asset"
-                        onClick={() => { this.handleClick(symbol)}}
-                        >
-                            <div className="key-quantity">
-                                <div className="p-key">
-                                    {symbol.toUpperCase()}
-                                </div>
 
-                            </div>
-                            <div className="minichart">
-                                <MiniChart symbol={symbol} 
-                                    />
-                            </div>
-                            <div className="p-price">
-                                ${price}
-                            </div>
-                        </li>
-                )
-            })) : (<li></li>)
-            if (document.getElementById("portfolioVal")) {
-                var loadingVal = document.getElementById("portfolioVal").innerHTML;
-            }
-
-                if ( !this.props.chart.news || !this.props.chart.symbol ) {
+                if ( !this.props.chart.news ) {
                     return (
-                        <ReactLoading
-                            type={"spinningBubbles"}
-                            color={"#21ce99"}
-                            height={100}
-                            width={100}
-                        />
+                        <div className="load-container">
+                            <div className="loading">
+                                <ReactLoading
+                                    type={"spinningBubbles"}
+                                    color={"#21ce99"}
+                                    height={100}
+                                    width={100}
+                                />
+                            </div>
+                        </div>
                     )
                 } else {
                 return(
                     <div className="greet-page">
                         <NavBar 
-                            portVal={this.state.portVal}
                             currentUser={this.props.currentUser}
                         />
     
@@ -259,33 +134,12 @@ import ReactLoading from 'react-loading';
                                 </div>
                                     <PortfolioChart 
                                         sidebar={propbar} 
-                                        portVal={this.state.portVal}
                                     />
                                     <div>
                                         {this.parsedNews()}
                                     </div>
                             </div>
-                            <div className="sidebar-div">
-                                <div className="sidebar-holder">
-                                    <div className="sidebar">
-    
-                                        <div className="personal-holder">
-                                            <div className="stocks">
-                                                <span>
-                                                    Stocks
-                                                </span>
-                                            </div>
-                                            {sidebar}
-                                            <div className="stocks">
-                                                <span>
-                                                    Watchlist
-                                                </span>
-                                            </div>
-                                            {watchbar}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <Sidebar />
                             </div>
                     </div>
                     </div>

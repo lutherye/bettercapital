@@ -111,12 +111,14 @@ class Chart extends React.Component {
 
         if (!this.parsedData) {
             return (
-                <ReactLoading
-                    type={"spinningBubbles"}
-                    color={"#21ce99"}
-                    height={100}
-                    width={100}
-                />
+                <div className="loading">
+                    <ReactLoading
+                        type={"bars"}
+                        color={"#21ce99"}
+                        height={100}
+                        width={100}
+                    />
+                </div>
             )
         } else {
             return(

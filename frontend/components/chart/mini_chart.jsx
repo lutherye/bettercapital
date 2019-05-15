@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetChart, fetBatch, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
-
+import ReactLoading from 'react-loading';
 
 const msp = (state, ownProps) => {
     let symbols = [];
@@ -21,9 +21,7 @@ const msp = (state, ownProps) => {
 
 const mdp = dispatch => {
     return ({
-        fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
-        fetBatch: (symbols, range) => dispatch(fetBatch(symbols, range)),
-
+        // fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
     });
 };
 
@@ -40,10 +38,6 @@ class MiniChart extends React.Component {
             range: "1m",
         };
     }
-
-    // componentDidMount() {
-    //     this.props.fetChart(this.props.symbol, this.state.range);
-    // }
 
     render() {
         let parsedChart;
@@ -73,31 +67,43 @@ class MiniChart extends React.Component {
             }
         }
 
-        return (
-            <div className="chart-chart-chart">
-                <LineChart
-                    // margin={{ top: 17, right: 30, left: 20, bottom: 30 }}
-                    width={70}
-                    height={30}
-                    data={parsedChart}>
-                    <Line type="linear"
-                        dataKey="price"
-                        stroke={color}
-                        strokeWidth={1}
-                        dot={false}
+        if (!parsedChart) {
+            return (
+                <div className="loading">
+                    <ReactLoading
+                    type={"bars"}
+                    color={"#21ce99"}
+                    height={20}
+                    width={20}
                     />
-                    <XAxis dataKey="time"
-                        hide={true}
-                    />
-                    <YAxis dataKey="price"
-                        type="number"
-                        domain={["dataMin", 'dataMax']}
-                        hide={true}
-                    />
-                </LineChart>
-                
-            </div>
-        )
+                </div>
+            )
+        } else {
+            return (
+                <div className="chart-chart-chart">
+                    <LineChart
+                        width={70}
+                        height={30}
+                        data={parsedChart}>
+                        <Line type="linear"
+                            dataKey="price"
+                            stroke={color}
+                            strokeWidth={1}
+                            dot={false}
+                        />
+                        <XAxis dataKey="time"
+                            hide={true}
+                        />
+                        <YAxis dataKey="price"
+                            type="number"
+                            domain={["dataMin", 'dataMax']}
+                            hide={true}
+                        />
+                    </LineChart>
+                    
+                </div>
+            )
+        }
     }
 }
 

@@ -59,7 +59,7 @@ class Asset extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if (prevProps.match.params.symbol !== this.props.match.params.symbol){
+        if ((prevProps.match.params.symbol !== this.props.match.params.symbol)){
             this.setState({
                 symbol: `${this.props.id}`,
                 owned: false,
@@ -93,14 +93,14 @@ class Asset extends React.Component {
     getStuff(symbol, range) {
         return this.props.fetChart(symbol, range).then(() => {
             this.props.fetQuote(symbol).then(() => {
-                this.props.fetSymbol().then(() => {
-                    this.props.fetNews(symbol).then(() => {
-                        this.props.fetCompany(symbol).then(() => {
-                                this.props.fetWatchlists(this.props.currentUser.id);
+                this.props.fetNews(symbol).then(() => {
+                    this.props.fetCompany(symbol).then(() => {
+                            this.props.fetSymbol().then(() => {
+                                    this.props.fetWatchlists(this.props.currentUser.id);
+                            });
                         });
                     });
-                });
-            });
+            })
         });
     }
 
@@ -139,7 +139,6 @@ class Asset extends React.Component {
                         price: this.props.chart.latestPrice,
                     });
                     let newCount = this.state.count - Number(this.state.quantity);
-                    debugger
                     this.setState({ count: newCount });
                         that.props.updateUserInfo(that.props.currentUser.id, that.props.currentUser.buying_power + (Number(that.state.quantity) * that.props.chart.latestPrice));
                 } else {
@@ -211,12 +210,16 @@ class Asset extends React.Component {
 
     render(){
         let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
-        let names = (this.props.chart.companyName) ? (this.props.chart.companyName.split(" ")) : null;
-        let companyName = (this.props.chart.companyName) ? (names.slice(0, names.length - 1)).join(" ") : null;
+        let names;
+        if (this.props.chart.company) {
+            names = (this.props.chart.company.companyName) ? (this.props.chart.company.companyName.split(" ")) : null;
+        }
+        let companyName = (this.props.chart.company) ? (names.slice(0, names.length - 1)).join(" ") : null;
         let companyCEO = (this.props.chart.company) ? (this.props.chart.company.CEO) : null;
-
+        debugger
         let avgTotalVolume = null;
         if (this.props.chart.avgTotalVolume) {
+            debugger
             let temp = this.props.chart.avgTotalVolume.toString();
             if (temp.length > 6 && temp.length <= 9) {
                 let num = temp.length - 6;
@@ -285,13 +288,6 @@ class Asset extends React.Component {
                                     </div>
                                         $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
-                            {/* <div className="checkbox">
-                                <div className="box">
-                                    <input type="checkbox" />
-                                    <span className="checkmark"></span>
-                                </div>
-                                Transaction may take up to 2 business days to complete.
-                                </div> */}
                             <div className="button-div">
                                 <input
                                     className="asset-buy"
@@ -333,13 +329,6 @@ class Asset extends React.Component {
                                     </div>
                                         $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
-                            {/* <div className="checkbox">
-                                <div className="box">
-                                    <input type="checkbox" />
-                                    <span className="checkmark"></span>
-                                </div>
-                                Transaction may take up to 3 business days to complete.
-                                </div> */}
                             <div className="button-div">
                                 <input
                                     className="asset-buy"
@@ -377,178 +366,193 @@ class Asset extends React.Component {
 
         let watchlistButton = (this.state.have) ? removeButton : addButton;
 
-        if (this.state.owned) {
+        if (this.state.owned && document.getElementById("watchButton")) {
             watchlistButton = noButton;
             document.getElementById("watchButton").style.display = "none";
         }
-
-        return(
-            <div className="asset-page">
-                <NavBar 
-                    portVal={0}
-                    currentUser={this.props.currentUser}
-                />
-
-            <div className="main-wrapper">
-            <div className="asset-main-wrapper">
-            <div className="asset-main-div">
-                <div className="asset-content-wrapper">
-                    <div className="asset-chart">
-                        <div className="sym-price">
-                            <div className="asset-sym">
-                                {companyName}
-                            </div>
-                            <div className="asset-price"
-                                id="assetPrice"
-                            >
-                            </div>
-                                <div className="changes">
-                                    <span className="port-change"
-                                        id="portChange"
-                                    >
-                                        <>{}</>
-                                    </span>
-                                    <span className="port-per"
-                                        id="portPer"
-                                    >
-                                        <>{}</>
-                                    </span>
-
-                                </div>
-                        </div>
-                            <div className="chart">
-                                <Chart 
-                                    symbol={this.state.symbol}
-                                    range={this.state.range}/>
-                            </div>
+        if (!this.props.chart.news || !companyName) {
+            return (
+                <div className="load-container">
+                    <div className="loading">
+                        <ReactLoading
+                            type={"bars"}
+                            color={"#21ce99"}
+                            height={100}
+                            width={100}
+                        />
                     </div>
-
-                    <div className="asset-content">
-                        <div className="asset-about">
-                        <div className="about-div-div">
-                            <div className="about-div">
-                                <span>About</span>
+                </div>
+            )
+        } else {
+            return(
+                <div className="asset-page">
+                    <NavBar 
+                        portVal={0}
+                        currentUser={this.props.currentUser}
+                    />
+    
+                <div className="main-wrapper">
+                <div className="asset-main-wrapper">
+                <div className="asset-main-div">
+                    <div className="asset-content-wrapper">
+                        <div className="asset-chart">
+                            <div className="sym-price">
+                                <div className="asset-sym">
+                                    {companyName}
+                                </div>
+                                <div className="asset-price"
+                                    id="assetPrice"
+                                >
+                                </div>
+                                    <div className="changes">
+                                        <span className="port-change"
+                                            id="portChange"
+                                        >
+                                            <>{}</>
+                                        </span>
+                                        <span className="port-per"
+                                            id="portPer"
+                                        >
+                                            <>{}</>
+                                        </span>
+    
+                                    </div>
                             </div>
+                                <div className="chart">
+                                    <Chart 
+                                        symbol={this.state.symbol}
+                                        range={this.state.range}/>
+                                </div>
                         </div>
-
-                            <div className="about-content">
-                                <span>{parsedCompany}</span>
-                            </div>
-                            <div className="about-grid">
-                                {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytd, week52High, week52Low, industry */}
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        CEO
-                                    </div>
-                                    <div className="grid-content">
-                                        {companyCEO}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        Avg Total Volume
-                                    </div>
-                                    <div className="grid-content">
-                                        {avgTotalVolume}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        Market Cap
-                                    </div>
-                                    <div className="grid-content">
-                                        {marketCap}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        Price-Earnings Ratio
-                                    </div>
-                                    <div className="grid-content">
-                                        {peRatio}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        YTD Change
-                                    </div>
-                                    <div className="grid-content">
-                                        {ytdChange}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        52 Week High
-                                    </div>
-                                    <div className="grid-content">
-                                        {weekHigh}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        52 Week Low
-                                    </div>
-                                    <div className="grid-content">
-                                        {week52Low}
-                                    </div>
-                                </div>
-                                <div className="about-grid-wrapper">
-                                    <div className="grid-title">
-                                        Industry
-                                    </div>
-                                    <div className="grid-content">
-                                        {industry}
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>  
-                        </div>
-
-                        <div className="asset-about">
+    
+                        <div className="asset-content">
+                            <div className="asset-about">
                             <div className="about-div-div">
                                 <div className="about-div">
-                                    <span>News</span>
+                                    <span>About</span>
                                 </div>
                             </div>
-
-                            <div>
-                                {this.parsedNews()}
+    
+                                <div className="about-content">
+                                    <span>{parsedCompany}</span>
+                                </div>
+                                <div className="about-grid">
+                                    {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytd, week52High, week52Low, industry */}
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            CEO
+                                        </div>
+                                        <div className="grid-content">
+                                            {companyCEO}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            Avg Total Volume
+                                        </div>
+                                        <div className="grid-content">
+                                            {avgTotalVolume}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            Market Cap
+                                        </div>
+                                        <div className="grid-content">
+                                            {marketCap}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            Price-Earnings Ratio
+                                        </div>
+                                        <div className="grid-content">
+                                            {peRatio}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            YTD Change
+                                        </div>
+                                        <div className="grid-content">
+                                            {ytdChange}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            52 Week High
+                                        </div>
+                                        <div className="grid-content">
+                                            {weekHigh}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            52 Week Low
+                                        </div>
+                                        <div className="grid-content">
+                                            {week52Low}
+                                        </div>
+                                    </div>
+                                    <div className="about-grid-wrapper">
+                                        <div className="grid-title">
+                                            Industry
+                                        </div>
+                                        <div className="grid-content">
+                                            {industry}
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>  
+                            </div>
+    
+                            <div className="asset-about">
+                                <div className="about-div-div">
+                                    <div className="about-div">
+                                        <span>News</span>
+                                    </div>
+                                </div>
+    
+                                <div>
+                                    {this.parsedNews()}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div className="buybox-wrapper">
-                    <div className="buybox-div">
-                        <div className="buybox">
-                            <div className="buy-wrapper">
-                                <div className={(this.state.buying) ? "buy-active" : "buy-symbol"}
-                                    onClick={()=> this.setState({buying: true})}
-                                >
-                                    Buy {this.props.chart.symbol}
+    
+                    <div className="buybox-wrapper">
+                        <div className="buybox-div">
+                            <div className="buybox">
+                                <div className="buy-wrapper">
+                                    <div className={(this.state.buying) ? "buy-active" : "buy-symbol"}
+                                        onClick={()=> this.setState({buying: true})}
+                                    >
+                                        Buy {this.props.chart.symbol}
+                                    </div>
+                                    <div className={(this.state.buying) ? "buy-symbol" : "buy-active"}
+                                        onClick={()=> this.setState({buying: false})}
+                                    >
+                                        Sell {this.props.chart.symbol}
+                                    </div>
                                 </div>
-                                <div className={(this.state.buying) ? "buy-symbol" : "buy-active"}
-                                    onClick={()=> this.setState({buying: false})}
-                                >
-                                    Sell {this.props.chart.symbol}
-                                </div>
+                                    {box}
                             </div>
-                                {box}
-                        </div>
-                        <div className="sidebar-buttons">
-                            <div className="buybox-button" id="watchButton">
-                                {watchlistButton}
+                            <div className="sidebar-buttons">
+                                <div className="buybox-button" id="watchButton">
+                                    {watchlistButton}
+                                </div>
                             </div>
                         </div>
                     </div>
+    
+                    </div>
+                    </div>
                 </div>
+                </div>
+            )
+        }
 
-                </div>
-                </div>
-            </div>
-            </div>
-        )
     }
 }
 
