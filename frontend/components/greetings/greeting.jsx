@@ -145,7 +145,7 @@ import ReactLoading from 'react-loading';
                                 <div className="personal-plug">
                                     <a href="https://samuel-ye.com/" target="_blank" className="plug site"><i className="fas fa-user-circle"></i></a>
                                     <a href="https://www.linkedin.com/in/lutherye/" target="_blank" className="plug link"><i className="fab fa-linkedin"></i></a>
-                                    <a href="https://github.com/lutherye/lastdream" target="_blank" className="plug git"><i className="fab fa-github-square"></i></a>
+                                    <a href="https://github.com/lutherye/bettercapital" target="_blank" className="plug git"><i className="fab fa-github-square"></i></a>
                                     <a href="https://angel.co/samuel-ye-1" target="_blank" className="plug angellist"><i className="fab fa-angellist"></i></a>
                                 </div>
                             </div>
