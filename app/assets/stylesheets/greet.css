@@ -140,3 +140,29 @@
 .word-holder {
     border-bottom: 1px solid #eee;
 }
+
+.plug-section {
+    position: fixed;
+    width: 100%;
+    display: block;
+    height: 30px;
+    top: 92%;
+    right: 2%;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1;
+}
+
+.personal-plug {
+    position: relative;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.plug {
+    margin-right: 5px;
+    color: rgb(49, 49, 49);
+    font-size: 20px
+}

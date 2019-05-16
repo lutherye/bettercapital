@@ -67,7 +67,6 @@ import ReactLoading from 'react-loading';
             const propbar = {};
             let that = this;
             this.portVal = document.getElementById("portfolioVal") ? document.getElementById("portfolioVal").innerHTML : 0;
-            debugger
             if (this.props.transactions && this.props.watchlists ) {
                 this.props.transactions.forEach((obj) => {
                 if (obj.user_id === this.props.currentUser.id) {const symbol = obj.asset_symbol;
@@ -108,42 +107,49 @@ import ReactLoading from 'react-loading';
                             currentUser={this.props.currentUser}
                             portVal={this.portVal}
                         />
-    
-                    <div className="main-wrapper">
-                        <div className="greet-chart">
-                        <br/>
-                            <div className="p-asset-chart">
-                                <div className="port-holder">
-                                    <div className="buying-power">
-                                    </div>
-                                    <span className="port-val"
-                                        id="portfolioVal">
-                                            <>${}</>
-                                    </span>
-                                    <div className="changes">
-                                        <span className="port-change"
-                                            id="portChange"
-                                        >
-                                            <>{}</>
+                        <div className="main-wrapper">
+                            <div className="greet-chart">
+                            <br/>
+                                <div className="p-asset-chart">
+                                    <div className="port-holder">
+                                        <div className="buying-power">
+                                        </div>
+                                        <span className="port-val"
+                                            id="portfolioVal">
+                                                <>${}</>
                                         </span>
-                                        <span className="port-per"
-                                            id="portPer"
-                                        >
+                                        <div className="changes">
+                                            <span className="port-change"
+                                                id="portChange"
+                                            >
                                                 <>{}</>
-                                        </span>
-                                       
+                                            </span>
+                                            <span className="port-per"
+                                                id="portPer"
+                                            >
+                                                    <>{}</>
+                                            </span>
+                                        
+                                        </div>
                                     </div>
+                                        <PortfolioChart 
+                                            sidebar={propbar} 
+                                        />
+                                        <div>
+                                            {this.parsedNews()}
+                                        </div>
                                 </div>
-                                    <PortfolioChart 
-                                        sidebar={propbar} 
-                                    />
-                                    <div>
-                                        {this.parsedNews()}
-                                    </div>
+                                <Sidebar />
+                                </div>
+                            <div className="plug-section">
+                                <div className="personal-plug">
+                                    <a href="https://samuel-ye.com/" target="_blank" className="plug site"><i className="fas fa-user-circle"></i></a>
+                                    <a href="https://www.linkedin.com/in/lutherye/" target="_blank" className="plug link"><i className="fab fa-linkedin"></i></a>
+                                    <a href="https://github.com/lutherye/lastdream" target="_blank" className="plug git"><i className="fab fa-github-square"></i></a>
+                                    <a href="https://angel.co/samuel-ye-1" target="_blank" className="plug angellist"><i className="fab fa-angellist"></i></a>
+                                </div>
                             </div>
-                            <Sidebar />
-                            </div>
-                    </div>
+                        </div>
                     </div>
                 )
             }

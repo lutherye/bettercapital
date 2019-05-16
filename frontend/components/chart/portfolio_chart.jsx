@@ -14,9 +14,9 @@ class PortfolioChart extends React.Component {
         this.dateChart = [];
     }
 
-    componentDidMount() {
-        this.props.fetBatch(this.props.symbols.join(","), "5y");
-    }
+    // componentDidMount() {
+    //     this.props.fetBatch(this.props.symbols.join(","), "5y");
+    // }
     
     componentDidUpdate(prevProps, prevState){
         if (prevProps.symbols[0] !== this.props.symbols[0]) {
