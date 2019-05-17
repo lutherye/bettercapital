@@ -36,7 +36,7 @@ class Chart extends React.Component {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
-                let percentChange = ((pricePoint - startPoint) / pricePoint).toLocaleString(undefined, {
+                let percentChange = (((pricePoint - startPoint) / startPoint) * 100).toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
@@ -65,7 +65,7 @@ class Chart extends React.Component {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
                     });
-                    let percentChange = Number((pricePoint - startPoint) / pricePoint).toLocaleString(undefined, {
+                    let percentChange = Number(((pricePoint - startPoint) / startPoint) * 100 ).toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
                     });
