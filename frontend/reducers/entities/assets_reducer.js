@@ -1,5 +1,5 @@
 
-import {RECEIVE_CHART, RECEIVE_QUOTE, RECEIVE_SYMBOL, RECEIVE_NEWS, RECEIVE_COMPANY, RECEIVE_CHARTS} from '../../actions/asset_actions';
+import {RECEIVE_CHART, RECEIVE_QUOTE, RECEIVE_SYMBOL, RECEIVE_NEWS, RECEIVE_COMPANY, RECEIVE_CHARTS, RECEIVE_PRICE} from '../../actions/asset_actions';
 import merge from 'lodash/merge';
 
 export default (state={}, action) => {
@@ -17,6 +17,8 @@ export default (state={}, action) => {
             return merge({}, newState, { charts: action.charts });
         case RECEIVE_QUOTE:
             return merge({}, state, action.quote);
+        case RECEIVE_PRICE:
+            return merge({}, state, {[action.symbol]: action.price});
         case RECEIVE_SYMBOL:
             return merge({}, state, { symbols: action.symbols });
         case RECEIVE_NEWS:

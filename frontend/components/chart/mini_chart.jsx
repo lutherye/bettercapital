@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetChart, fetBatch, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
+import { fetChart, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
 import ReactLoading from 'react-loading';
 
 const msp = (state, ownProps) => {

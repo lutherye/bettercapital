@@ -6,6 +6,7 @@ export const RECEIVE_QUOTE = "RECEIVE_QUOTE";
 export const RECEIVE_SYMBOL = "RECEIVE_SYMBOL";
 export const RECEIVE_NEWS = "RECEIVE_NEWS";
 export const RECEIVE_COMPANY = "RECEIVE_COMPANY";
+export const RECEIVE_PRICE = "RECEIVE_PRICE";
 
 export const receiveChart = (symbol, chart) => {
     return({
@@ -51,6 +52,14 @@ export const receiveCompany = (company) => {
     });
 };
 
+export const receivePrice = (price, symbol) => {
+    return({
+        type: RECEIVE_PRICE,
+        price,
+        symbol,
+    });
+};
+
 export const fetChart = (symbol, range) => dispatch => {
     return (
         ApiUtilAsset.getChart(symbol, range)
@@ -62,6 +71,13 @@ export const fetQuote = (symbol) => dispatch => {
     return(
         ApiUtilAsset.getQuote(symbol)
             .then(quote => dispatch(receiveQuote(symbol, quote)))
+    );
+};
+
+export const fetPrice = (symbol) => dispatch => {
+    return(
+        ApiUtilAsset.getPrice(symbol)
+            .then(price => dispatch(receivePrice(price, symbol)))
     );
 };
 

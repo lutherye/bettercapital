@@ -14,24 +14,29 @@ class PortfolioChart extends React.Component {
         this.dateChart = [];
     }
 
-    // componentDidMount() {
-    //     this.props.fetBatch(this.props.symbols.join(","), "5y");
-    // }
-    
-    componentDidUpdate(prevProps, prevState){
-        if (prevProps.symbols[0] !== this.props.symbols[0]) {
+    componentDidMount() {
+        if (this.props.symbols) {
             this.props.fetBatch(this.props.symbols.join(","), "5y");
         }
+    }
+    
+    componentDidUpdate(prevProps, prevState){
+        // if (prevProps.symbols[0] !== this.props.symbols[0]) {
+        //     debugger
+        //     this.props.fetBatch(this.props.symbols.join(","), "5y");
+        // }
         if (prevProps.symbols.length !== this.props.symbols.length) {
-            
+            debugger
             this.props.fetBatch(this.props.symbols.join(","), "5y").then(() => {
                 this.setCharts();
             });
         }
         if (this.state.chart[0] === undefined && this.props.transactions[0] !== undefined) {
+            debugger
             this.setCharts();
         }
         if (this.state.chart.length > 0) {
+            debugger
             if (Number.isNaN(this.state.chart[0].price)) {
                 this.props.fetBatch(this.props.symbols.join(","), "5y").then(()=> {
                     this.setCharts();
@@ -134,8 +139,7 @@ class PortfolioChart extends React.Component {
         let symb = this.props.symbols[0];
         let that = this;
         let easyactions = {};
-        const transactionDup = Array.from(this.props.transactions)
-        // .reverse();
+        const transactionDup = Array.from(this.props.transactions);
 
         if (this.props.transactions && this.props.chart){
             this.props.transactions.forEach(obj => {
@@ -169,7 +173,6 @@ class PortfolioChart extends React.Component {
             if (that.props.symbols && that.props.chart[symb]) {
                     while(chart.length < that.props.chart[symb].chart.length) {
                         for (let i = that.props.chart[symb].chart.length - 1; i >= 0 ; i--) {        // iterating through dates
-                            // for (let i = 0; i <= that.props.chart[symb].chart.length - 1 ; i++) {        // iterating through dates
                             const obj = that.props.chart[symb].chart[i];
                                 let chartEpoch = new Date(obj.date).getTime()/1000.0;
                                 let price = 0;

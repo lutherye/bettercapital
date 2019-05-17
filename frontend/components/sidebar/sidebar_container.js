@@ -3,6 +3,7 @@ import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions
 import Sidebar from './sidebar';
 import { withRouter } from 'react-router-dom';
 import { fetWatchlists } from '../../actions/watchlist_actions';
+import { fetQuote, fetPrice } from '../../actions/asset_actions';
 
 const msp = state => {
     return({
@@ -20,6 +21,7 @@ const mdp = dispatch => {
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
         fetWatchlists: (id) => dispatch(fetWatchlists(id)),
+        fetPrice: (symbol) => dispatch(fetPrice(symbol)),
     });
 };
 

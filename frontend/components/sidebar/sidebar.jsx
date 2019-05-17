@@ -22,8 +22,8 @@ class Sidebar extends React.Component {
             if ( this.props.watchlists.length > 0 ) {
                 this.props.watchlists.forEach(ele => {
                     if (!keys[ele.asset_symbol]) {
-                        this.props.fetQuote(ele.asset_symbol).then(quote => {
-                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: quote.quote.latestPrice});
+                        this.props.fetPrice(ele.asset_symbol).then(price => {
+                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: price.price});
                             that.setState({ symbolPrices: newPrice });
                         });
                         keys[ele.asset_symbol] = true;
@@ -40,12 +40,12 @@ class Sidebar extends React.Component {
                             let sellVal = (transaction.quantity * transaction.price);
                             this.setState({ portVal: that.state.portVal + sellVal });
                         } else if (!keys[transaction.asset_symbol] && transaction.quantity >= 0) {
-                            this.props.fetQuote(transaction.asset_symbol).then(quote => {
-                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: quote.quote.latestPrice });
+                            this.props.fetPrice(transaction.asset_symbol).then(price => {
+                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: price.price });
                                 that.setState({ symbolPrices: newPrices });
-                                let val = (quote.quote.latestPrice * transaction.quantity);
+                                let val = (price.price * transaction.quantity);
                                 if ( val === undefined ) {
-                                    val = quote.quote.latestPrice * transaction.quantity;
+                                    val = price.price * transaction.quantity;
                                 }
                                 this.setState({ portVal: that.state.portVal + val });
                             });
@@ -94,31 +94,45 @@ class Sidebar extends React.Component {
                 }
                 that.state.portVal;
                 if (quantity > 0) {
-                    return (
-                        <li key={idx}
-                            className="personal-asset"
-                            onClick={() => { this.handleClick(symbol) }}
-                        >
-                            <div className="key-quantity">
-                                <div className="p-key">
-                                    {symbol.toUpperCase()}
-                                </div>
-    
-                                <div className="p-quantity">
-                                    {quantity}
-                                    <div className="p-shares">
-                                        Shares
+                    if (!price || !this.props.chart.charts) {
+                        return (
+                            <div className="loading"
+                                key={idx}>
+                                <ReactLoading
+                                    type={"bars"}
+                                    color={"#21ce99"}
+                                    height={50}
+                                    width={50}
+                                />
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <li key={idx}
+                                className="personal-asset"
+                                onClick={() => { this.handleClick(symbol) }}
+                            >
+                                <div className="key-quantity">
+                                    <div className="p-key">
+                                        {symbol.toUpperCase()}
+                                    </div>
+        
+                                    <div className="p-quantity">
+                                        {quantity}
+                                        <div className="p-shares">
+                                            Shares
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="minichart">
-                                <MiniChart symbol={symbol} />
-                            </div>
-                            <div className="p-price">
-                                ${price}
-                            </div>
-                        </li>
-                    )
+                                <div className="minichart">
+                                    <MiniChart symbol={symbol} />
+                                </div>
+                                <div className="p-price">
+                                    ${price}
+                                </div>
+                            </li>
+                        )
+                    }
                 }
             })) : (<li></li>);
     
@@ -150,26 +164,40 @@ class Sidebar extends React.Component {
                     maximumFractionDigits: 2,
                 });
             }
-            return (
-                <li key={idx}
-                    className="personal-asset"
-                    onClick={() => { this.handleClick(symbol) }}
-                >
-                    <div className="key-quantity">
-                        <div className="p-key">
-                            {symbol.toUpperCase()}
-                        </div>
-
-                    </div>
-                    <div className="minichart">
-                        <MiniChart symbol={symbol}
+            if (!price || !this.props.chart.charts) {
+                return (
+                    <div className="loading"
+                        key={idx}>
+                        <ReactLoading
+                            type={"bars"}
+                            color={"#21ce99"}
+                            height={50}
+                            width={50}
                         />
                     </div>
-                    <div className="p-price">
-                        ${price}
-                    </div>
-                </li>
-            )
+                )
+            } else {
+                return (
+                    <li key={idx}
+                        className="personal-asset"
+                        onClick={() => { this.handleClick(symbol) }}
+                    >
+                        <div className="key-quantity">
+                            <div className="p-key">
+                                {symbol.toUpperCase()}
+                            </div>
+    
+                        </div>
+                        <div className="minichart">
+                            <MiniChart symbol={symbol}
+                            />
+                        </div>
+                        <div className="p-price">
+                            ${price}
+                        </div>
+                    </li>
+                )
+            }
         })) : (<li></li>)
         return watchbar;
     }

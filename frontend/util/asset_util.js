@@ -13,6 +13,13 @@ export const getQuote = (symbol) => {
     });
 };
 
+export const getPrice = (symbol) => {
+    return $.ajax({
+        method: "GET",
+        url: `https://api.iextrading.com/1.0/stock/${symbol}/price`
+    });
+};
+
 export const getSymbol = () => {
     return $.ajax ({
         method:"GET",

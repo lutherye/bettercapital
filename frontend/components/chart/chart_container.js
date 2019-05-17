@@ -12,8 +12,8 @@ const msp = (state, ownProps) => {
     return ({
         currentUser: state.entities.users[state.session.userId],
         chart,
-        // symbol: Object.keys(chart)[0],
         // id,
+        // symbol: Object.keys(chart)[0],
         // transactions: state.entities.transactions,
     });
 };
