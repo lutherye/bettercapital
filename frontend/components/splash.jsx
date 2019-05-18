@@ -33,11 +33,11 @@ class Splash extends React.Component {
                                     className="logo-link">
                                     BetterCapital
                                 </Link>
-                                <a href="https://github.com/lutherye/bettercapital"
+                                <a target="_blank" href="https://github.com/lutherye/bettercapital"
                                     className="github">GitHub</a>
-                                <a href="https://www.linkedin.com/in/lutherye/"
+                                <a target="_blank" href="https://www.linkedin.com/in/lutherye/"
                                     className="linkedin">LinkedIn</a>
-                                <a href="https://samuel-ye.com"
+                                <a target="_blank" href="https://samuel-ye.com"
                                     className="personal">Personal Site</a>
     
                             </div>
