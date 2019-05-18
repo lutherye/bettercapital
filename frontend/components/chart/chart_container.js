@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetChart, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
+import { fetChart, fetBatch, fetQuote, fetSymbol, fetNews, fetCompany } from '../../actions/asset_actions';
 import Chart from './chart';
 import { logout } from '../../actions/session_actions';
 import { withRouter } from 'react-router-dom';
@@ -22,6 +22,7 @@ const mdp = dispatch => {
     return ({
         logout: () => dispatch(logout()),
         // asset
+        fetBatch: (symbol, range) => dispatch(fetBatch(symbol, range)),
         fetChart: (symbol, range) => dispatch(fetChart(symbol, range)),
         fetQuote: symbol => dispatch(fetQuote(symbol)),
         fetSymbol: () => dispatch(fetSymbol()),

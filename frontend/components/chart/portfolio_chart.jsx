@@ -15,7 +15,7 @@ class PortfolioChart extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.symbols) {
+        if (this.props.symbols.length > 0) {
             this.props.fetBatch(this.props.symbols.join(","), "5y");
         }
     }
@@ -26,17 +26,14 @@ class PortfolioChart extends React.Component {
         //     this.props.fetBatch(this.props.symbols.join(","), "5y");
         // }
         if (prevProps.symbols.length !== this.props.symbols.length) {
-            debugger
             this.props.fetBatch(this.props.symbols.join(","), "5y").then(() => {
                 this.setCharts();
             });
         }
         if (this.state.chart[0] === undefined && this.props.transactions[0] !== undefined) {
-            debugger
             this.setCharts();
         }
         if (this.state.chart.length > 0) {
-            debugger
             if (Number.isNaN(this.state.chart[0].price)) {
                 this.props.fetBatch(this.props.symbols.join(","), "5y").then(()=> {
                     this.setCharts();
@@ -180,8 +177,10 @@ class PortfolioChart extends React.Component {
                                         const ele = that.props.symbols[i];                          // getting ele to grab quantity
                                         if (charts[ele][chartEpoch] === undefined) {
                                             price += 0
+                                            debugger
                                         } else {
                                             price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
+                                            debugger
                                         }
                                         if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
                                             for (let idx= 0; idx< transactionDup.length; idx++) {
@@ -205,7 +204,9 @@ class PortfolioChart extends React.Component {
                             that.setState({chart: chart});
                             that.dateChart = chart;
                         }
+                        debugger
                     }
+                    debugger
             }
         }
     }
@@ -227,16 +228,16 @@ class PortfolioChart extends React.Component {
             }
         }
         if (!this.props.chart) {
-            return (
-                <div className="loading">
-                    <ReactLoading
-                        type={"bars"}
-                        color={"#21ce99"}
-                        height={100}
-                        width={100}
-                    />
-                </div>
-            )
+                return (
+                    <div className="loading">
+                        <ReactLoading
+                            type={"bars"}
+                            color={"#21ce99"}
+                            height={100}
+                            width={100}
+                        />
+                    </div>
+                )
         } else {
             return (
                 <div className="chart-chart-chart">

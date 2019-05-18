@@ -17,9 +17,11 @@ import ReactLoading from 'react-loading';
         }
     
         componentDidMount(){
-            this.props.fetAllNews();
+            Promise.all([
+                this.props.fetAllNews(),
+            ]);
         }
-        
+
         updateSearch(e) {
             this.setState({ search: e.target.value });
         }

@@ -8,30 +8,59 @@ class Chart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            range: "1d",
+            range: "5y",
+            chart: [],
         };
-        this.parsedData = undefined;
+        this.oneChart = [];
+        this.dateChart = [];
     }
     componentDidMount() {
-        this.props.fetChart(this.props.symbol, this.state.range);
+        // this.props.fetChart(this.props.symbol, this.state.range);
+        this.props.fetBatch(this.props.symbol, "5y").then(() => {
+            this.props.fetChart(this.props.symbol, "1d").then(() => {
+                this.setChart();
+            });
+        });
+
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.symbol !== prevProps.symbol) {
-            this.fetChart(this.props.symbol, this.state.range);
+        //     this.fetChart(this.props.symbol, this.state.range);
+            this.props.fetBatch(this.props.symbol, "5y").then(() => {
+                this.setChart();
+            });
         }
     }
     
     changeDate(date) {
         this.setState({range: date});
-        this.props.fetChart(this.props.symbol, date);
+        // this.props.fetChart(this.props.symbol, date);
+        if (date === "1d") {
+            this.dateChart = this.oneChart;
+        }
+        if (date === "1m") {
+            this.dateChart = this.state.chart.slice(1237);
+        }
+        if (date === "3m") {
+            this.dateChart = this.state.chart.slice(1195);
+        }
+        if (date === "6m") {
+            this.dateChart = this.state.chart.slice(1134);
+        }
+        if (date === "1y") {
+            this.dateChart = this.state.chart.slice(1006);
+        }
+        if (date === "5y") {
+            this.dateChart = this.state.chart;
+        }
     }
     ToolTipContent(e) {
         if (document.getElementById("assetPrice")) {
             if (e.payload && e.payload.length > 0) {
                 let datePoint = e.payload[0].payload.time;
                 let pricePoint = Number(e.payload[0].value);
-                let startPoint = Number(this.parsedData[0].price);
+                let startPoint = Number(this.dateChart[0].price);
                 let change = (pricePoint - startPoint).toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
@@ -57,10 +86,10 @@ class Chart extends React.Component {
                 document.getElementById("portChange").innerHTML = change;
                 document.getElementById("portPer").innerHTML = "(" + percentChange + "%)";
                 return (<div className="dateTool">{datePoint}</div>)
-            } else if (this.parsedData) {
-                if(this.parsedData.length > 0) { 
-                    let pricePoint = Number(this.parsedData[this.parsedData.length - 1].price);
-                    let startPoint = Number(this.parsedData[0].price);
+            } else if (this.dateChart) {
+                if(this.dateChart.length > 0) { 
+                    let pricePoint = Number(this.dateChart[this.dateChart.length - 1].price);
+                    let startPoint = Number(this.dateChart[0].price);
                     let change = Number(pricePoint - startPoint).toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
@@ -91,31 +120,47 @@ class Chart extends React.Component {
         }
     }
 
+    setChart() {
+        if (this.props.chart.charts) {
+            let chart = (this.props.chart.charts[this.props.symbol]
+            ) ? (this.props.chart.charts[this.props.symbol].chart.map((ele) => {
+                return { time: ele.label, price: ((ele.high + ele.low) / 2) };
+            })) : null;
+            this.dateChart = chart;
+            this.setState({ chart: chart });
+        } 
+        if (this.props.chart[this.props.symbol].length > 0) {
+            let chart = (this.props.chart[this.props.symbol]
+            ) ? (this.props.chart[this.props.symbol].map((ele) => {
+                return { time: ele.label, price: ((ele.high + ele.low) / 2) };
+            })) : null;
+            this.oneChart = chart;
+            debugger
+        }
+    }
+
     render() {
-        this.parsedData = (this.props.chart[this.props.symbol].length && this.props.chart[this.props.symbol].chart === undefined) ? (this.props.chart[this.props.symbol].map((ele) => {
-            return { time: ele.label, price: ((ele.high + ele.low) / 2) };
-        })) : null;
 
         this.min = "dataMin";
 
-        if (this.parsedData) {
-            let filteredData = this.parsedData.filter(obj => obj.price > 0);
-            this.parsedData = filteredData;
+        if (this.dateChart) {
+            let filteredData = this.dateChart.filter(obj => obj.price > 0);
+            this.dateChart = filteredData;
             let prices = filteredData.map(obj => obj.price);
             this.min = Math.min(...prices);
         }
         
         let color;
 
-        if (this.parsedData && this.parsedData.length > 0) {
-            if (this.parsedData[0].price < this.parsedData[this.parsedData.length - 1].price) {
+        if (this.dateChart && this.dateChart.length > 0) {
+            if (this.dateChart[0].price < this.dateChart[this.dateChart.length - 1].price) {
                 color = "#21ce99";
             } else {
                 color = "#ff4700";
             }
         }
 
-        if (!this.parsedData) {
+        if (!this.props.chart[this.props.symbol]) {
             return (
                 <div className="loading">
                     <ReactLoading
@@ -133,7 +178,7 @@ class Chart extends React.Component {
                         margin={{ top: 37, right: 30, left: 20, bottom: 30 }}
                         width={700}
                         height={270}
-                        data={this.parsedData}>
+                        data={this.dateChart}>
                         <Line type="linear"
                             dataKey="price"
                             stroke={color}
@@ -158,8 +203,6 @@ class Chart extends React.Component {
                                 backgroundColor: "transparent",
                                 fontSize: "10"
                             }}
-                        // viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
-                        // coordinate={{ x: 100, y: 140 }}
                         />
                     </LineChart>
                     <div className="date-ranges">

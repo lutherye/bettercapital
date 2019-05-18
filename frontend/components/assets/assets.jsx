@@ -91,17 +91,13 @@ class Asset extends React.Component {
     }
 
     getStuff(symbol, range) {
-        return this.props.fetChart(symbol, range).then(() => {
-            this.props.fetQuote(symbol).then(() => {
-                this.props.fetNews(symbol).then(() => {
-                    this.props.fetCompany(symbol).then(() => {
-                            this.props.fetSymbol().then(() => {
-                                    this.props.fetWatchlists(this.props.currentUser.id);
-                            });
-                        });
-                    });
-            })
-        });
+        Promise.all([
+            this.props.fetQuote(symbol),
+            this.props.fetNews(symbol),
+            this.props.fetCompany(symbol),
+            this.props.fetSymbol(),
+            this.props.fetWatchlists(this.props.currentUser.id),
+        ]);
     }
 
     handleSubmit(e) {
@@ -367,7 +363,7 @@ class Asset extends React.Component {
             watchlistButton = noButton;
             document.getElementById("watchButton").style.display = "none";
         }
-        if (!this.props.chart.news || !companyName) {
+        if (!this.props.chart.news || !companyName || !this.props.chart.latestPrice) {
             return (
                 <div className="load-container">
                     <div className="loading">

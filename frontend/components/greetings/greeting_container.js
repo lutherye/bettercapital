@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetChart, fetQuote, fetAllNews } from '../../actions/asset_actions';
+import { fetChart, fetBatch, fetQuote, fetAllNews } from '../../actions/asset_actions';
 import {logout} from '../../actions/session_actions';
 import { updateUserInfo, updateTransaction, fetTransaction } from '../../actions/transaction_actions';
 import Greeting from './greeting';
@@ -25,7 +25,7 @@ const mdp = dispatch => {
         updateTransaction: (transaction) => dispatch(updateTransaction(transaction)),
         fetTransaction: (id) => dispatch(fetTransaction(id)),
         fetAllNews: (news) => dispatch(fetAllNews(news)),
-        // fetBatch: (symbols, range) => dispatch(fetBatch(symbols, range)),
+        fetBatch: (symbols, range) => dispatch(fetBatch(symbols, range)),
         fetWatchlists: (id) => dispatch(fetWatchlists(id)),
     });
 };

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import merge from 'lodash/merge';
 import MiniChart from '../chart/mini_chart';
@@ -16,9 +17,13 @@ class Sidebar extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetWatchlists(this.props.currentUser.id).then(() => {
+        Promise.all([
+            this.props.fetTransaction(this.props.currentUser.id),
+            this.props.fetWatchlists(this.props.currentUser.id),
+        ]).then(()=> {
             let that = this;
             let keys = {};
+            let watKeys = {};
             if ( this.props.watchlists.length > 0 ) {
                 this.props.watchlists.forEach(ele => {
                     if (!keys[ele.asset_symbol]) {
@@ -30,8 +35,6 @@ class Sidebar extends React.Component {
                     }
                 });
             }
-            this.props.fetTransaction(this.props.currentUser.id).then(() => {
-                let keys = {};
                 (this.props.transactions.length < 1) ? null : 
                 (this.props.transactions.map(transaction => {
                     if (transaction.user_id === this.props.currentUser.id) {
@@ -39,7 +42,7 @@ class Sidebar extends React.Component {
                         if (transaction.quantity < 0) {
                             let sellVal = (transaction.quantity * transaction.price);
                             this.setState({ portVal: that.state.portVal + sellVal });
-                        } else if (!keys[transaction.asset_symbol] && transaction.quantity >= 0) {
+                        } else if (!watKeys[transaction.asset_symbol] && transaction.quantity >= 0) {
                             this.props.fetPrice(transaction.asset_symbol).then(price => {
                                 let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: price.price });
                                 that.setState({ symbolPrices: newPrices });
@@ -49,11 +52,10 @@ class Sidebar extends React.Component {
                                 }
                                 this.setState({ portVal: that.state.portVal + val });
                             });
-                            keys[transaction.asset_symbol] = true;
+                            watKeys[transaction.asset_symbol] = true;
                         }
                     }
-                }))
-            });
+                }));
         });
     }
 
