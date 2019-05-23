@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     window.getChart = getChart;
     window.fetChart = fetChart;
     window.fetSymbol = fetSymbol;
-    window.fetQuote = fetQuote
+    window.fetQuote = fetQuote;
     window.fetTransaction = fetTransaction;
     window.updateTransaction = updateTransaction;
 
@@ -37,5 +37,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
         store = configureStore();
     }
     window.store = store;
-    ReactDOM.render(<Root store={store}/>, root)
-})
+    ReactDOM.render(<Root store={store}/>, root);
+});
