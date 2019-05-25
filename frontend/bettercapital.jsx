@@ -10,19 +10,6 @@ import { updateTransaction, fetTransaction} from './actions/transaction_actions'
 document.addEventListener("DOMContentLoaded", ()=>{
     const root = document.getElementById("root");
 
-    //testing   
-    //testing
-    window.ProtectedRoute = ProtectedRoute;
-    window.AuthRoute = AuthRoute;
-    window.getChart = getChart;
-    window.fetChart = fetChart;
-    window.fetSymbol = fetSymbol;
-    window.fetQuote = fetQuote;
-    window.fetTransaction = fetTransaction;
-    window.updateTransaction = updateTransaction;
-
-    //testing
-    //testing
     let store;
     if (window.user) {
         const preloadedState = {
