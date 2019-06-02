@@ -27,9 +27,10 @@ class Sidebar extends React.Component {
             if ( this.props.watchlists.length > 0 ) {
                 this.props.watchlists.forEach(ele => {
                     if (!keys[ele.asset_symbol]) {
-                        this.props.fetPrice(ele.asset_symbol).then(price => {
-                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: price.price});
+                        this.props.fetQuote(ele.asset_symbol).then(price => {
+                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: price.quote.latestPrice});
                             that.setState({ symbolPrices: newPrice });
+                            debugger
                         });
                         keys[ele.asset_symbol] = true;
                     }
@@ -43,12 +44,12 @@ class Sidebar extends React.Component {
                             let sellVal = (transaction.quantity * transaction.price);
                             this.setState({ portVal: that.state.portVal + sellVal });
                         } else if (!watKeys[transaction.asset_symbol] && transaction.quantity >= 0) {
-                            this.props.fetPrice(transaction.asset_symbol).then(price => {
-                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: price.price });
+                            this.props.fetQuote(transaction.asset_symbol).then(price => {
+                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: price.quote.latestPrice });
                                 that.setState({ symbolPrices: newPrices });
-                                let val = (price.price * transaction.quantity);
+                                let val = (price.quote.latestPrice * transaction.quantity);
                                 if ( val === undefined ) {
-                                    val = price.price * transaction.quantity;
+                                    val = price.quote.latestPrice * transaction.quantity;
                                 }
                                 this.setState({ portVal: that.state.portVal + val });
                             });

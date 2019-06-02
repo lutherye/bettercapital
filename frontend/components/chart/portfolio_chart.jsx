@@ -22,7 +22,7 @@ class PortfolioChart extends React.Component {
     
     componentDidUpdate(prevProps, prevState){
         // if (prevProps.symbols[0] !== this.props.symbols[0]) {
-        //     debugger
+
         //     this.props.fetBatch(this.props.symbols.join(","), "5y");
         // }
         if (prevProps.symbols.length !== this.props.symbols.length) {
@@ -177,10 +177,10 @@ class PortfolioChart extends React.Component {
                                         const ele = that.props.symbols[i];                          // getting ele to grab quantity
                                         if (charts[ele][chartEpoch] === undefined) {
                                             price += 0
-                                            debugger
+
                                         } else {
                                             price += (parseFloat(Math.round(charts[ele][chartEpoch] * 100) / 100).toFixed(2) * that.props.sidebar[ele]);
-                                            debugger
+
                                         }
                                         if (easyactions[ele] && transactionDup.length > 0) {        // easyactions = transactions / transactionDup = array               // iterate through array
                                             for (let idx= 0; idx< transactionDup.length; idx++) {
@@ -204,9 +204,9 @@ class PortfolioChart extends React.Component {
                             that.setState({chart: chart});
                             that.dateChart = chart;
                         }
-                        debugger
+
                     }
-                    debugger
+
             }
         }
     }
