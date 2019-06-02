@@ -30,7 +30,6 @@ class Sidebar extends React.Component {
                         this.props.fetQuote(ele.asset_symbol).then(price => {
                             let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: price.quote.latestPrice});
                             that.setState({ symbolPrices: newPrice });
-                            debugger
                         });
                         keys[ele.asset_symbol] = true;
                     }

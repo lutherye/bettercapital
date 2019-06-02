@@ -135,7 +135,7 @@ class Chart extends React.Component {
                 return { time: ele.label, price: ((ele.high + ele.low) / 2) };
             })) : null;
             this.oneChart = chart;
-            debugger
+
         }
     }
 
