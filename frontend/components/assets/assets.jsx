@@ -97,6 +97,7 @@ class Asset extends React.Component {
             this.props.fetCompany(symbol),
             this.props.fetSymbol(),
             this.props.fetWatchlists(this.props.currentUser.id),
+            this.props.fetTransaction(this.props.currentUser.id),
         ]);
     }
 

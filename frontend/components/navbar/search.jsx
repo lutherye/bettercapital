@@ -35,13 +35,14 @@ class Search extends React.Component {
 
     matches(){
         const matches = [];
-        if ( this.state.inputVal.length === 0 ) {
+        let length = this.state.inputVal.length;
+        if ( length === 0 ) {
             return null;
         }
         if (this.props.symbols){
             this.props.symbols.forEach(asset => {
-                if ((asset.symbol.includes(this.state.inputVal.toUpperCase())) || 
-                (asset.name.toUpperCase().includes(this.state.inputVal.toUpperCase()))) {
+                if ((asset.symbol.slice(0, length) == (this.state.inputVal.toUpperCase())) || 
+                (asset.name.slice(0, length).toUpperCase() == (this.state.inputVal.toUpperCase()))) {
                     matches.push(asset);
                 }
             });
