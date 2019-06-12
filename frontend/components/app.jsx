@@ -1,6 +1,6 @@
 import React from 'react';
 import SignupContainer from './session/signup_container';
-import { Route, witch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Splash from './splash';
 import LoginContainer from './session/login_container';
 import GreetingContainer from './greetings/greeting_container';

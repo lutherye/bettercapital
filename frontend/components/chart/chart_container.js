@@ -6,13 +6,12 @@ import { withRouter } from 'react-router-dom';
 import { updateUserInfo, updateTransaction } from '../../actions/transaction_actions';
 
 const msp = (state, ownProps) => {
-
     const chart = state.entities.assets;
-    // const id = ownProps.match.params.symbol;
+    const id = ownProps.match.params.symbol;
     return ({
         currentUser: state.entities.users[state.session.userId],
         chart,
-        // id,
+        id,
         // symbol: Object.keys(chart)[0],
         // transactions: state.entities.transactions,
     });
@@ -36,4 +35,4 @@ const mdp = dispatch => {
 };
 
 
-export default connect(msp, mdp)(Chart);
+export default withRouter(connect(msp, mdp)(Chart));
