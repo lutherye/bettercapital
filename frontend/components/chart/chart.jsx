@@ -26,7 +26,6 @@ class Chart extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.id !== prevProps.symbol || this.props.id !== prevProps.id) {
-            debugger
         //     this.fetChart(this.props.id, this.state.range);
             this.props.fetBatch(this.props.id, "5y").then(() => {
                 this.props.fetChart(this.props.id, "1d").then(() => {
