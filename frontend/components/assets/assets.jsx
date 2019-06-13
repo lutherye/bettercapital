@@ -21,28 +21,31 @@ class Asset extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleWatchAdd = this.handleWatchAdd.bind(this);
         this.handleWatchRemove = this.handleWatchRemove.bind(this);
+        this.getLists = this.getLists.bind(this);
     }
 
     componentDidMount(){
         let that = this;
-        this.props.fetTransaction(this.props.currentUser.id).then(() => {
+        this.getLists().then(() => {
             if (that.props.transactions) {
                 if (that.props.transactions.length > 0) {
                     that.props.transactions.forEach(ele => {
                         if ((ele.asset_symbol === that.state.symbol) &&
                             (ele.user_id === that.props.currentUser.id)) {
                             that.setState({ owned: true });
-                        } else if (that.props.watchlists.length > 0) {
-                            that.props.watchlists.forEach(ele => {
-                                if ((ele.asset_symbol === that.state.symbol) &&
-                                    (ele.user_id === that.props.currentUser.id) && (that.state.have !== true)) {
-                                    that.setState({ have: true });
-                                }
-                            });
-                        }
+                        } 
                     });
                 }
             }
+                if (that.props.watchlists.length > 0) {
+                    that.props.watchlists.forEach(ele => {
+                        if ((ele.asset_symbol === that.state.symbol) &&
+                            (ele.user_id === that.props.currentUser.id) && (that.state.have !== true)) {
+                            that.setState({ have: true });
+                        }
+                    });
+                }
+
         }).then(() => {
             let thisCount = 0;
             if (this.props.entities.transactions.length > 0) {
@@ -66,28 +69,36 @@ class Asset extends React.Component {
                 have: false,
             }, () => {
                     let that = this;
-                    this.props.fetTransaction(this.props.currentUser.id).then(() => {
+                    this.getLists().then(() => {
                         if (that.props.transactions) {
                             if (that.props.transactions.length > 0) {
                                 that.props.transactions.forEach(ele => {
                                     if ((ele.asset_symbol === that.state.symbol) &&
                                         (ele.user_id === that.props.currentUser.id)) {
                                         that.setState({ owned: true });
-                                    } else if (that.props.watchlists.length > 0) {
-                                        that.props.watchlists.forEach(ele => {
-                                            if ((ele.asset_symbol === that.state.symbol) &&
-                                                (ele.user_id === that.props.currentUser.id) && (that.state.have !== true)) {
-                                                that.setState({ have: true });
-                                            }
-                                        });
                                     }
                                 });
                             }
+                        }
+                        if (that.props.watchlists.length > 0) {
+                            that.props.watchlists.forEach(ele => {
+                                if ((ele.asset_symbol === that.state.symbol) &&
+                                    (ele.user_id === that.props.currentUser.id) && (that.state.have !== true)) {
+                                    that.setState({ have: true });
+                                }
+                            });
                         }
                     });
                 this.getStuff(this.state.symbol, this.state.range);
             });
         }
+    }
+
+    getLists() {
+        return Promise.all([
+            this.props.fetWatchlists(this.props.currentUser.id),
+            this.props.fetTransaction(this.props.currentUser.id),
+        ]);
     }
 
     getStuff(symbol, range) {
@@ -96,8 +107,6 @@ class Asset extends React.Component {
             this.props.fetNews(symbol),
             this.props.fetCompany(symbol),
             this.props.fetSymbol(),
-            this.props.fetWatchlists(this.props.currentUser.id),
-            this.props.fetTransaction(this.props.currentUser.id),
         ]);
     }
 
