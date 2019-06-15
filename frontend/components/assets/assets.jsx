@@ -12,7 +12,7 @@ class Asset extends React.Component {
             symbol: `${props.id}`,
             range: "1d",
             quantity: "",
-            price: `${this.props.chart.latestPrice}`,
+            // price: `${this.props.chart[this.props.id].quote.latestPrice}`,
             buying: true,
             owned: false,
             have: false,
@@ -111,6 +111,7 @@ class Asset extends React.Component {
     }
 
     handleSubmit(e) {
+        let currentSymbol = this.props.id;
         let thisCount = 0;
         if (this.props.entities.transactions.length > 0) {
             for (let i = 0; i < this.props.entities.transactions.length; i++) {
@@ -123,11 +124,11 @@ class Asset extends React.Component {
         let that = this;
             e.preventDefault();
             if (this.state.buying) {
-                if (this.props.currentUser.buying_power > this.state.quantity * this.props.chart.latestPrice) {
+                if (this.props.currentUser.buying_power > this.state.quantity * this.props.chart.quote[currentSymbol].quote.latestPrice) {
                     this.props.updateTransaction({ user_id: this.props.currentUser.id,
                         quantity: this.state.quantity,
                         asset_symbol: this.state.symbol,
-                        price: this.props.chart.latestPrice,
+                        price: this.props.chart.quote[currentSymbol].quote.latestPrice,
                     });
                     let newCount = this.state.count + Number(this.state.quantity);
                     this.setState({ count: newCount });
@@ -141,7 +142,7 @@ class Asset extends React.Component {
                         user_id: this.props.currentUser.id,
                         quantity: (this.state.quantity) * -1,
                         asset_symbol: this.state.symbol,
-                        price: this.props.chart.latestPrice,
+                        price: this.props.chart.quote[currentSymbol].quote.latestPrice,
                     });
                     let newCount = this.state.count - Number(this.state.quantity);
                     this.setState({ count: newCount });
@@ -214,13 +215,14 @@ class Asset extends React.Component {
     }
 
     render(){
-        let parsedCompany = (this.props.chart.company) ? (this.props.chart.company.description) : null;
+        let currentSymbol = this.props.id;
+        let parsedCompany = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.description) : null;
         let names;
         if (this.props.chart.company) {
-            names = (this.props.chart.company.companyName) ? (this.props.chart.company.companyName.split(" ")) : null;
+            names = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.companyName.split(" ")) : null;
         }
         let companyName = (this.props.chart.company) ? (names.slice(0, names.length - 1)).join(" ") : null;
-        let companyCEO = (this.props.chart.company) ? (this.props.chart.company.CEO) : null;
+        let companyCEO = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.CEO) : null;
         let avgTotalVolume = null;
         if (this.props.chart.avgTotalVolume) {
             let temp = this.props.chart.avgTotalVolume.toString();
@@ -248,15 +250,16 @@ class Asset extends React.Component {
         let ytdChange = (this.props.chart.ytdChange) ? ((this.props.chart.ytdChange).toFixed(2) + "%") : null;
         let weekHigh = (this.props.chart.week52High) ? ("$" + (this.props.chart.week52High).toFixed(2)) : null;
         let week52Low = (this.props.chart.week52Low) ? (this.props.chart.week52Low) : null;
-        let industry = (this.props.chart.company) ? (this.props.chart.company.industry) : null;
+        let industry = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.industry) : null;
             {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytdChange, week52High, week52Low, industry */ }
-
         let showPrice; 
-        if (this.props.chart.latestPrice) {
-            showPrice = this.props.chart.latestPrice.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol].quote) {
+                    showPrice = this.props.chart.quote[currentSymbol].quote.latestPrice.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+            }
         }
 
         let buyingPower;
@@ -277,6 +280,7 @@ class Asset extends React.Component {
                                     placeholder="0"
                                     value={this.state.quantity}
                                     onChange={this.update()}
+                                    min="0"
                                 />
                             </div>
                             <div className="market">
@@ -289,7 +293,7 @@ class Asset extends React.Component {
                                 <div>
                                     Estimated Cost
                                     </div>
-                                        $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
+                                        $ {parseFloat(Math.round((showPrice) * 100) / 100).toFixed(2)}
                                     </div>
                             <div className="button-div">
                                 <input
@@ -318,6 +322,7 @@ class Asset extends React.Component {
                                     placeholder="0"
                                     value={this.state.quantity}
                                     onChange={this.update()}
+                                    min="0"
                                 />
                             </div>
                             <div className="market">
@@ -330,7 +335,7 @@ class Asset extends React.Component {
                                 <div>
                                     Estimated Credit
                                     </div>
-                                        $ {parseFloat(Math.round((this.props.chart.latestPrice * this.state.quantity) * 100) / 100).toFixed(2)}
+                                        $ {parseFloat(Math.round((showPrice * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
                             <div className="button-div">
                                 <input
@@ -373,7 +378,7 @@ class Asset extends React.Component {
             watchlistButton = noButton;
             document.getElementById("watchButton").style.display = "none";
         }
-        if (!this.props.chart.news || !companyName || !this.props.chart.latestPrice) {
+        if (!this.props.chart.news || !companyName || showPrice === undefined) {
             return (
                 <div className="load-container">
                     <div className="loading">

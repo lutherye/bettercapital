@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { fetWatchlists } from '../../actions/watchlist_actions';
 import { fetQuote, fetPrice } from '../../actions/asset_actions';
 
-const msp = state => {
+const msp = (state, ownProps) => {
     return({
         currentUser: state.entities.users[state.session.userId],
         chart: state.entities.assets,

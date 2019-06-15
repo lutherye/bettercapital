@@ -24,33 +24,32 @@ class Sidebar extends React.Component {
             let that = this;
             let keys = {};
             let watKeys = {};
-            if ( this.props.watchlists.length > 0 ) {
-                this.props.watchlists.forEach(ele => {
+            if ( that.props.watchlists.length > 0 ) {
+                that.props.watchlists.forEach(ele => {
                     if (!keys[ele.asset_symbol]) {
-                        this.props.fetQuote(ele.asset_symbol).then(price => {
-                            let newPrice = merge({}, this.state.symbolPrices, {[ele.asset_symbol]: price.quote.latestPrice});
+                        that.props.fetQuote(ele.asset_symbol).then(price => {
+                            let newPrice = merge({}, that.state.symbolPrices, {[ele.asset_symbol]: price.quote[ele.asset_symbol].quote.latestPrice});
                             that.setState({ symbolPrices: newPrice });
                         });
                         keys[ele.asset_symbol] = true;
                     }
                 });
             }
-                (this.props.transactions.length < 1) ? null : 
-                (this.props.transactions.map(transaction => {
-                    if (transaction.user_id === this.props.currentUser.id) {
-                        let that = this;
+                (that.props.transactions.length < 1) ? null : 
+                (that.props.transactions.map(transaction => {
+                    if (transaction.user_id === that.props.currentUser.id) {
                         if (transaction.quantity < 0) {
                             let sellVal = (transaction.quantity * transaction.price);
-                            this.setState({ portVal: that.state.portVal + sellVal });
+                            that.setState({ portVal: that.state.portVal + sellVal });
                         } else if (!watKeys[transaction.asset_symbol] && transaction.quantity >= 0) {
-                            this.props.fetQuote(transaction.asset_symbol).then(price => {
-                                let newPrices = merge({}, this.state.symbolPrices, { [transaction.asset_symbol]: price.quote.latestPrice });
+                            that.props.fetQuote(transaction.asset_symbol).then(price => {
+                                let newPrices = merge({}, that.state.symbolPrices, { [transaction.asset_symbol]: price.quote[transaction.asset_symbol].quote.latestPrice });
                                 that.setState({ symbolPrices: newPrices });
-                                let val = (price.quote.latestPrice * transaction.quantity);
+                                let val = (price.quote[transaction.asset_symbol].quote.latestPrice * transaction.quantity);
                                 if ( val === undefined ) {
-                                    val = price.quote.latestPrice * transaction.quantity;
+                                    val = price.quote[transaction.asset_symbol].quote.latestPrice * transaction.quantity;
                                 }
-                                this.setState({ portVal: that.state.portVal + val });
+                                that.setState({ portVal: that.state.portVal + val });
                             });
                             watKeys[transaction.asset_symbol] = true;
                         }

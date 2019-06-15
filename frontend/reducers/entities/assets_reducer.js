@@ -16,7 +16,7 @@ export default (state={}, action) => {
             delete newState["charts"];
             return merge({}, newState, { charts: action.charts });
         case RECEIVE_QUOTE:
-            return merge({}, state, action.quote);
+            return merge({}, state, { quote: action.quote });
         case RECEIVE_PRICE:
             return merge({}, state, {[action.symbol]: action.price});
         case RECEIVE_SYMBOL:

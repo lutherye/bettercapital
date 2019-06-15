@@ -2,21 +2,21 @@
 export const getChart = (symbol, range) => {
     return $.ajax({
         method: "GET",
-        url: `https://api.iextrading.com/1.0/stock/${symbol}/chart/${range}`
+        url: `https://cloud.iexapis.com/stable/stock/market/batch?token=pk_466bf44e8d9046169a29eefc6ceaae56&symbols=${symbol}&types=chart&range=${range}`
     });
 };
 
 export const getQuote = (symbol) => {
     return $.ajax({
         method: "GET",
-        url: `https://api.iextrading.com/1.0/stock/${symbol}/quote`
+        url: `https://cloud.iexapis.com/stable/stock/market/batch?token=pk_466bf44e8d9046169a29eefc6ceaae56&symbols=${symbol}&types=quote`
     });
 };
 
 export const getPrice = (symbol) => {
     return $.ajax({
         method: "GET",
-        url: `https://api.iextrading.com/1.0/stock/${symbol}/price`
+        url: `https://cloud.iexapis.com/stable/stock/market/batch?token=pk_466bf44e8d9046169a29eefc6ceaae56&symbols=${symbol}&types=price`
     });
 };
 
@@ -30,7 +30,7 @@ export const getSymbol = () => {
 export const getBatch = (symbols, range) => {
     return $.ajax ({
         method: "GET",
-        url: `https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbols}&types=chart&range=${range}`,
+        url: `https://cloud.iexapis.com/stable/stock/market/batch?token=pk_466bf44e8d9046169a29eefc6ceaae56&symbols=${symbols}&types=chart&range=${range}`,
     });
 };
 
@@ -58,7 +58,7 @@ export const getAllNews = () => {
 export const getCompany = (symbol) => {
     return $.ajax ({
         method: "GET",
-        url: `https://api.iextrading.com/1.0/stock/${symbol}/company`
+        url: `https://cloud.iexapis.com/stable/stock/market/batch?token=pk_466bf44e8d9046169a29eefc6ceaae56&symbols=${symbol}&types=company`
     });
 };
 

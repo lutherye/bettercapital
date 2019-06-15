@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         @user.portfolio_value = 0
-        @user.buying_power = 0
+        @user.buying_power = 10000
         if @user.save
             login(@user)
             render "/api/users/show"
