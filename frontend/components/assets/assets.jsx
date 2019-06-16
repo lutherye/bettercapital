@@ -26,7 +26,7 @@ class Asset extends React.Component {
 
     componentDidMount(){
         let that = this;
-        this.getLists().then(() => {
+        this.getLists(this.state.symbol).then(() => {
             if (that.props.transactions) {
                 if (that.props.transactions.length > 0) {
                     that.props.transactions.forEach(ele => {
@@ -58,7 +58,7 @@ class Asset extends React.Component {
                 this.setState({ count: thisCount });
             }
         });
-        this.getStuff(this.state.symbol, this.state.range);
+        // this.getStuff(this.state.symbol, this.state.range);
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -69,7 +69,7 @@ class Asset extends React.Component {
                 have: false,
             }, () => {
                     let that = this;
-                    this.getLists().then(() => {
+                    this.getLists(this.state.symbol).then(() => {
                         if (that.props.transactions) {
                             if (that.props.transactions.length > 0) {
                                 that.props.transactions.forEach(ele => {
@@ -89,15 +89,19 @@ class Asset extends React.Component {
                             });
                         }
                     });
-                this.getStuff(this.state.symbol, this.state.range);
+                // this.getStuff(this.state.symbol, this.state.range);
             });
         }
     }
 
-    getLists() {
+    getLists(symbol) {
         return Promise.all([
             this.props.fetWatchlists(this.props.currentUser.id),
             this.props.fetTransaction(this.props.currentUser.id),
+            this.props.fetQuote(symbol),
+            this.props.fetNews(symbol),
+            this.props.fetCompany(symbol),
+            this.props.fetSymbol(),
         ]);
     }
 
@@ -215,14 +219,32 @@ class Asset extends React.Component {
     }
 
     render(){
-        let currentSymbol = this.props.id;
-        let parsedCompany = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.description) : null;
+        const currentSymbol = this.props.id;
+        let parsedCompany;
+        debugger
+        if (this.props.chart.company) {
+            parsedCompany = (this.props.chart.company[currentSymbol].company.description) 
+        } else {
+            parsedCompany = null;
+        }
         let names;
         if (this.props.chart.company) {
-            names = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.companyName.split(" ")) : null;
+            names = this.props.chart.company[currentSymbol].company.companyName.split(" ") 
+        } else {
+            names = null;
         }
-        let companyName = (this.props.chart.company) ? (names.slice(0, names.length - 1)).join(" ") : null;
-        let companyCEO = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.CEO) : null;
+        let companyName;
+        if (this.props.chart.company) {
+            companyName = names.slice(0, names.length - 1).join(" ") 
+        } else {
+            companyName = null;
+        }
+        let companyCEO;
+        if (this.props.chart.company) {
+            companyCEO = this.props.chart.company[currentSymbol].company.CEO
+        } else {
+            companyCEO = null;
+        }
         let avgTotalVolume = null;
         if (this.props.chart.avgTotalVolume) {
             let temp = this.props.chart.avgTotalVolume.toString();
