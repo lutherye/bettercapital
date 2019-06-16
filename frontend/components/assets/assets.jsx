@@ -12,11 +12,12 @@ class Asset extends React.Component {
             symbol: `${props.id}`,
             range: "1d",
             quantity: "",
-            // price: `${this.props.chart[this.props.id].quote.latestPrice}`,
+            // price: `${this.props.chart[this.props.id.toUpperCase()].quote.latestPrice}`,
             buying: true,
             owned: false,
             have: false,
             count: 0,
+            called: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleWatchAdd = this.handleWatchAdd.bind(this);
@@ -25,7 +26,10 @@ class Asset extends React.Component {
     }
 
     componentDidMount(){
+        debugger
         let that = this;
+        this.getStuff(this.state.symbol, this.state.range);
+        this.setState({called: true});
         this.getLists(this.state.symbol).then(() => {
             if (that.props.transactions) {
                 if (that.props.transactions.length > 0) {
@@ -62,13 +66,40 @@ class Asset extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if ((prevProps.match.params.symbol !== this.props.match.params.symbol)){
+        debugger
+        if (!this.props.chart.company && !this.state.called) {
+            let that = this;
+            this.getStuff(this.state.symbol, this.state.range);
+            this.getLists(this.state.symbol).then(() => {
+                if (that.props.transactions) {
+                    if (that.props.transactions.length > 0) {
+                        that.props.transactions.forEach(ele => {
+                            if ((ele.asset_symbol === that.state.symbol) &&
+                                (ele.user_id === that.props.currentUser.id)) {
+                                that.setState({ owned: true });
+                            }
+                        });
+                    }
+                }
+                if (that.props.watchlists.length > 0) {
+                    that.props.watchlists.forEach(ele => {
+                        if ((ele.asset_symbol === that.state.symbol) &&
+                            (ele.user_id === that.props.currentUser.id) && (that.state.have !== true)) {
+                            that.setState({ have: true });
+                        }
+                    });
+                }
+            });
+            this.setState({called: true});
+        }
+        if ((prevProps.match.params.symbol.toUpperCase() !== this.props.match.params.symbol.toUpperCase())){
             this.setState({
-                symbol: `${this.props.id}`,
+                symbol: `${this.props.id.toUpperCase()}`,
                 owned: false,
                 have: false,
             }, () => {
                     let that = this;
+                    this.getStuff(this.state.symbol, this.state.range);
                     this.getLists(this.state.symbol).then(() => {
                         if (that.props.transactions) {
                             if (that.props.transactions.length > 0) {
@@ -98,14 +129,10 @@ class Asset extends React.Component {
         return Promise.all([
             this.props.fetWatchlists(this.props.currentUser.id),
             this.props.fetTransaction(this.props.currentUser.id),
-            this.props.fetQuote(symbol),
-            this.props.fetNews(symbol),
-            this.props.fetCompany(symbol),
-            this.props.fetSymbol(),
         ]);
     }
 
-    getStuff(symbol, range) {
+    getStuff(symbol) {
         Promise.all([
             this.props.fetQuote(symbol),
             this.props.fetNews(symbol),
@@ -115,7 +142,7 @@ class Asset extends React.Component {
     }
 
     handleSubmit(e) {
-        let currentSymbol = this.props.id;
+        let currentSymbol = this.props.id.toUpperCase();
         let thisCount = 0;
         if (this.props.entities.transactions.length > 0) {
             for (let i = 0; i < this.props.entities.transactions.length; i++) {
@@ -199,7 +226,7 @@ class Asset extends React.Component {
 
     handleWatchAdd() {
             this.props.createWatchlist(
-                { user_id: this.props.currentUser.id, asset_symbol: this.props.id }
+                { user_id: this.props.currentUser.id, asset_symbol: this.props.id.toUpperCase() }
             );
             this.setState({ have: true });
             
@@ -209,7 +236,7 @@ class Asset extends React.Component {
         let object;
         if (this.props.watchlists.length > 0) {
             this.props.watchlists.forEach((ele, idx) => {
-                if ((ele.user_id === this.props.currentUser.id) && (ele.asset_symbol === this.props.id)) {
+                if ((ele.user_id === this.props.currentUser.id) && (ele.asset_symbol === this.props.id.toUpperCase())) {
                     object = ele;
                 }
             })
@@ -219,71 +246,111 @@ class Asset extends React.Component {
     }
 
     render(){
-        const currentSymbol = this.props.id;
+        const currentSymbol = this.props.id.toUpperCase();
         let parsedCompany;
-        debugger
         if (this.props.chart.company) {
-            parsedCompany = (this.props.chart.company[currentSymbol].company.description) 
+            if (this.props.chart.company[currentSymbol]) {
+                parsedCompany = (this.props.chart.company[currentSymbol].company.description) 
+            }
         } else {
             parsedCompany = null;
         }
         let names;
         if (this.props.chart.company) {
-            names = this.props.chart.company[currentSymbol].company.companyName.split(" ") 
+            if (this.props.chart.company[currentSymbol]) {
+                names = this.props.chart.company[currentSymbol].company.companyName.split(" ") 
+            }
         } else {
-            names = null;
+            names = undefined;
         }
         let companyName;
-        if (this.props.chart.company) {
+        if (this.props.chart.company && names !== undefined ) {
             companyName = names.slice(0, names.length - 1).join(" ") 
         } else {
             companyName = null;
         }
         let companyCEO;
         if (this.props.chart.company) {
-            companyCEO = this.props.chart.company[currentSymbol].company.CEO
+            if (this.props.chart.company[currentSymbol]) {
+                companyCEO = this.props.chart.company[currentSymbol].company.CEO
+            }
         } else {
             companyCEO = null;
         }
         let avgTotalVolume = null;
-        if (this.props.chart.avgTotalVolume) {
-            let temp = this.props.chart.avgTotalVolume.toString();
-            if (temp.length > 6 && temp.length <= 9) {
-                let num = temp.length - 6;
-                avgTotalVolume = temp.slice(0,num) + "." + temp.slice(num, num + 1) + "M";
-            } else if (temp.length > 9) {
-                let num = temp.length - 9;
-                avgTotalVolume = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "B";
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                let temp = this.props.chart.quote[currentSymbol].quote.avgTotalVolume.toString();
+                if (temp.length > 6 && temp.length <= 9) {
+                    let num = temp.length - 6;
+                    avgTotalVolume = temp.slice(0,num) + "." + temp.slice(num, num + 1) + "M";
+                } else if (temp.length > 9) {
+                    let num = temp.length - 9;
+                    avgTotalVolume = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "B";
+                }
             }
         }
         let marketCap = null;
-        if (this.props.chart.marketCap) {
-            let temp = this.props.chart.marketCap.toString();
-            if (temp.length > 6 && temp.length <= 9) {
-                let num = temp.length - 6;
-                marketCap = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "M";
-            } else if (temp.length > 9) {
-                let num = temp.length - 9;
-                marketCap = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "B";
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                let temp = this.props.chart.quote[currentSymbol].quote.marketCap.toString();
+                if (temp.length > 6 && temp.length <= 9) {
+                    let num = temp.length - 6;
+                    marketCap = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "M";
+                } else if (temp.length > 9) {
+                    let num = temp.length - 9;
+                    marketCap = temp.slice(0, num) + "." + temp.slice(num, num + 1) + "B";
+                }
             }
         }
 
-        let peRatio = (this.props.chart.peRatio) ? (this.props.chart.peRatio) : null;
-        let ytdChange = (this.props.chart.ytdChange) ? ((this.props.chart.ytdChange).toFixed(2) + "%") : null;
-        let weekHigh = (this.props.chart.week52High) ? ("$" + (this.props.chart.week52High).toFixed(2)) : null;
-        let week52Low = (this.props.chart.week52Low) ? (this.props.chart.week52Low) : null;
-        let industry = (this.props.chart.company) ? (this.props.chart.company[currentSymbol].company.industry) : null;
+
+        let peRatio;
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                peRatio = this.props.chart.quote[currentSymbol].quote.peRatio;
+            }
+        }
+        let ytdChange;
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                ytdChange = this.props.chart.quote[currentSymbol].quote.ytdChange.toFixed(2) + "%"
+            }
+        }
+        let weekHigh;
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                weekHigh = ("$" + this.props.chart.quote[currentSymbol].quote.week52High.toFixed(2));
+            }
+        }
+        let week52Low;
+        if (this.props.chart.quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                week52Low = this.props.chart.quote[currentSymbol].quote.week52Low;
+            }
+        }
+        let industry;
+        if (this.props.chart.company) {
+            if (this.props.chart.company[currentSymbol]) {
+                industry = (this.props.chart.company[currentSymbol].company.industry);
+            } else {
+                industry = undefined;
+            }
+        } 
             {/* ceo, averageTotalVolume, marketCap, peRatio(if positive), ytdChange, week52High, week52Low, industry */ }
         let showPrice; 
+        let price;
         if (this.props.chart.quote) {
-            if (this.props.chart.quote[currentSymbol].quote) {
+            if (this.props.chart.quote[currentSymbol]) {
+                if (this.props.chart.quote[currentSymbol].quote) {
+                    price = this.props.chart.quote[currentSymbol].quote.latestPrice
                     showPrice = this.props.chart.quote[currentSymbol].quote.latestPrice.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
                     });
+                }
             }
         }
-
         let buyingPower;
         if (this.props.currentUser.buying_power) {
             buyingPower = this.props.currentUser.buying_power.toLocaleString(undefined, {
@@ -315,7 +382,7 @@ class Asset extends React.Component {
                                 <div>
                                     Estimated Cost
                                     </div>
-                                        $ {parseFloat(Math.round((showPrice) * 100) / 100).toFixed(2)}
+                                        $ {parseFloat(Math.round((price * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
                             <div className="button-div">
                                 <input
@@ -357,7 +424,7 @@ class Asset extends React.Component {
                                 <div>
                                     Estimated Credit
                                     </div>
-                                        $ {parseFloat(Math.round((showPrice * this.state.quantity) * 100) / 100).toFixed(2)}
+                                        $ {parseFloat(Math.round((price * this.state.quantity) * 100) / 100).toFixed(2)}
                                     </div>
                             <div className="button-div">
                                 <input
@@ -400,7 +467,10 @@ class Asset extends React.Component {
             watchlistButton = noButton;
             document.getElementById("watchButton").style.display = "none";
         }
-        if (!this.props.chart.news || !companyName || showPrice === undefined) {
+        if (!this.props.chart.news 
+            || !companyName 
+            || showPrice === undefined
+            ) {
             return (
                 <div className="load-container">
                     <div className="loading">
@@ -558,12 +628,12 @@ class Asset extends React.Component {
                                     <div className={(this.state.buying) ? "buy-active" : "buy-symbol"}
                                         onClick={()=> this.setState({buying: true})}
                                     >
-                                        Buy {this.props.chart.symbol}
+                                        Buy {this.props.id.toUpperCase()}
                                     </div>
                                     <div className={(this.state.buying) ? "buy-symbol" : "buy-active"}
                                         onClick={()=> this.setState({buying: false})}
                                     >
-                                        Sell {this.props.chart.symbol}
+                                        Sell {this.props.id.toUpperCase()}
                                     </div>
                                 </div>
                                     {box}

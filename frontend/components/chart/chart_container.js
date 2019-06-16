@@ -7,7 +7,7 @@ import { updateUserInfo, updateTransaction } from '../../actions/transaction_act
 
 const msp = (state, ownProps) => {
     const chart = state.entities.assets;
-    const id = ownProps.match.params.symbol;
+    const id = ownProps.match.params.symbol.toUpperCase();
     return ({
         currentUser: state.entities.users[state.session.userId],
         chart,

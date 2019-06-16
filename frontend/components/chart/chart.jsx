@@ -15,9 +15,9 @@ class Chart extends React.Component {
         this.dateChart = [];
     }
     componentDidMount() {
-        // this.props.fetChart(this.props.id, this.state.range);
-        this.props.fetBatch(this.props.id, "5y").then(() => {
-            this.props.fetChart(this.props.id, "1d").then(() => {
+        // this.props.fetChart(this.props.id.toUpperCase(), this.state.range);
+        this.props.fetBatch(this.props.id.toUpperCase(), "5y").then(() => {
+            this.props.fetChart(this.props.id.toUpperCase(), "1d").then(() => {
                 this.setChart();
             });
         });
@@ -25,10 +25,11 @@ class Chart extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.id !== prevProps.symbol || this.props.id !== prevProps.id) {
-        //     this.fetChart(this.props.id, this.state.range);
-            this.props.fetBatch(this.props.id, "5y").then(() => {
-                this.props.fetChart(this.props.id, "1d").then(() => {
+        debugger
+        if (this.props.id.toUpperCase().toUpperCase() !== prevProps.id.toUpperCase()) {
+        //     this.fetChart(this.props.id.toUpperCase(), this.state.range);
+            this.props.fetBatch(this.props.id.toUpperCase(), "5y").then(() => {
+                this.props.fetChart(this.props.id.toUpperCase(), "1d").then(() => {
                     this.setChart();
                 });
             });
@@ -37,7 +38,7 @@ class Chart extends React.Component {
     
     changeDate(date) {
         this.setState({range: date});
-        // this.props.fetChart(this.props.id, date);
+        // this.props.fetChart(this.props.id.toUpperCase(), date);
         if (date === "1d") {
             this.dateChart = this.oneChart;
         }
@@ -124,16 +125,16 @@ class Chart extends React.Component {
 
     setChart() {
         if (this.props.chart.charts) {
-            let chart = (this.props.chart.charts[this.props.id]
-            ) ? (this.props.chart.charts[this.props.id].chart.map((ele) => {
+            let chart = (this.props.chart.charts[this.props.id.toUpperCase()]
+            ) ? (this.props.chart.charts[this.props.id.toUpperCase()].chart.map((ele) => {
                 return { time: ele.label, price: ((ele.high + ele.low) / 2) };
             })) : null;
             this.dateChart = chart;
             this.setState({ chart: chart });
         } 
-        if (this.props.chart[this.props.id].length > 0) {
-            let chart = (this.props.chart[this.props.id]
-            ) ? (this.props.chart[this.props.id].map((ele) => {
+        if (this.props.chart[this.props.id.toUpperCase()].length > 0) {
+            let chart = (this.props.chart[this.props.id.toUpperCase()]
+            ) ? (this.props.chart[this.props.id.toUpperCase()].map((ele) => {
                 return { time: ele.label, price: ((ele.high + ele.low) / 2) };
             })) : null;
             this.oneChart = chart;
@@ -162,7 +163,7 @@ class Chart extends React.Component {
             }
         }
 
-        if (!this.props.chart[this.props.id]) {
+        if (!this.props.chart[this.props.id.toUpperCase()]) {
             return (
                 <div className="loading">
                     <ReactLoading
