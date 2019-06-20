@@ -25,7 +25,6 @@ class Chart extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        debugger
         if (this.props.id.toUpperCase().toUpperCase() !== prevProps.id.toUpperCase()) {
         //     this.fetChart(this.props.id.toUpperCase(), this.state.range);
             this.props.fetBatch(this.props.id.toUpperCase(), "5y").then(() => {
@@ -132,13 +131,12 @@ class Chart extends React.Component {
             this.dateChart = chart;
             this.setState({ chart: chart });
         } 
-        if (this.props.chart[this.props.id.toUpperCase()].length > 0) {
-            let chart = (this.props.chart[this.props.id.toUpperCase()]
-            ) ? (this.props.chart[this.props.id.toUpperCase()].map((ele) => {
+        if (this.props.chart[this.props.id.toUpperCase()][this.props.id.toUpperCase()].chart.length > 0) {
+            let chart = (this.props.chart[this.props.id.toUpperCase()][this.props.id.toUpperCase()].chart
+            ) ? (this.props.chart[this.props.id.toUpperCase()][this.props.id.toUpperCase()].chart.map((ele) => {
                 return { time: ele.label, price: ((ele.high + ele.low) / 2) };
             })) : null;
             this.oneChart = chart;
-
         }
     }
 

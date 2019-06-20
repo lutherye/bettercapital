@@ -39,11 +39,8 @@ class MiniChart extends React.Component {
     }
 
     render() {
-        debugger
         let parsedChart;
-        debugger
         if (this.props.chart.charts) {
-            debugger
             if (this.props.chart.charts[this.props.symbol]) {
                 parsedChart = this.props.chart.charts[this.props.symbol].chart.map((ele) => {
                     return { time: ele.label, price: ele.high };
@@ -68,7 +65,6 @@ class MiniChart extends React.Component {
                 }
             }
         }
-        debugger
         if (!parsedChart) {
             return (
                 <div className="loading">

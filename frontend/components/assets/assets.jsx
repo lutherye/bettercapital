@@ -26,7 +26,6 @@ class Asset extends React.Component {
     }
 
     componentDidMount(){
-        debugger
         let that = this;
         this.getStuff(this.state.symbol, this.state.range);
         this.setState({called: true});
@@ -66,7 +65,6 @@ class Asset extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        debugger
         if (!this.props.chart.company && !this.state.called) {
             let that = this;
             this.getStuff(this.state.symbol, this.state.range);
