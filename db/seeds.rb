@@ -5,10 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-U_delete = User.destroy_all
-U = User.create(first_name: "bemo", last_name: "bemo", email: "bemo@bemo.com", password: "password", buying_power: 50000)
+# U_delete = User.destroy_all
+# U = User.create(first_name: "bemo", last_name: "bemo", email: "bemo@bemo.com", password: "password", buying_power: 50000)
 
-# U1 = User.find(1).update(buying_power: 50000)
+U1 = User.find(1).update(buying_power: 50000)
 
 T_delete = Transaction.destroy_all
 W_delete = Watchlist.destroy_all
