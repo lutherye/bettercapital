@@ -27,7 +27,7 @@ class Login extends React.Component {
     
     handleDemo(e) {
         e.preventDefault();
-        const demo = Object.assign({}, {email:"demo@demo.com", password:"password"});
+        const demo = Object.assign({}, {email:"bemo@bemo.com", password:"password"});
         this.props.login(demo)
         .then(() => this.props.history.push('/'));
     }
