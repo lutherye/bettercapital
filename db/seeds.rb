@@ -8,7 +8,7 @@
 # U_delete = User.destroy_all
 # U = User.create(first_name: "aaa", last_name: "aaa", email: "aaa@aaa.com", password: "password", buying_power: 50000, portfolio_value: 0)
 
-# U1 = User.find(1).update(buying_power: 50000)
+U1 = User.find(8).update(buying_power: 50000)
 
 T_delete = Transaction.destroy_all
 W_delete = Watchlist.destroy_all
